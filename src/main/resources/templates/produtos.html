@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<title th:text="${#strings.concat('Empresa ', nome)}">Produtos</title>
+</head>
+<body>
+
+	<div class="container" style="width: 60%; ">
+		<div class="card">
+			<div class="card-header"><h2><spam th:text=${nome}>Produtos</spam></h2></div>
+			<div class="card-body" th:each="produto : ${produtos}">
+				<div class="row justify-content-between">
+					<img class="col-12 col-lg-3 img-thumbnail" th:src="${produto.imagem}" src="URL Imagem">
+					<div class="col-12 col-lg-9">
+						<div class="row justify-content-between">
+							<h3 class="col-12 col-lg-9" th:text="${produto.nome}">Nome</h3>
+							<h3 class="col-12 col-lg-3" th:text="${#numbers.formatDecimal(produto.valor/100, 1, 2)}">Valor</h3>
+						</div>
+						<span th:text="${#dates.format(produto.valor, 'dd/MM/yy')}">Data Cadastro</span>
+						<p class="card-text" th:text="${produto.descricao}">Descricao</p>
+					</div>
+				</div> <!-- Conteudo -->
+			</div>
+		</div> <!-- Card -->
+	</div> <!-- Container -->
+
+</body>
+</html>

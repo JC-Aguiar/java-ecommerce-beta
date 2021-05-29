@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>FORMULÁRIO</title>
+</head>
+<body>
+
+	<div class="container" style="width: 60%; ">
+	
+		<form action="/" id="f1"></form>
+		
+		<div th:each="nomes : ${formulario.nome}">
+			<div class="mb-3">
+				
+			    <label for="texto" class="form-label" th:text="${nomes}">
+			    	Nome do Campo
+			    </label>
+			    <input type="text" class="form-control">
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary" form="f1">Enviar</button>
+		
+	</div>
+
+</body>
+</html>

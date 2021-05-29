@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>FORMULÁRIO</title>
+</head>
+<body>
+
+	<div class="container" style="width: 60%; ">
+		
+		<div th:each="linhas : ${arquivo}">
+			<div th:each="linha : ${linhas}">
+				<div class="mb-3">
+						<p class="form-label" th:text="${linha}">Campo1</p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</html>

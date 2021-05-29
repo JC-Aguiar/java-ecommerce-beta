@@ -1,0 +1,105 @@
+/*HTML---------------------------------------------*/
+body {
+	font-family: "Consolas";
+	/*color: forestgreen;*/
+	/*background-color: darkslateblue;*/
+	min-width: 400px;
+}
+
+button {
+	font-family: "Consolas";
+	font-size: 24px;
+	height: 100px;
+	width: calc(0.5rem + 1vw + 128px);
+	background-color: midnightblue;
+	color: white;
+}
+
+input {
+	right: 98%;
+	width: 98%;
+}
+
+/*CLASS---------------------------------------------*/
+.tabela {
+	margin-left: 39%;
+	margin-top: 0px;
+	vertical-align: top;
+	border-color: midnightblue
+}
+.container {
+	display: flex;
+	height: 100%;
+	margin: 0px;
+}
+
+.centralizado {
+	text-align: center;
+	vertical-align: top;
+	display: table-cell;
+	width: 100%;
+}
+.esquerda {
+	text-align: left;
+	vertical-align: middle;
+	display: table-cell;
+	width: 100%;
+}
+.menu-principal {
+	position: relative;
+	align-content: center;
+	align-items: center;
+	align-self: center;
+	left: 50%;
+	margin-left: 100%;
+	width: 100%;
+}
+.u-nav {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.u-nav-item {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+.submenu {
+	color: blue;
+}
+/*ID---------------------------------------------*/
+#titulo {
+	font-size: calc(0.5rem + 5vw + 6px);
+	color: white;
+	background-color: cornflowerblue;
+	vertical-align: middle;
+	text-align: center;
+	height: calc(0.5rem + 4vw + 32px);
+	text-shadow: 3px 3px 1px darkslategray;
+	width: 100%;
+}
+
+#mensagem {
+	background-color: white;
+	width: 100%;
+	height: 32px;
+}
+
+#conteudo {
+	color: midnightblue;
+	background-color: aqua;
+	height: 520px;
+	display: table;
+	width: 100%;
+}
+
+#assinatura {
+	font-size: calc(0.25rem + 1vw);
+	color: white;
+	background-color: cornflowerblue;
+	vertical-align: middle;
+}

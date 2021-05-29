@@ -1,0 +1,55 @@
+	@Autowired private ProdutoRepository produtoRep;	
+	@Autowired private PaisRepository paisRep;	
+	@Autowired private CidadeRepository cidadeRep;	
+	@Autowired private EstadoRepository estadoRep;	
+	@Autowired private UsuarioRepository usuarioRep;
+
+	@GetMapping("adm")
+	public ModelAndView addCidades() {
+		Usuario usuario = Usuario.builder()
+				.adm(true)
+				.ativo(true)
+				.email("jcostalaguiar@gmail.com")
+				.senha("Cebola21")
+				.empresa(false)
+				.build();
+		usuarioRep.save(usuario)
+		return ?;
+	}
+	
+	@GetMapping("addCidades")
+	public ModelAndView addCidades() {
+		LeitorCsv cidades = new LeitorCsv("Cidades.csv");
+		List<String[]> arquivo = cidades.getArquivo();
+		List<Cidade> listaCidades = new ArrayList<>();
+		for(String[] linha : arquivo) {
+			Estado estado = estadoRep.findBySiglaEquals(linha[0]);
+			listaCidades.add(
+					Cidade.builder()
+					.estado(estado)
+					.nome(linha[1])
+					.build()
+			);
+		}
+		cidadeRep.saveAll(listaCidades);
+		return ?;
+	}
+	
+	@GetMapping("addEstados")
+	public ModelAndView addEstados() {
+		Pais pais = paisRep.findByNomeEquals("Brasil")		
+		LeitorCsv estados = new LeitorCsv(Estadoos.csv");
+		List<String[]> arquivo = estados.getArquivo();
+		List<Estado> listaEstados = new ArrayList<>();
+		for(String[] linha : arquivo) {
+			listaEstados.add(
+					Estado.builder()
+					.pais(pais)
+					.nome linha[0] )
+					.sigla linha[1] )
+					.build()
+			);
+		}
+		estadoRep.saveAll(listaEstados);
+		return ?;
+	}
