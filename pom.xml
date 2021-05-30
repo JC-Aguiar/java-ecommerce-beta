@@ -16,7 +16,10 @@
 	<name>ecommerce</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<!-- Java -->
 		<java.version>11</java.version>
+		<!-- Spring Security -->
+    	<spring-security.version>5.5.0</spring-security.version>
 	</properties>
 	<dependencies>
 	
@@ -81,6 +84,11 @@
 		    <version>5.4</version>
 		</dependency>
 		
+		<!-- Spring Security -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
+	    </dependency>
 				
 	</dependencies>
 
