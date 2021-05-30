@@ -8,10 +8,10 @@
 
 	<div class="container" style="width: 60%; ">
 		
-		<div th:each="linhas : ${arquivo}">
-			<div th:each="linha : ${linhas}">
+		<div th:each="col: ${tabela}">
+			<div th:each="linha : ${col}">
 				<div class="mb-3">
-						<p class="form-label" th:text="${linha}">Campo1</p>
+						<p class="form-label" th:text="${linha}">Campo da Tabela</p>
 				</div>
 			</div>
 		</div>

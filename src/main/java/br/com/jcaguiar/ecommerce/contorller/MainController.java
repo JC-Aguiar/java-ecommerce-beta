@@ -32,23 +32,6 @@ public class MainController {
 		return modeloPagina;
 	}
 	
-	@GetMapping("formulario")
-	public ModelAndView formulario(@RequestParam(name = "quant") String quant) {		
-		try {
-			int tamanho = Integer.parseInt(quant);
-			Formulario formulario = new Formulario(tamanho);
-			String[] nomes =  {"Campo 1", "Campo 2", "Campo 3"};
-			formulario.setNome( nomes );
-			modeloPagina = new ModelAndView("formularios");
-			modeloPagina.addObject("formulario", formulario);
-			modeloPagina.addObject("nome", "FORMULÁRIO");
-			return modeloPagina;
-		}
-		catch (Exception e) {
-			return home();
-		}
-	}
-	
 	@GetMapping("addProdutos")
 	public ModelAndView addProdutos() {
 		List<Produto> produto = new ArrayList<>();
