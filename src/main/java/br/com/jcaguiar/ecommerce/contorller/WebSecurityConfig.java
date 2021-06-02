@@ -1,18 +1,29 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
-import org.springframework.context.annotation.Bean;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+
+import br.com.jcaguiar.ecommerce.model.Usuario;
+import br.com.jcaguiar.ecommerce.repository.UsuarioRepository;
 
 @Controller
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private UsuarioRepository usuarioRep;
+	
+	@Autowired
+	private DataSource dataSource;
  
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -20,6 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/adm").authenticated().and()
 			.formLogin()
 				.loginPage("/login")
+				.defaultSuccessUrl("/home", true)
+				.usernameParameter("username")
+				.passwordParameter("password")
 				.permitAll()
 				.and()
 			.logout()
@@ -28,18 +42,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.logout()
 				.logoutUrl("/logout")
 				.permitAll();
-	}
+	}	
 	
-	@Bean
+	/*
+	 * @Bean
+	 * 
+	 * @Override public UserDetailsService userDetailsService() { List<Usuario>
+	 * usuarios = usuarioRep.findAll(); List<UserDetails> users = new
+	 * ArrayList<UserDetails>(); for(Usuario usuario : usuarios) { users.add(
+	 * User.withDefaultPasswordEncoder() .username( usuario.getEmail() ) .password(
+	 * usuario.getSenha() ) .roles( usuario.isAdm()? "ADM" : "USER" ) .build() ); }
+	 * return new InMemoryUserDetailsManager(users); }
+	 */
+	
 	@Override
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("jcostalaguiar@gmail.com")
-				.password("Cebola21")
-				.roles("ADM")
-				.build();
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		BCryptPasswordEncoder senhaCripto = new BCryptPasswordEncoder();
 
-		return new InMemoryUserDetailsManager(user);
+		 auth.jdbcAuthentication()
+		 	.dataSource(dataSource)
+		 	.passwordEncoder(senhaCripto);
+		 
 	}
 }
+

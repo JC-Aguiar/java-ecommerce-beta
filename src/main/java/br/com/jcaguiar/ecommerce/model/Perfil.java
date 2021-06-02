@@ -1,12 +1,10 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +17,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Entity(name = "usuario")
-final public class Usuario {
+@Entity(name = "perfil")
+final public class Perfil {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String email;
-	private String senha;
-	private boolean empresa;
-	private boolean ativo;
-	private Timestamp data_cadastro = new Timestamp( System.currentTimeMillis() );
+	
+	@OneToOne
+	private Usuario usuario;
+	private String nome;
 
 }

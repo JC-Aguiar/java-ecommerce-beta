@@ -8,14 +8,14 @@ import javax.persistence.PersistenceContext;
 import lombok.Getter;
 
 
-public class JpaUtil {
+public class deletJpaUtil {
 	
 	private final EntityManagerFactory fabricaGerente = Persistence.createEntityManagerFactory("jdbc:mysql://localhost/ecommerce2");
 	
 	@Getter
 	private EntityManager gerente;
 
-	public JpaUtil() {
+	public deletJpaUtil() {
 		gerente = fabricaGerente.createEntityManager();
 	}
 	
