@@ -1,5 +1,8 @@
 package br.com.jcaguiar.ecommerce.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,8 +11,10 @@ import br.com.jcaguiar.ecommerce.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
-	Usuario findByEmail(String email);
+	List<Usuario> findByEmail(String email, Sort sort);
 	
-	Usuario deleteByEmail(String email);
+	List<Usuario> findByEmailContaining(String email, Sort sort);
 	
+	List<Usuario> deleteByEmail(String email, Sort sort);
+
 }
