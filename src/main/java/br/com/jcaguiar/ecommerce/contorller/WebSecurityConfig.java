@@ -7,20 +7,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-
-import br.com.jcaguiar.ecommerce.model.Usuario;
-import br.com.jcaguiar.ecommerce.repository.UsuarioRepository;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	private UsuarioRepository usuarioRep;
 	
 	@Autowired
 	private DataSource dataSource;
@@ -28,7 +20,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/adm").authenticated().and()
+				.mvcMatchers("/adm/**").hasRole("ADMIN")
+				.and()
+			.authorizeRequests()
+				.mvcMatchers("/usr/**").hasRole("USER")
+				.and()
 			.formLogin()
 				.loginPage("/login")
 				.defaultSuccessUrl("/home", true)
@@ -57,11 +53,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		BCryptPasswordEncoder senhaCripto = new BCryptPasswordEncoder();
-
+		final BCryptPasswordEncoder ENCRIPT = new BCryptPasswordEncoder();
 		 auth.jdbcAuthentication()
 		 	.dataSource(dataSource)
-		 	.passwordEncoder(senhaCripto);
+		 	.passwordEncoder(ENCRIPT);
 		 
 	}
 }
