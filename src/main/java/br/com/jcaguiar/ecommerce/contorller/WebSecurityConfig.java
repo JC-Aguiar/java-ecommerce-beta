@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 @Controller
 @EnableWebSecurity
@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.mvcMatchers("/adm/**").hasRole("ADMIN")
 				.and()
 			.authorizeRequests()
-				.mvcMatchers("/usr/**").hasRole("USER")
+				.mvcMatchers("/user/**").hasRole("USER")
 				.and()
 			.formLogin()
 				.loginPage("/login")
@@ -32,12 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordParameter("password")
 				.permitAll()
 				.and()
-			.logout()
-				.permitAll()
-				.and()
-			.logout()
-				.logoutUrl("/logout")
-				.permitAll();
+			.httpBasic();
 	}	
 	
 	/*
