@@ -53,3 +53,21 @@
 		estadoRep.saveAll(listaEstados);
 		return ?;
 	}
+	
+		//INSERE JOÃO
+	@GetMapping("/add-nunca-mais-use-esse-metodo-louco")
+	public List<Cliente> addCrazyNotUse() {
+		Optional<Usuario> usuario = usuarioRep.findById(1);
+		System.out.printf("Usuario email: %s\n", usuario.get().getEmail());
+		Cliente cliente = Cliente.builder()
+				.nome("João")
+				.sobrenome("Costal Aguiar")
+				.cpf("31746653884")
+				.usuario(usuario.get())
+				.sexo('M')
+				.phone("51989087424")
+				.build();
+		System.out.println(cliente.toString());
+		clienteRep.save(cliente);
+		return clienteRep.findAll();
+	}

@@ -1,8 +1,6 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.repository.ClienteRepository;
 import br.com.jcaguiar.ecommerce.repository.UsuarioRepository;
@@ -60,7 +57,7 @@ public class UsuarioController {
 		List<Usuario> usuarios = new ArrayDeque<Usuario>();
 		try {
 			final int ID = Integer.parseInt(var);
-			usuarios = usuarioRep.findById(ID, ORDENE);
+			usuarios.add( usuarioRep.findById(ID) );
 		}
 		catch (NumberFormatException e) {
 			usuarios = usuarioRep.findByEmailContaining(var, ORDENE);

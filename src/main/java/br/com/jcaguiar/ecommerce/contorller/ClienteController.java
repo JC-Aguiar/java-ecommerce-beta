@@ -1,20 +1,20 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
-import br.com.jcaguiar.ecommerce.model.Usuario;
-import br.com.jcaguiar.ecommerce.repository.ClienteRepository;
-import br.com.jcaguiar.ecommerce.repository.UsuarioRepository;
+import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
+import br.com.jcaguiar.ecommerce.service.ClienteService;
 
 @RestController
 @RequestMapping("cliente")
@@ -26,43 +26,34 @@ public class ClienteController {
 	 */
 	
 	@Autowired
-	private UsuarioRepository usuarioRep;
-	@Autowired
-	private ClienteRepository clienteRep;
+	private ClienteService CLIENTE_SERVICE;
 	
 	//BUSCA GERAL
 	@GetMapping
-	public List<Cliente> findAll(HttpServletRequest request) {
-		List<Cliente> clientes;
+	public ResponseEntity<List<?>> findAll(HttpServletRequest request) {
 		final Sort ORDENE = Sort.by("id").ascending();		
 		if( request.isUserInRole("TESTE") ) {
 			System.out.printf("Consulta ADMIN\n");
-			clientes = clienteRep.findAll(ORDENE);
+			List<Cliente> clientes = CLIENTE_SERVICE.findAll(ORDENE);
+			return new ResponseEntity<>(clientes, HttpStatus.FOUND);
 		}
-		else {
-			System.out.printf("Consulta USER\n");
-			clientes = clienteRep.findAllLimited();
-		}
-		return clientes;
+		System.out.printf("Consulta USER\n");
+		List<ClientesInfoLimitada> clientesLimit = CLIENTE_SERVICE.findAllLimited(ORDENE);
+		return new ResponseEntity<>(clientesLimit, HttpStatus.FOUND);
+		
+				//		List<Cliente> clientes;
+				//		for(ClientesInfoLimitada cl : clientesLimit) {
+				//			clientes.add(
+				//					Cliente.builder()
+				//						.nome(cl.getNome())
+				//						.sobrenome(cl.getSobrenome())
+				//						.usuario(usuario)
+				//			);
+				//			
+				//		}
 	}
 	
-	//INSERE JOÃO
-	@GetMapping("/add-nunca-mais-use-esse-metodo-louco")
-	public List<Cliente> addCrazyNotUse() {
-		Optional<Usuario> usuario = usuarioRep.findById(1);
-		System.out.printf("Usuario email: %s\n", usuario.get().getEmail());
-		Cliente cliente = Cliente.builder()
-				.nome("João")
-				.sobrenome("Costal Aguiar")
-				.cpf("31746653884")
-				.usuario(usuario.get())
-				.sexo('M')
-				.phone("51989087424")
-				.build();
-		System.out.println(cliente.toString());
-		clienteRep.save(cliente);
-		return clienteRep.findAll();
-	}
+
 	
 	
 }
