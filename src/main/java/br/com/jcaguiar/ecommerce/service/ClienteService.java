@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.jcaguiar.ecommerce.dto.ClienteLimitadoDto;
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
 import br.com.jcaguiar.ecommerce.repository.ClienteRepository;
