@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
 import br.com.jcaguiar.ecommerce.service.ClienteService;
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("cliente")
 public class ClienteController {
 	
 	@Autowired
-	private ClienteService CLIENTE_SERVICE;
+	private final ClienteService CLIENTE_SERVICE;
 	final String ADM = "ADMIN";
 	
 	//BUSCA GERAL
