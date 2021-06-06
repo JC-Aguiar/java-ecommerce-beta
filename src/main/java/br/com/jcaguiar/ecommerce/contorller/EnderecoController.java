@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
+import br.com.jcaguiar.ecommerce.model.Endereco;
 import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
 import br.com.jcaguiar.ecommerce.service.ClienteService;
 import br.com.jcaguiar.ecommerce.service.EnderecoService;
@@ -25,54 +26,50 @@ public class EnderecoController {
 	
 	@Autowired
 	private EnderecoService ENDERECO_SERVICE;
-	final String ADM = "ADMIN";
 	
 	//BUSCA GERAL
 	@GetMapping
 	public ResponseEntity<List<?>> findAll(HttpServletRequest request) {
 		final Sort ORDENE = Sort.by("id").ascending();
-		if( request.isUserInRole(ADM) ) {
-			System.out.printf("Consulta ADMIN\n");
-			List<Cliente> clientes = ENDERECO_SERVICE.findAll(ORDENE);
-			return new ResponseEntity<>(clientes, HttpStatus.FOUND);
-		}
-		System.out.printf("Consulta USER\n");
-		List<ClientesInfoLimitada> clientesLimit = ENDERECO_SERVICE.findAllLimited(ORDENE);
-		return new ResponseEntity<>(clientesLimit, HttpStatus.FOUND);
+		List<Endereco> endereco = ENDERECO_SERVICE.findAll(ORDENE);
+		return new ResponseEntity<>(endereco, HttpStatus.FOUND);
 	}
 	
 	//BUSCA ESPECIFICA ID
 	@GetMapping("/{var}")
-	public ResponseEntity<?> findOneId(@PathVariable(name = "var")String var, HttpServletRequest request) {
+	public ResponseEntity<?> findById(@PathVariable(name = "var")String var) {
 		try {
 			final int ID = Integer.parseInt(var);
 			final Sort ORDENE = Sort.by("id").ascending();
-			if( request.isUserInRole(ADM) ) {
-				System.out.printf("Consulta ADMIN\n");
-				final Optional<Cliente> cliente = ENDERECO_SERVICE.findById(ID);
-				return new ResponseEntity<>(cliente, HttpStatus.FOUND);
-			}
-			System.out.printf("Consulta USER\n");
-			final ClientesInfoLimitada clienteLimit = ENDERECO_SERVICE.findByIdLimited(ID);
-			return new ResponseEntity<>(clienteLimit, HttpStatus.FOUND);
+			final Optional<Endereco> endereco = ENDERECO_SERVICE.findById(ID);
+			return new ResponseEntity<>(endereco, HttpStatus.FOUND);
 		}
 		catch (NumberFormatException e) {
-			return findOneNome(var, request);
+			return findByBairro(var);
 		}
 	}
 	
-	//BUSCA ESPECIFICA NOME
-	public ResponseEntity<List<?>> findOneNome(String nome, HttpServletRequest request) {
+	//BUSCA ESPECIFICA RUA
+	@GetMapping("/rua/{rua}")
+	public ResponseEntity<List<?>> findByRua(@PathVariable(name = "rua")String rua) {
 		final Sort ORDENE = Sort.by("id").ascending();
-		if( request.isUserInRole(ADM) ) {
-			System.out.printf("Consulta ADMIN\n");
-			final List<Cliente> cliente = ENDERECO_SERVICE.findByNameContaining(nome, ORDENE);
-			return new ResponseEntity<>(cliente, HttpStatus.FOUND);
-		}
-		System.out.printf("Consulta USER\n");
-		final List<ClientesInfoLimitada> clienteLimit = ENDERECO_SERVICE.findByNameContainingLimited(nome);
-		return new ResponseEntity<>(clienteLimit, HttpStatus.FOUND);
+		final List<Endereco> endereco = ENDERECO_SERVICE.findByRuaContaining(rua, ORDENE);
+		return new ResponseEntity<>(endereco, HttpStatus.FOUND);
+	}
+	
+	//BUSCA ESPECIFICA BAIRRO
+	public ResponseEntity<List<?>> findByBairro(String bairro) {
+		final Sort ORDENE = Sort.by("id").ascending();
+		final List<Endereco> endereco = ENDERECO_SERVICE.findByBairroContaining(bairro, ORDENE);
+		return new ResponseEntity<>(endereco, HttpStatus.FOUND);
 	}
 
+	//BUSCA ESPECIFICA CEP
+	@GetMapping("/rua/{cep}")
+	public ResponseEntity<List<?>> findByCep(@PathVariable(name = "cep")String cep) {
+		final Sort ORDENE = Sort.by("id").ascending();
+		final List<Endereco> endereco = ENDERECO_SERVICE.findByCepContaining(cep, ORDENE);
+		return new ResponseEntity<>(endereco, HttpStatus.FOUND);
+	}
 	
 }

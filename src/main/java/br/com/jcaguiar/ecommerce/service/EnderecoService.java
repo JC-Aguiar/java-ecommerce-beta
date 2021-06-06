@@ -30,7 +30,15 @@ public class EnderecoService {
 		return enderecoRepo.findAll(ordene);
 	}
 	
-	public List<Endereco> findByNameContaining(String nome, Sort ordene) {
-		return enderecoRepo.findByNomeContaining(nome, ordene);
+	public List<Endereco> findByRuaContaining(String rua, Sort ordene) {
+		return enderecoRepo.findByRuaContaining(rua, ordene);
+	}
+	
+	public List<Endereco> findByBairroContaining(String bairro, Sort ordene) {
+		return enderecoRepo.findByBairroContaining(bairro, ordene);
+	}
+	
+	public List<Endereco> findByCepContaining(String cep, Sort ordene) {
+		return enderecoRepo.findByCepContaining(cep, ordene);
 	}
 }

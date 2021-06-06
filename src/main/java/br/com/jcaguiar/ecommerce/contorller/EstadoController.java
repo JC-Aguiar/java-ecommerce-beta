@@ -16,44 +16,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cidade;
 import br.com.jcaguiar.ecommerce.model.Cliente;
+import br.com.jcaguiar.ecommerce.model.Estado;
 import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
 import br.com.jcaguiar.ecommerce.service.CidadeService;
 import br.com.jcaguiar.ecommerce.service.ClienteService;
+import br.com.jcaguiar.ecommerce.service.EstadoService;
 
 @RestController
-@RequestMapping("cidade")
-public class CidadeController {
+@RequestMapping("estado")
+public class EstadoController {
 	
 	@Autowired
-	private CidadeService CIDADE_SERVICE;
+	private EstadoService ESTADO_SERVICE;
 	
 	//BUSCA GERAL
 	@GetMapping
 	public ResponseEntity<List<?>> findAll(HttpServletRequest request) {
 		final Sort ORDENE = Sort.by("id").ascending();
-		List<Cidade> cidades = CIDADE_SERVICE.findAll(ORDENE);
-		return new ResponseEntity<>(cidades, HttpStatus.FOUND);
+		List<Estado> estados = ESTADO_SERVICE.findAll(ORDENE);
+		return new ResponseEntity<>(estados, HttpStatus.FOUND);
 	}
 	
 	//BUSCA ESPECIFICA ID
 	@GetMapping("/{var}")
-	public ResponseEntity<?> findOneId(@PathVariable(name = "var")String var, HttpServletRequest request) {
+	public ResponseEntity<?> findById(@PathVariable(name = "var")String var, HttpServletRequest request) {
 		try {
-			final int ID = Integer.parseInt(var);
+			final short ID = Short.parseShort(var);
 			final Sort ORDENE = Sort.by("id").ascending();
-			final Optional<Cidade> cidade = CIDADE_SERVICE.findById(ID);
-			return new ResponseEntity<>(cidade, HttpStatus.FOUND);
+			final Optional<Estado> estados = ESTADO_SERVICE.findById(ID);
+			return new ResponseEntity<>(estados, HttpStatus.FOUND);
 		}
 		catch (NumberFormatException e) {
-			return findOneNome(var, request);
+			return findByNome(var, request);
 		}
 	}
 	
 	//BUSCA ESPECIFICA NOME
-	public ResponseEntity<List<?>> findOneNome(String nome, HttpServletRequest request) {
+	public ResponseEntity<List<?>> findByNome(String nome, HttpServletRequest request) {
 		final Sort ORDENE = Sort.by("id").ascending();
-		final List<Cidade> cidades = CIDADE_SERVICE.findByNomeContaining(nome, ORDENE);
-		return new ResponseEntity<>(cidades, HttpStatus.FOUND);
+		final List<Estado> estados = ESTADO_SERVICE.findByNomeContaining(nome, ORDENE);
+		return new ResponseEntity<>(estados, HttpStatus.FOUND);
 	}
 
 	

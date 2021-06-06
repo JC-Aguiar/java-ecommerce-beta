@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.Cidade;
-import br.com.jcaguiar.ecommerce.model.Cliente;
 
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
 
-	List<Cliente> findByNameContaining(String nome, Sort ordene);
+	List<Cidade> findByNomeContaining(String nome, Sort ordene);
 	
 }

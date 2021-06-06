@@ -32,8 +32,8 @@ public class CidadeService {
 		return cidadeRepo.findAll(ordene);
 	}
 
-	public List<Cliente> findByNameContaining(String nome, Sort ordene) {
-		return cidadeRepo.findByNameContaining(nome, ordene);
+	public List<Cidade> findByNomeContaining(String nome, Sort ordene) {
+		return cidadeRepo.findByNomeContaining(nome, ordene);
 	}
 	
 
