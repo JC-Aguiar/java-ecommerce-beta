@@ -45,6 +45,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE c.nome like %?1% AND u.id = c.usuario_id")
-	List<ClientesInfoLimitada> findByNameContainingLimited(String name);
+	List<ClientesInfoLimitada> findByNomeContainingLimited(String name);
 
 }

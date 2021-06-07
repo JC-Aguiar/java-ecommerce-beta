@@ -17,23 +17,23 @@ import br.com.jcaguiar.ecommerce.repository.SetorRepository;
 public class CategoriaController {
 	
 	@Autowired
-	private CategoriaRepository categoriaRep;
+	private CategoriaRepository categoriaRepo;
 	
 	@Autowired
-	private SetorRepository setorRep;
+	private SetorRepository setorRepo;
 	
 	@GetMapping("add/{setorNome}/{categoriaNome}")
 	public ModelAndView add(@PathVariable String setorNome, @PathVariable String categoriaNome) {
 		String mensagem;
 		ModelAndView pagina = new ModelAndView("Generico/mensagem");
-		Setor setor = setorRep.findByNome(setorNome);
+		Setor setor = setorRepo.findByNome(setorNome);
 		if( setor != null ) {
-			if( categoriaRep.findByNome(categoriaNome) == null ) {
+			if( categoriaRepo.findByNome(categoriaNome) == null ) {
 				Categoria categoria = Categoria.builder()
 						.setor(setor)
 						.nome(categoriaNome)
 						.build();
-				categoriaRep.save(categoria);
+				categoriaRepo.save(categoria);
 				mensagem = String.format("Categoria %s criado com sucesso.", categoria.getNome() );
 			}
 			else {

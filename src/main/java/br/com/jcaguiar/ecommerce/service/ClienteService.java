@@ -33,7 +33,7 @@ public class ClienteService {
 		return clienteRep.findAll(ordene);
 	}
 	
-	public List<Cliente> findByNameContaining(String nome, Sort ordene) {
+	public List<Cliente> findByNomeContaining(String nome, Sort ordene) {
 		return clienteRep.findByNomeContaining(nome, ordene);
 	}
 	
@@ -47,8 +47,8 @@ public class ClienteService {
 		return clienteRep.findAllLimited();
 	}
 
-	public List<ClientesInfoLimitada> findByNameContainingLimited(String name) {
-		return clienteRep.findByNameContainingLimited(name);
+	public List<ClientesInfoLimitada> findByNomeContainingLimited(String name) {
+		return clienteRep.findByNomeContainingLimited(name);
 	}
 	
 }

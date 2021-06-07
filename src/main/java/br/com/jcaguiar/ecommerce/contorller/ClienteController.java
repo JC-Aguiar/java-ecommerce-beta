@@ -67,11 +67,11 @@ public class ClienteController {
 		final Sort ORDENE = Sort.by("id").ascending();
 		if( request.isUserInRole(ADM) ) {
 			System.out.printf("Consulta ADMIN\n");
-			final List<Cliente> cliente = CLIENTE_SERVICE.findByNameContaining(nome, ORDENE);
+			final List<Cliente> cliente = CLIENTE_SERVICE.findByNomeContaining(nome, ORDENE);
 			return new ResponseEntity<>(cliente, HttpStatus.FOUND);
 		}
 		System.out.printf("Consulta USER\n");
-		final List<ClientesInfoLimitada> clienteLimit = CLIENTE_SERVICE.findByNameContainingLimited(nome);
+		final List<ClientesInfoLimitada> clienteLimit = CLIENTE_SERVICE.findByNomeContainingLimited(nome);
 		return new ResponseEntity<>(clienteLimit, HttpStatus.FOUND);
 	}
 
