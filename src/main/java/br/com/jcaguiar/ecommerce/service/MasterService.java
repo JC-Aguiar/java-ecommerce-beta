@@ -3,7 +3,6 @@ package br.com.jcaguiar.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,8 @@ public abstract class MasterService<T, ID> {
 		return jpaRepo.findById(id);
 	}
 	
+	public abstract Optional<T> findByIdLimited(ID id);
+	
 	public List<T> findAllById(Iterable<ID> id) {
 		return jpaRepo.findAllById(id);
 	}
@@ -48,6 +49,11 @@ public abstract class MasterService<T, ID> {
 	public List<T> findAll(Sort ordene) {
 		return jpaRepo.findAll(ordene);
 	}
+	
+	public abstract List<T> findAllLimited();
 
+	public abstract List<T> findByNomeContaining(String nome);
+
+	public abstract List<T> findByNomeContainingLimited(String nome);
 
 }
