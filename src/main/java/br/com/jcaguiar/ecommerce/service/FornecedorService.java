@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Fornecedor;
+import br.com.jcaguiar.ecommerce.repository.FornecedorRepository;
 
 @Service
 public class FornecedorService extends MasterService<Fornecedor, Short> {

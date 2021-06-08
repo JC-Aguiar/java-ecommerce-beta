@@ -1,4 +1,4 @@
-package br.com.jcaguiar.ecommerce.service;
+package br.com.jcaguiar.ecommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
