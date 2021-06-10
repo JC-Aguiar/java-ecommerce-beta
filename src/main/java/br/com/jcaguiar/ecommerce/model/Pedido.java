@@ -1,7 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +44,5 @@ final public class Pedido {
 	private List<NotaFiscal> nf = new ArrayList<>();
 	private short status;
 	private BigDecimal total;
-	private Timestamp data_pedido = new Timestamp( System.currentTimeMillis() );	
+	final private LocalDateTime data_pedido = LocalDateTime.now();	
 }

@@ -36,5 +36,4 @@ final public class Carrinho {
 	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
 	private List<ItemCarrinho> item = new ArrayList<>();
 	private BigDecimal total;
-	private Timestamp data_carrinho = new Timestamp( System.currentTimeMillis() );
 }

@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,14 +14,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
-@Entity(name = "acessa")
-final public class Acessa {
+@Entity(name = "acesso")
+final public class Acesso {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -30,6 +33,8 @@ final public class Acessa {
 	
 	@ManyToOne
 	private Produto produto;
-	private Timestamp data_acesso = new Timestamp( System.currentTimeMillis() );
+	private String url;
+	final private LocalDateTime data_acesso = LocalDateTime.now();
+	private Duration duracao;
 
 }

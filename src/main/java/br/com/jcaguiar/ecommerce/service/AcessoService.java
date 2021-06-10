@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Acesso;
-import br.com.jcaguiar.ecommerce.repository.PedidoRepository;
+import br.com.jcaguiar.ecommerce.repository.AcessoRepository;
 
 @Service
-public class PedidoService extends MasterService<Acesso, Long> {
+public class AcessoService extends MasterService<Acesso, Long> {
 	
-	public PedidoService(PedidoRepository pedidoRepo) {
-		super(pedidoRepo);
+	public AcessoService(AcessoRepository acessoRepo) {
+		super(acessoRepo);
 	}
 
 	@Override

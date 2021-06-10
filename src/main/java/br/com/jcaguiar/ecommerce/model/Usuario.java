@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +29,8 @@ final public class Usuario {
 	private String senha;
 	private boolean empresa;
 	private boolean ativo;
-	private Timestamp data_cadastro = new Timestamp( System.currentTimeMillis() );
+	final private LocalDateTime data_cadastro = LocalDateTime.now();
+	private LocalDateTime data_removido;
+	private LocalDateTime data_ativado;
 
 }

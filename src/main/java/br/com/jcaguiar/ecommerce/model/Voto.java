@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +30,6 @@ final public class Voto {
 	
 	@ManyToOne
 	private Produto produto;
-	private Timestamp data_voto = new Timestamp( System.currentTimeMillis() );
+	final private LocalDateTime data_voto = LocalDateTime.now();
 
 }

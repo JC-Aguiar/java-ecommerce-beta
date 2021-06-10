@@ -24,10 +24,11 @@ public abstract class MasterController<T, ID> {
 
 	private MasterService<T, ID> MASTER_SERVICE;
 	final String ADM = "ADMIN";
+	final boolean admSql = true;
 	
 	//BUSCA GERAL
 	@GetMapping
-	public ResponseEntity<List<?>> findAll(Boolean admSql, HttpServletRequest request) {
+	public ResponseEntity<List<?>> findAll(HttpServletRequest request) {
 		
 		final Sort ORDENE = Sort.by("id").ascending();
 		
@@ -44,7 +45,7 @@ public abstract class MasterController<T, ID> {
 	
 	//BUSCA ESPECIFICA ID
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> findById(@PathVariable(name = "id")ID id, Boolean admSql, HttpServletRequest request)
+	public ResponseEntity<?> findById(@PathVariable(name = "id")ID id, HttpServletRequest request)
 	throws NumberFormatException, ParseException {
 		
 		final Sort ORDENE = Sort.by("id").ascending();
@@ -62,7 +63,7 @@ public abstract class MasterController<T, ID> {
 	
 	//BUSCA ESPECIFICA NOME
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<?> findByNome(@PathVariable(name = "nome")String nome, Boolean admSql, HttpServletRequest request)
+	public ResponseEntity<?> findByNome(@PathVariable(name = "nome")String nome, HttpServletRequest request)
 	throws NumberFormatException {
 		
 		final Sort ORDENE = Sort.by("id").ascending();

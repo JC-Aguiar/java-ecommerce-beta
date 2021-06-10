@@ -1,5 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,5 +28,7 @@ final public class Perfil {
 	@OneToOne
 	private Usuario usuario;
 	private String nome;
+	final private LocalDateTime data_cadastro = LocalDateTime.now();
+	private LocalDateTime data_removido;
 
 }

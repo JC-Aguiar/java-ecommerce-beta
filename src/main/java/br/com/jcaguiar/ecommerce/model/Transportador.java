@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +33,6 @@ final public class Transportador {
 	private String ie;
 	private String matriz;
 	private boolean ativo;
-	private Timestamp data_cadastro = new Timestamp( System.currentTimeMillis() );
+	final private LocalDateTime data_cadastro = LocalDateTime.now();
 
 }
