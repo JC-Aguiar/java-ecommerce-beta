@@ -1,5 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,7 @@ final public class Categoria {
 	
 	@ManyToOne
 	private Setor setor;
-	private String nome;	
+	private String nome;
+	private final LocalDateTime data_cadastro = LocalDateTime.now();
 	
 }

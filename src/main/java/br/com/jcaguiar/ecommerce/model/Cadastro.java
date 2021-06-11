@@ -2,13 +2,14 @@ package br.com.jcaguiar.ecommerce.model;
 
 import java.time.LocalDateTime;
 
-import lombok.Builder;
+import javax.persistence.MappedSuperclass;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class Cadastro {
 	
 	private boolean ativo = true;

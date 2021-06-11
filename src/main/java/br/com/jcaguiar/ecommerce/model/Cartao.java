@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +32,9 @@ final public class Cartao {
 	private Cliente cliente;
 	
 	@OneToMany(mappedBy = "cartao")
-	private List<Pagamento> pagamento = new ArrayList<>();
+	private final List<Pagamento> pagamento = new ArrayList<>();
 	private String numero;
-	private Timestamp data_validade;
+	private LocalDateTime data_validade;
 	private String titular;
 	private String cpf;	
 	private String agencia;

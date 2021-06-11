@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +31,6 @@ final public class Pagamento {
 	@ManyToOne
 	private Pedido pedido;
 	private byte parcelas;
-	private Timestamp data_pagamento = new Timestamp( System.currentTimeMillis() );
+	private final LocalDateTime data_pagamento = LocalDateTime.now();
 
 }

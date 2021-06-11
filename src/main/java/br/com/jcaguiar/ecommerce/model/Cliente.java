@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -36,15 +35,15 @@ final public class Cliente {
 	
 	@OneToMany
 	@JoinColumn(name = "id")
-	private List<Endereco> endereco = new ArrayList<>();
+	private final List<Endereco> endereco = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<Cartao> cartao = new ArrayList<>();
+	private final List<Cartao> cartao = new ArrayList<>();
 	private String nome;
 	private String sobrenome;
 	private String cpf;
 	private String phone;
-	private Timestamp data_nascimento;
+	private LocalDateTime data_nascimento;
 	private short idade;
 	private char sexo;
 	private short votos;

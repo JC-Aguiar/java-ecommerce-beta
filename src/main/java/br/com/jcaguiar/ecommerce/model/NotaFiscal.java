@@ -1,7 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,8 +37,8 @@ final public class NotaFiscal {
 	
 	private String numero;
 	private String serie;
-	private long valor;
-	private Timestamp data_emissao = new Timestamp( System.currentTimeMillis() );
+	private BigDecimal valor;
+	private final LocalDateTime data_emissao = LocalDateTime.now();
 	private String nop;
 	private BigDecimal total;
 	

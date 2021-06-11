@@ -1,7 +1,5 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +18,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "usuario")
-final public class Usuario {
+final public class Usuario extends Cadastro {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -28,9 +26,5 @@ final public class Usuario {
 	private String email;
 	private String senha;
 	private boolean empresa;
-	private boolean ativo;
-	final private LocalDateTime data_cadastro = LocalDateTime.now();
-	private LocalDateTime data_removido;
-	private LocalDateTime data_ativado;
 
 }

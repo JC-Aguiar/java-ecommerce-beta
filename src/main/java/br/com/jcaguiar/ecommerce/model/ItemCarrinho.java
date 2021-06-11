@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,5 +33,6 @@ final public class ItemCarrinho {
 	private Carrinho carrinho;
 	private short quantidade;
 	private BigDecimal total;
+	private final LocalDateTime data_carrinho = LocalDateTime.now();
 	
 }

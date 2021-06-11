@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +32,6 @@ final public class Comentario {
 	private Produto produto;
 	private String texto;
 	private long reply;
-	private Timestamp data_cadastro = new Timestamp( System.currentTimeMillis() );
+	private final LocalDateTime data_cadastro = LocalDateTime.now();
 
 }

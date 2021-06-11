@@ -1,7 +1,5 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +18,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "fornece")
-final public class Fornece {
+final public class Fornece extends Cadastro {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,7 +28,5 @@ final public class Fornece {
 	
 	@ManyToOne
 	private Fornecedor fornecedor;
-	private Timestamp data_fornece = new Timestamp( System.currentTimeMillis() );
-	private Timestamp data_cancelado;
 	
 }

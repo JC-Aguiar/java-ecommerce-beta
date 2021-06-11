@@ -30,6 +30,6 @@ final public class Voto {
 	
 	@ManyToOne
 	private Produto produto;
-	final private LocalDateTime data_voto = LocalDateTime.now();
+	private final LocalDateTime data_voto = LocalDateTime.now();
 
 }

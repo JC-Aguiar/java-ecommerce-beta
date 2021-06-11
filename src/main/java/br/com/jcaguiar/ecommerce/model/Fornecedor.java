@@ -1,6 +1,5 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,22 +23,16 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "fornecedor")
-final public class Fornecedor {
+final public class Fornecedor extends Empresa {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private short id;
 	
 	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
-	private List<Fornece> fornece = new ArrayList<>();
+	private final List<Fornece> fornece = new ArrayList<>();
 	
 	@OneToOne
 	private Endereco endereco;
-	private String doc;
-	private String razao_social;
-	private String nome;
-	private String ie;
-	private String matriz;
-	private boolean ativo;
-	private Timestamp data_cadastro = new Timestamp( System.currentTimeMillis() );
+
 
 }

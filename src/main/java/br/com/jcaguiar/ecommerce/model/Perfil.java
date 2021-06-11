@@ -29,6 +29,7 @@ final public class Perfil {
 	private Usuario usuario;
 	private String nome;
 	final private LocalDateTime data_cadastro = LocalDateTime.now();
+	private boolean ativo;
 	private LocalDateTime data_removido;
 
 }

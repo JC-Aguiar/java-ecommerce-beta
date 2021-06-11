@@ -34,6 +34,6 @@ final public class Carrinho {
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
-	private List<ItemCarrinho> item = new ArrayList<>();
+	private final List<ItemCarrinho> item = new ArrayList<>();
 	private BigDecimal total;
 }

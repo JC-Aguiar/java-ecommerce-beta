@@ -21,12 +21,12 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "marca")
-final public class Marca {
+final public class Marca extends Cadastro {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private short id;
 	private String nome;
 	
 	@ManyToMany(mappedBy = "marca")
-	private List<Produto> produto = new ArrayList<>();
+	private final List<Produto> produto = new ArrayList<>();
 }

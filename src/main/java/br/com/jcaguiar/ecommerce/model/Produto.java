@@ -1,5 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +33,14 @@ final public class Produto extends Cadastro {
 	private Categoria categoria;
 	
 	@ManyToMany
-	final private List<Marca> marca = new ArrayList<>();
+	private final List<Marca> marca = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "produto")
-	final private List<Fornece> fornece = new ArrayList<>();
+	private final List<Fornece> fornece = new ArrayList<>();
 	private String nome;
 	private String descricao;
 	private String modelo;
-	private long valor;
+	private BigDecimal valor;
 	private int estoque;
 	private int peso;
 	private int altura;

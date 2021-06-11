@@ -38,11 +38,11 @@ final public class Pedido {
 	private Carrinho carrinho;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<Pagamento> pagamento = new ArrayList<>();
+	private final List<Pagamento> pagamento = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<NotaFiscal> nf = new ArrayList<>();
+	private final List<NotaFiscal> nf = new ArrayList<>();
 	private short status;
 	private BigDecimal total;
-	final private LocalDateTime data_pedido = LocalDateTime.now();	
+	private final LocalDateTime data_pedido = LocalDateTime.now();	
 }
