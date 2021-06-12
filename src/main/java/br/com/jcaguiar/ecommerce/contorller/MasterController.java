@@ -22,9 +22,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public abstract class MasterController<T, ID> {
 
-	private MasterService<T, ID> MASTER_SERVICE;
-	final String ADM = "ADMIN";
-	final boolean admSql = true;
+	private final MasterService<T, ID> MASTER_SERVICE;
+	private final String ADM = "ADMIN";
+	protected boolean admSql = true;
 	
 	//BUSCA GERAL
 	@GetMapping
