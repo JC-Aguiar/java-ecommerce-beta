@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.projection;
 
-public interface ClientesInfoLimitada {
+public interface ClientesReport {
 
 	String getCpf();
 	String getNome();

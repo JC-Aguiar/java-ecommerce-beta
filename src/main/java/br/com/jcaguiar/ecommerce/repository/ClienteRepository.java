@@ -12,7 +12,7 @@ import br.com.jcaguiar.ecommerce.dto.ClienteLimitadoDto;
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Endereco;
 import br.com.jcaguiar.ecommerce.model.Usuario;
-import br.com.jcaguiar.ecommerce.projection.ClientesInfoLimitada;
+import br.com.jcaguiar.ecommerce.projection.ClientesReport;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
@@ -33,18 +33,18 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE c.id = ?1 AND u.id = c.usuario_id")
-	ClientesInfoLimitada findByIdLimited(int id);
+	ClientesReport findByIdLimited(int id);
 	
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE u.id = c.usuario_id")
-	List<ClientesInfoLimitada> findAllLimited();	
+	List<ClientesReport> findAllLimited();	
 
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE c.nome like %?1% AND u.id = c.usuario_id")
-	List<ClientesInfoLimitada> findByNomeContainingLimited(String name);
+	List<ClientesReport> findByNomeContainingLimited(String name);
 
 }
