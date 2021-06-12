@@ -1,10 +1,8 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import br.com.jcaguiar.ecommerce.util.DataFormato;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,11 +40,14 @@ final public class Acesso {
 	private Duration duracao;
 	
 	public String print() throws ParseException {
-		DateTimeFormatter dataFormato = DateTimeFormatter.ofPattern("dd/MM/yy - HH:mm:ss (EEE)");
 		return String.format(
-				"Acesso: %s\n"
-				+ "URL: %s\n"
-				+ "Duração: %d.%d\n", data_acesso.format(dataFormato) , url, duracao.getSeconds(), duracao.getNano());
+				"INTERCEPTADOR DE ACESSO {\n"
+				+ "\tACESSO:   %s\n"
+				+ "\tUSER:     %s\n"
+				+ "\tURL:      %s\n"
+				+ "\tDURAÇÃO:  %d.%ds\n"
+				+ "}\n", 
+				DataFormato.formatar(data_acesso), usuario.getEmail(), url, duracao.getSeconds(), duracao.getNano());
 	}
 
 }

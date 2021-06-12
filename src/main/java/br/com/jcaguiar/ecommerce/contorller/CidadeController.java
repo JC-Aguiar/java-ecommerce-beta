@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cidade;
-import br.com.jcaguiar.ecommerce.model.Cliente;
-import br.com.jcaguiar.ecommerce.projection.ClientesReport;
 import br.com.jcaguiar.ecommerce.service.CidadeService;
-import br.com.jcaguiar.ecommerce.service.ClienteService;
 
 @RestController
 @RequestMapping("cidade")

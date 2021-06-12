@@ -14,4 +14,5 @@ public class NotaFiscalController extends MasterController<NotaFiscal, Long> {
 		super(nfService);
 	}
 
+	
 }

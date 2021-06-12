@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.el.parser.ParseException;
 
-import br.com.jcaguiar.ecommerce.projection.ProdutoReport;
 import br.com.jcaguiar.ecommerce.service.MasterService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor 
 public abstract class MasterController<T, ID> {
 
-	private final MasterService<T, ID> MASTER_SERVICE;
+	protected final MasterService<T, ID> MASTER_SERVICE;
 	private final String ADM = "ADMIN";
 	protected boolean admSql = true;
 	

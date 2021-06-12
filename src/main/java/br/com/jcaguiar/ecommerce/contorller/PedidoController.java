@@ -14,4 +14,6 @@ public class PedidoController extends MasterController<Acesso, Long> {
 		super(pedidoService);
 	}
 
+	
+
 }

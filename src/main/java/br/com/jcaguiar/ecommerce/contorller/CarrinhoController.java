@@ -14,4 +14,7 @@ public class CarrinhoController extends MasterController<Carrinho, Long> {
 		super(carrinhoService);
 	}
 
+
+
+
 }

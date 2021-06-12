@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Fornecedor;
 import br.com.jcaguiar.ecommerce.service.FornecedorService;
-import br.com.jcaguiar.ecommerce.service.TransportadorService;
 
 @RestController
 @RequestMapping("/fornecedor")
@@ -14,5 +13,8 @@ public class FornecedorController extends MasterController<Fornecedor, Short> {
 	public FornecedorController(FornecedorService fornecedorService) {
 		super(fornecedorService);
 	}
+
+	
+
 
 }
