@@ -33,7 +33,7 @@ final public class Produto extends Cadastro {
 	private Categoria categoria;
 	
 	@ManyToMany
-	private final List<Marca> marca = new ArrayList<>();
+	private final List<Marca> marca = new ArrayList<>(); //AJUSTAR MARCAS -> TRANSFORMAR EM OneToOne 1<->1
 	
 	@OneToMany(mappedBy = "produto")
 	private final List<Fornece> fornece = new ArrayList<>();
@@ -42,13 +42,13 @@ final public class Produto extends Cadastro {
 	private String modelo;
 	private BigDecimal valor;
 	private int estoque;
-	private int peso;
-	private int altura;
-	private int largura;
-	private int cumprimento;
+	private String tamanho;
+	private String medidas;
 	private int acessos;
 	private int votos;
 	private int nota;
-	private String imagem;
+	
+	@OneToMany(mappedBy = "produto")
+	private List<ImagemProduto> imagem;
 	
 }

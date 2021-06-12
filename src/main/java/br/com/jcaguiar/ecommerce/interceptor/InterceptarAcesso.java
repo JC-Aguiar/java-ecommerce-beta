@@ -2,6 +2,7 @@ package br.com.jcaguiar.ecommerce.interceptor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import br.com.jcaguiar.ecommerce.model.Acesso;
+import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
@@ -44,13 +46,33 @@ public class InterceptarAcesso implements HandlerInterceptor {
 		//HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 	
+	//USER CHECK
 	final private Usuario getUsuarioLogin(HttpServletRequest request) {
 		try {
 			final String USER_NAME = request.getUserPrincipal().getName();
 			return userService.findByNomeContainingLimited(USER_NAME).get(0);
 		}
 		catch (Exception e) {
-			return Usuario.builder().email("Usuario não logado").build();
+			return Usuario.builder().email("{Usuario-não-logado}").build();
+		}
+	}
+	
+	//PRODUTO CHECK
+	//UNFINISHED!!!!!!!!
+	final private Produto getProdutoAcesso(String url) {
+		final String[] URL = url.substring(1).split("/");
+		System.out.println("teste " + Arrays.toString(URL) );
+		if(!URL[0].startsWith("produto")) {
+			//cancele se url não aponta para /produto(s)
+			return Produto.builder().nome(("{Produto-não-acessado}")).build();
+		}
+		try {
+			//se converter o número após "produto/", retorne o produto desse id
+			final int PROD_ID = Integer.parseInt(URL[1]);
+			return prodService.findById(PROD_ID).get();
+		}catch (Exception e) {
+			//cancele caso não identifique o produto ou o id do produto
+			return Produto.builder().nome(("{Produto-não-acessado}")).build();
 		}
 	}
 }
