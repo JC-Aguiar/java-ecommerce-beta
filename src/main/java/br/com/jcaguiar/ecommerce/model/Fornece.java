@@ -18,7 +18,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "fornece")
-final public class Fornece extends Cadastro {
+final public class Fornece extends EntidadeData {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

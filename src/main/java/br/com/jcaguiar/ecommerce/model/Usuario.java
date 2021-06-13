@@ -18,10 +18,11 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "usuario")
-final public class Usuario extends Cadastro {
+final public class Usuario extends EntidadeData<Integer> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	protected Integer id;
+	
 	@Column(unique=true, nullable=false) //se tiver com problemas na persistência, remover/pesquisar
 	private String email;
 	private String senha;

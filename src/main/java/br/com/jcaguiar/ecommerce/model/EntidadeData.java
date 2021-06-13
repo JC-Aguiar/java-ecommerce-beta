@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class Cadastro {
+public abstract class EntidadeData<ID> implements Entidade<ID> {
 	
 	private boolean ativo = true;
 	private LocalDateTime data_cadastro = LocalDateTime.now();

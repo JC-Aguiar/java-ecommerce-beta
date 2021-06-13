@@ -21,7 +21,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "marca")
-final public class Marca extends Cadastro {
+final public class Marca extends EntidadeData {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private short id;

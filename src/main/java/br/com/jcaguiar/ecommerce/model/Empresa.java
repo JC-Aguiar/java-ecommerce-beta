@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class Empresa extends Cadastro {
+public class Empresa extends EntidadeData {
 	
 	private String doc;
 	private String razao_social;

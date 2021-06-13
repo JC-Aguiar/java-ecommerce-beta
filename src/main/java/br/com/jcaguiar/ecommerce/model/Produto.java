@@ -24,10 +24,10 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @Entity(name = "produto")
-final public class Produto extends Cadastro {
-
+final public class Produto extends EntidadeData<Integer> {
+	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	protected Integer id;
 	
 	@ManyToOne
 	private Categoria categoria;

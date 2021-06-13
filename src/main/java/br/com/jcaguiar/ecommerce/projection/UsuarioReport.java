@@ -1,7 +1,6 @@
 package br.com.jcaguiar.ecommerce.projection;
 
-public interface UsuarioReport {
+public interface UsuarioReport{
 	
 	String getEmail();
-
 }
