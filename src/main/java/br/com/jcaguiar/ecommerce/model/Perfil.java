@@ -20,10 +20,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "perfil")
-final public class Perfil {
+final public class Perfil implements Entidade<Integer> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@OneToOne
 	private Usuario usuario;

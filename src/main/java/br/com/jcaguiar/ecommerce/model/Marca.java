@@ -21,10 +21,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "marca")
-final public class Marca extends EntidadeData {
+final public class Marca implements Entidade<Short> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Short id;
 	private String nome;
 	
 	@ManyToMany(mappedBy = "marca")

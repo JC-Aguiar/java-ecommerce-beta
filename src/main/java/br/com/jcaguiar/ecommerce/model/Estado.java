@@ -18,10 +18,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "estado")
-final public class Estado {
+final public class Estado implements Entidade<Short> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Short id;
 	
 	@ManyToOne
 	private Pais pais;

@@ -25,10 +25,10 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @Entity(name = "acesso")
-final public class Acesso {
+final public class Acesso implements Entidade<Long> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Usuario usuario;

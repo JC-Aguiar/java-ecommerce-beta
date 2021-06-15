@@ -15,21 +15,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Entity(name = "pedido")
-final public class Pedido {
+final public class Pedido extends EntidadeData<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Cliente cliente;

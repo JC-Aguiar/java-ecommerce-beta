@@ -7,18 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Entity(name = "usuario")
-final public class Usuario extends EntidadeData<Integer> {
+public class Usuario extends EntidadeData<Integer> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
@@ -27,5 +27,6 @@ final public class Usuario extends EntidadeData<Integer> {
 	private String email;
 	private String senha;
 	private boolean empresa;
+	private String foto;
 
 }

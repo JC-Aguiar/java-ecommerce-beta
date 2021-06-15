@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Cidade;
-import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.repository.CidadeRepository;
 import lombok.AllArgsConstructor;
 

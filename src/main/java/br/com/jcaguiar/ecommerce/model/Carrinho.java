@@ -1,7 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +24,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "carrinho")
-final public class Carrinho {
+final public class Carrinho implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@OneToOne
 	private Usuario usuario;

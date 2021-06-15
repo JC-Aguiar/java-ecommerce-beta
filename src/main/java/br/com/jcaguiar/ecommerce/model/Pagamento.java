@@ -20,10 +20,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "pagamento")
-final public class Pagamento {
+final public class Pagamento implements Entidade<Long> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Cartao cartao;

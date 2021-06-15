@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,10 +17,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "pais")
-final public class Pais {
+final public class Pais implements Entidade<Short> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Short id;
 	private String nome;
 	private String sigla;
 

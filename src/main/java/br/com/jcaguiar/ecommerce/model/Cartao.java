@@ -23,10 +23,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "cartao")
-final public class Cartao {
+final public class Cartao implements Entidade<Integer> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
 	private Cliente cliente;

@@ -38,12 +38,12 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	protected final MasterService<OBJ, ID> MASTER_SERVICE;
 	private static final String ADM = "ADMIN";
 	private static final String[] LOG = {
-			"Consulta Completa",	//0
-			"Consulta Restrita",	//1
-			"Cadastro Criado",		//2
-			"Cadastro Atualizado",	//3
-			"Cadastro Excluído",	//4
-			"Erro na Operação"		//5+
+			"Consulta Completa",		//0
+			"Consulta Restrita",		//1
+			"Cadastro Criado",			//2
+			"Cadastro Atualizado",		//3
+			"Cadastro Excluído",		//4
+			"Erro na Operação"			//5+
 			};
 	
 	//CADASTRAR UM ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -65,7 +65,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	}
 	
 	//CADASTRAR MUITOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	@PostMapping
+	@PostMapping("/remover-e-ajustar")
 	public abstract ResponseEntity<?> salvarTodos(@RequestBody List<DTO> objetos, HttpServletRequest request) throws Exception;
 	
 	//BUSCA TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -146,7 +146,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	public abstract ResponseEntity<?> atualizar(@RequestBody OBJ objeto, HttpServletRequest request) throws Exception;
 	
 	//ATUALIZA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	@PutMapping
+	@PutMapping("/remover-e-ajustar")
 	public abstract ResponseEntity<?> atualizarTodos(@RequestBody List<OBJ> objeto, HttpServletRequest request) throws Exception;
 	
 	//DELETA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -154,7 +154,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	public abstract ResponseEntity<?> deletar(@RequestBody OBJ objeto, HttpServletRequest request) throws Exception;
 	
 	//DELETA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	@DeleteMapping
+	@DeleteMapping("/remover-e-ajustar")
 	public abstract ResponseEntity<?> deletarTodos(@RequestBody List<OBJ> objeto, HttpServletRequest request) throws Exception;	
 	
 	//CONVERSOR DE CLASSES: OBJETO -> OBJETO-DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

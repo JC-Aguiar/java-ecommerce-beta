@@ -20,10 +20,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "categoria")
-final public class Categoria {
+final public class Categoria implements Entidade<Short> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Short id;
 	
 	@ManyToOne
 	private Setor setor;

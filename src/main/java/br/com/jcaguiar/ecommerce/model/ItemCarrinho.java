@@ -21,10 +21,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "item_carrinho")
-final public class ItemCarrinho {
+final public class ItemCarrinho implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Produto produto;

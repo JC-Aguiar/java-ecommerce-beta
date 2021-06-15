@@ -35,4 +35,10 @@ public class AcessoService extends MasterService<Acesso, Long> {
 		return null;
 	}
 
+	@Override
+	public List<Acesso> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -35,4 +35,10 @@ public class FornecedorService extends MasterService<Fornecedor, Short> {
 		return null;
 	}
 
+	@Override
+	public List<Fornecedor> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

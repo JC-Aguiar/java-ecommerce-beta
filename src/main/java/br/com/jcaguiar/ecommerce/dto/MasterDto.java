@@ -1,7 +1,7 @@
 package br.com.jcaguiar.ecommerce.dto;
 
-public abstract class MasterDto {
+public interface MasterDto {
 
-	public abstract boolean validar();
+	public boolean validar();
 	
 }

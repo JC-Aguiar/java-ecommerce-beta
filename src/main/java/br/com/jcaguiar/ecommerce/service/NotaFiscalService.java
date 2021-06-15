@@ -35,4 +35,10 @@ public class NotaFiscalService extends MasterService<NotaFiscal, Long> {
 		return null;
 	}
 
+	@Override
+	public List<NotaFiscal> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

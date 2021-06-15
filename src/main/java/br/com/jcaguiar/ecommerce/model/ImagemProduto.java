@@ -18,10 +18,10 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @Entity(name = "imagem_produto")
-final public class ImagemProduto{
+final public class ImagemProduto implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Produto produto;

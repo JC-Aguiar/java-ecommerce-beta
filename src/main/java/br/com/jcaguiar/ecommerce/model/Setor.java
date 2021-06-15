@@ -1,7 +1,5 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +17,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity
-final public class Setor {
+final public class Setor implements Entidade<Short> {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Short id;
 	private String nome;
 
 }

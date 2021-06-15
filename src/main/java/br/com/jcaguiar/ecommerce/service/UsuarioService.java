@@ -39,4 +39,10 @@ public class UsuarioService extends MasterService<Usuario, Integer> {
 		return null;
 	}
 
+	@Override
+	public List<Usuario> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

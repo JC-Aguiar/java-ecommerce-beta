@@ -1,6 +1,6 @@
 package br.com.jcaguiar.ecommerce.dto;
 
-public class UsuarioDto extends MasterDto {
+final public class UsuarioDto implements MasterDto {
 	
 	String email;
 

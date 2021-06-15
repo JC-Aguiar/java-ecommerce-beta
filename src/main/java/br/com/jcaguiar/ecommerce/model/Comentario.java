@@ -9,21 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Entity(name = "comentario")
-final public class Comentario {
+final public class Comentario extends EntidadeData<Long> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Usuario usuario;

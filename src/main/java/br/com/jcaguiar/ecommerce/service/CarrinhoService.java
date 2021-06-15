@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Carrinho;
 import br.com.jcaguiar.ecommerce.repository.CarrinhoRepository;
-import br.com.jcaguiar.ecommerce.service.MasterService;
 
 @Service
 public class CarrinhoService extends MasterService<Carrinho, Long> {
@@ -33,6 +32,12 @@ public class CarrinhoService extends MasterService<Carrinho, Long> {
 
 	@Override
 	public List<Carrinho> findByNomeContainingLimited(String nome) {
+		return null;
+	}
+
+	@Override
+	public List<Carrinho> findByNome(String nome) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -35,4 +35,10 @@ public class TransportadorService extends MasterService<Transportador, Short> {
 		return null;
 	}
 
+	@Override
+	public List<Transportador> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

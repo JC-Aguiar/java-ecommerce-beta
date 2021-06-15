@@ -21,10 +21,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "nota_fiscal")
-final public class NotaFiscal {
+final public class NotaFiscal implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne
 	private Pedido pedido;
