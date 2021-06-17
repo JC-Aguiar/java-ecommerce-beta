@@ -26,7 +26,7 @@ public abstract class Empresa<ID> extends EntidadeData<ID> {
 	private String razao_social;
 	private String nome;
 	private String ie;
-	private String matriz;
+	private boolean matriz;
 
 	public ID getId() {
 		return this.id;
