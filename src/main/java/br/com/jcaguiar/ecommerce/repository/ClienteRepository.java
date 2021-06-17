@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.jcaguiar.ecommerce.dto.ClienteLimitadoDto;
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Endereco;
 import br.com.jcaguiar.ecommerce.model.Usuario;
