@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.modelmapper.ConfigurationException;
 import org.modelmapper.MappingException;
@@ -48,7 +49,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//CADASTRAR UM ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody DTO objDto, HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> salvar(@RequestBody @Valid DTO objDto, HttpServletRequest request) throws Exception{
 		/**Método genérico para salvar Entidade
 		 * 1) Valida os campos obrigatórios
 		 * 2) Converte em objeto OBJ
@@ -66,7 +67,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//CADASTRAR MUITOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PostMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> salvarTodos(@RequestBody List<DTO> objetos, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> salvarTodos(@RequestBody @Valid List<DTO> objetos, HttpServletRequest request) throws Exception;
 	
 	//BUSCA TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping
@@ -143,19 +144,19 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//ATUALIZA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping
-	public abstract ResponseEntity<?> atualizar(@RequestBody OBJ objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> atualizar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
 	
 	//ATUALIZA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> atualizarTodos(@RequestBody List<OBJ> objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> atualizarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;
 	
 	//DELETA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping
-	public abstract ResponseEntity<?> deletar(@RequestBody OBJ objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> deletar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
 	
 	//DELETA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> deletarTodos(@RequestBody List<OBJ> objeto, HttpServletRequest request) throws Exception;	
+	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;	
 	
 	//CONVERSOR DE CLASSES: OBJETO -> OBJETO-DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	protected DTO converter(OBJ objeto) throws IllegalArgumentException, ConfigurationException, MappingException {
