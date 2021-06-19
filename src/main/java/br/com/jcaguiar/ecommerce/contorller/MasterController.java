@@ -1,5 +1,6 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sun.el.parser.ParseException;
 
@@ -32,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends MasterDto> {
 
+	private final String PATH; 
 	@Autowired private ModelMapper modelMapper;
 	protected boolean admSql = true;
 	private Class<DTO> classeDto;
@@ -47,27 +51,29 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 			"Erro na Operação"			//5+
 			};
 	
+	
 	//CADASTRAR UM ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody @Valid DTO objDto, HttpServletRequest request) throws Exception{
-		/**Método genérico para salvar Entidade
-		 * 1) Valida os campos obrigatórios
-		 * 2) Converte em objeto OBJ
-		 * 3) Salva no SGBD
-		 * 4) Chama método buscaId({id});
-		 */
-		if (!objDto.validar()) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		final OBJ OBJ_NOVO = converter(objDto);
-		final ID OBJ_ID = OBJ_NOVO.getId();
-		MASTER_SERVICE.salvar(OBJ_NOVO);		
-		return buscarId(OBJ_ID, request);
+	@Transactional
+	public ResponseEntity<?> salvar(@RequestBody @Valid DTO objDto, HttpServletRequest request, UriComponentsBuilder uriBuilder) throws Exception {
+		//Convertendo DTO e Salvando
+		final OBJ OBJ_MODEL = converter(objDto);
+		final ID OBJ_MODEL_ID = OBJ_MODEL.getId();
+		MASTER_SERVICE.salvar(OBJ_MODEL);
+		
+		//Montando URI de retorno
+		final String URL = String.format("/%s/{id}", PATH);
+		URI uri = uriBuilder
+				.path(URL)
+				.buildAndExpand(OBJ_MODEL_ID)
+				.toUri();
+		
+		//Retornando HttpStatus, Url e Objeto 
+		return ResponseEntity
+				.created(uri)
+				.body(objDto);
 	}
-	
-	//CADASTRAR MUITOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	@PostMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> salvarTodos(@RequestBody @Valid List<DTO> objetos, HttpServletRequest request) throws Exception;
+
 	
 	//BUSCA TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping
@@ -85,6 +91,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
 	
+	
 	//BUSCA POR ID - EXATA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarId(@PathVariable(name = "id")ID id, HttpServletRequest request)
@@ -101,6 +108,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		
 		return new ResponseEntity<>(objetoReport, HttpStatus.OK);
 	}
+	
 	
 	/**BUSCA POR NOME - POSSUI ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	 * Dependendo do login/perfil de quem fez a solicitação serão retornados diferentes campos da Entidade.
@@ -125,6 +133,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
 	
+	
 	//BUSCA POR NOME - EXATA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping("/nome_exato/{nome}")
 	public ResponseEntity<?> buscarNome(@PathVariable(name = "nome")String nome, HttpServletRequest request)
@@ -142,31 +151,48 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
 	
+	
 	//ATUALIZA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping
 	public abstract ResponseEntity<?> atualizar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
+	
 	
 	//ATUALIZA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping("/remover-e-ajustar")
 	public abstract ResponseEntity<?> atualizarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;
 	
+	
 	//DELETA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping
 	public abstract ResponseEntity<?> deletar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
+	
 	
 	//DELETA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping("/remover-e-ajustar")
 	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;	
 	
-	//CONVERSOR DE CLASSES: OBJETO -> OBJETO-DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+	//CONVERSOR UNITÁRIO: MODELO -> DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	protected DTO converter(OBJ objeto) throws IllegalArgumentException, ConfigurationException, MappingException {
 		return modelMapper.map(objeto, classeDto);
 	}
 	
-	//CONVERSOR DE CLASSES: OBJETO-DTO -> OBJETO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+	//CONVERSOR UNITÁRIO: DTO -> MODELO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	protected OBJ converter(DTO objetoDto) throws IllegalArgumentException, ConfigurationException, MappingException {
 		return modelMapper.map(objetoDto, classeObj);
 	}
+	
+	
+	//CONVERSOR PLURAL: DTOS -> MODELOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	protected List<OBJ> converterMuitos(List<DTO> objetosDto) throws IllegalArgumentException, ConfigurationException, MappingException {
+		List<OBJ> objetosModel = new ArrayList<OBJ>();
+		for(DTO dto : objetosDto) {
+			objetosModel.add( modelMapper.map(dto, classeObj) );
+		}
+		return objetosModel;
+	}
+	
 	
 	//MENSAGENS DAS OPERAÇÕES ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/*Mensagens LOG:
