@@ -15,7 +15,7 @@ import br.com.jcaguiar.ecommerce.projection.ClientesReport;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	
-	List<Cliente> findByUsuario(Usuario usuario, Sort sort);
+	//List<Cliente> findByUsuario(Usuario usuario, Sort sort);
 	
 	List<Cliente> findByNomeContaining(String nome, Sort sort);
 	

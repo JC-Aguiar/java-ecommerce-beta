@@ -31,27 +31,30 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 //			+ "WHERE p.id = x.produto_id AND m.id = x.marca_id AND p.categoria_id = c.id")
 	
 	@Query(nativeQuery = true,
-			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, p.imagem, c.nome as categoria "
+			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, c.nome as categoria, ip.imagem "
 					+ "FROM produto_marca pm "
 					+ "INNER JOIN marca m ON m.id = pm.marca_id "
 					+ "INNER JOIN produto p ON p.id = pm.produto_id "
+					+ "LEFT JOIN imagem_produto ip ON p.id = ip.produto_id "
 					+ "LEFT JOIN categoria c ON c.id = p.categoria_id")
 	List<ProdutoReport> findAllLimited();
 
 	@Query(nativeQuery = true,
-			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, p.imagem, c.nome as categoria "
+			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, c.nome as categoria, ip.imagem "
 					+ "FROM produto_marca pm "
 					+ "INNER JOIN marca m ON m.id = pm.marca_id "
 					+ "INNER JOIN produto p ON p.id = pm.produto_id "
+					+ "LEFT JOIN imagem_produto ip ON p.id = ip.produto_id "
 					+ "LEFT JOIN categoria c ON c.id = p.categoria_id "
 					+ "WHERE p.id = ?1")
 	ProdutoReport findByIdLimited(int id);
 
 	@Query(nativeQuery = true,
-			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, p.imagem, c.nome as categoria "
+			value = "SELECT p.nome, p.valor, m.nome as marca, p.modelo, p.descricao, p.estoque, c.nome as categoria, ip.imagem "
 					+ "FROM produto_marca pm "
 					+ "INNER JOIN marca m ON m.id = pm.marca_id "
 					+ "INNER JOIN produto p ON p.id = pm.produto_id "
+					+ "LEFT JOIN imagem_produto ip ON p.id = ip.produto_id "
 					+ "LEFT JOIN categoria c ON c.id = p.categoria_id "
 					+ "WHERE p.nome like %?1%")
 	List<ProdutoReport> findByNomeContainingLimited(String nome);

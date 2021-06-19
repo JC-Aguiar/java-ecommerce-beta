@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("produto")
+@RequestMapping("/produto")
 public class ProdutoController {
 
 	private ProdutoService PRODUTO_SERVICE;
