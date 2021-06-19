@@ -3,6 +3,7 @@ package br.com.jcaguiar.ecommerce.contorller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,38 +17,33 @@ import br.com.jcaguiar.ecommerce.service.NotaFiscalService;
 public class NotaFiscalController extends MasterController<NotaFiscal, Long, NotaFiscalDto> {
 
 	public NotaFiscalController(NotaFiscalService nfService) {
-		super(nfService);
+		super("nf", nfService);
 	}
 
 	@Override
-	public ResponseEntity<?> salvarTodos(List<NotaFiscalDto> objetos, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizar(@Valid NotaFiscal objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizar(NotaFiscal objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizarTodos(@Valid List<NotaFiscal> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizarTodos(List<NotaFiscal> objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletar(@Valid NotaFiscal objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> deletar(NotaFiscal objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletarTodos(@Valid List<NotaFiscal> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public ResponseEntity<?> deletarTodos(List<NotaFiscal> objeto, HttpServletRequest request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 }

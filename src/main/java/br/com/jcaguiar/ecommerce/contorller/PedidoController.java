@@ -3,6 +3,7 @@ package br.com.jcaguiar.ecommerce.contorller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,38 +17,33 @@ import br.com.jcaguiar.ecommerce.service.PedidoService;
 public class PedidoController extends MasterController<Acesso, Long, PedidoDto> {
 
 	public PedidoController(PedidoService pedidoService) {
-		super(pedidoService);
+		super("pedido", pedidoService);
 	}
 
 	@Override
-	public ResponseEntity<?> salvarTodos(List<PedidoDto> objetos, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizar(@Valid Acesso objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizar(Acesso objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizarTodos(@Valid List<Acesso> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizarTodos(List<Acesso> objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletar(@Valid Acesso objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> deletar(Acesso objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletarTodos(@Valid List<Acesso> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public ResponseEntity<?> deletarTodos(List<Acesso> objeto, HttpServletRequest request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 

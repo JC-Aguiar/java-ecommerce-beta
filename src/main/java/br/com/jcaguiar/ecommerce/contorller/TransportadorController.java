@@ -3,6 +3,7 @@ package br.com.jcaguiar.ecommerce.contorller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,39 +13,33 @@ import br.com.jcaguiar.ecommerce.model.Transportador;
 import br.com.jcaguiar.ecommerce.service.TransportadorService;
 
 @RestController
-@RequestMapping("/transportador")
+@RequestMapping("/transp")
 public class TransportadorController extends MasterController<Transportador, Short, TransportadorDto> {
 
 	public TransportadorController(TransportadorService transpService) {
-		super(transpService);
+		super("transp", transpService);
 	}
 
 	@Override
-	public ResponseEntity<?> salvarTodos(List<TransportadorDto> objetos, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizar(@Valid Transportador objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizar(Transportador objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> atualizarTodos(@Valid List<Transportador> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> atualizarTodos(List<Transportador> objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletar(@Valid Transportador objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<?> deletar(Transportador objeto, HttpServletRequest request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<?> deletarTodos(List<Transportador> objeto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> deletarTodos(@Valid List<Transportador> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}

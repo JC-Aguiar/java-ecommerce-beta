@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.sun.el.parser.ParseException;
 
 import br.com.jcaguiar.ecommerce.dto.MasterDto;
 import br.com.jcaguiar.ecommerce.model.Entidade;
@@ -78,14 +77,16 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	//BUSCA TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping
 	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
+		//Preparando ordenação
 		final Sort ORDENE = Sort.by("id").ascending();
 		
+		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
-			log(0);
+			log(0);//Consulta ADMIN
 			List<?> objetos = MASTER_SERVICE.findAll(ORDENE);
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
-		log(1);
+		log(1);//Consulta USER
 		List<?> objetosReport = MASTER_SERVICE.findAllLimited();
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
@@ -94,16 +95,17 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//BUSCA POR ID - EXATA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> buscarId(@PathVariable(name = "id")ID id, HttpServletRequest request)
-	throws NumberFormatException, ParseException {
+	public ResponseEntity<?> buscarId(@PathVariable(name = "id")ID id, HttpServletRequest request) {
+		//Preparando ordenação
 		final Sort ORDENE = Sort.by("id").ascending();
 		
+		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql) {
-			log(0);
+			log(0);//Consulta ADMIN
 			final Optional<?> objeto = MASTER_SERVICE.findById(id);
 			return new ResponseEntity<>(objeto, HttpStatus.OK);
 		}
-		log(1);
+		log(1);//Consulta USER
 		final Optional<?> objetoReport = MASTER_SERVICE.findByIdLimited(id);
 		
 		return new ResponseEntity<>(objetoReport, HttpStatus.OK);
@@ -118,8 +120,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	 * @throws NumberFormatException
 	 */
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<?> buscarNomeCom(@PathVariable(name = "nome")String nome, HttpServletRequest request)
-	throws NumberFormatException {
+	public ResponseEntity<?> buscarNomeCom(@PathVariable(name = "nome")String nome, HttpServletRequest request) {
 		final Sort ORDENE = Sort.by("id").ascending();
 		
 		if( request.isUserInRole(ADM) || admSql) {
@@ -154,22 +155,22 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//ATUALIZA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping
-	public abstract ResponseEntity<?> atualizar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> atualizar(@RequestBody @Valid OBJ objeto, HttpServletRequest request);
 	
 	
 	//ATUALIZA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PutMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> atualizarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> atualizarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request);
 	
 	
 	//DELETA UM CADASTRO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping
-	public abstract ResponseEntity<?> deletar(@RequestBody @Valid OBJ objeto, HttpServletRequest request) throws Exception;
+	public abstract ResponseEntity<?> deletar(@RequestBody @Valid OBJ objeto, HttpServletRequest request);
 	
 	
 	//DELETA MUITOS CADASTROS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping("/remover-e-ajustar")
-	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request) throws Exception;	
+	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request);	
 	
 	
 	//CONVERSOR UNITÁRIO: MODELO -> DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
