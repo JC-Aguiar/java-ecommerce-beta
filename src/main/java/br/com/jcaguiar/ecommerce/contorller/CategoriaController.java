@@ -6,19 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.dto.CategoriaDto;
 import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.service.CategoriaService;
 
-@Controller
+@RestController
 @RequestMapping("/categoria")
 public class CategoriaController extends MasterController<Categoria, Short, CategoriaDto> {
 
-	public CategoriaController(CategoriaService MASTER_SERVICE) {
-		super("categoria", MASTER_SERVICE);
+	public CategoriaController(CategoriaService categoriaService) {
+		super("categoria", categoriaService);
 	}
 
 	@Override

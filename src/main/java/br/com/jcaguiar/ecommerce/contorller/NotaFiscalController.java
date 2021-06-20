@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jcaguiar.ecommerce.dto.NotaFiscalDto;
 import br.com.jcaguiar.ecommerce.model.NotaFiscal;
 import br.com.jcaguiar.ecommerce.service.NotaFiscalService;
 
