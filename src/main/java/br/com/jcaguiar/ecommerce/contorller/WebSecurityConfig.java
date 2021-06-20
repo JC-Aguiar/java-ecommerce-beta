@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and()
 			.httpBasic();
+		http.cors().and().csrf().disable();
 	}	
 	
 	/*
