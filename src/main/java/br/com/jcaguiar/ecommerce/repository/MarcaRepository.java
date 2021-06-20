@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.jcaguiar.ecommerce.model.Marca;
 
 @Repository
-public interface MarcaRepository extends JpaRepository<Marca, Integer> {
+public interface MarcaRepository extends JpaRepository<Marca, Short> {
 	
 }

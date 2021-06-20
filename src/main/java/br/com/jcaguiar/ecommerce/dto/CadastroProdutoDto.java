@@ -13,7 +13,7 @@ import br.com.jcaguiar.ecommerce.model.Fornecedor;
 import br.com.jcaguiar.ecommerce.model.ImagemProduto;
 import br.com.jcaguiar.ecommerce.model.Marca;
 
-final public class CadastroProdutoDto {
+final public class CadastroProdutoDto extends MasterDto {
 	
 	@NotNull Categoria categoria;
 	@NotNull List<Marca> marca; //AJUSTAR MARCAS -> TRANSFORMAR EM OneToOne 1<->1

@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @RequiredArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class ErroCadastroDto extends MasterDto {
 
 	private final String campo;
-	private final String mensagem;
+	private final String erro;
 	
 }

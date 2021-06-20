@@ -8,54 +8,61 @@ import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.model.Produto;
-import br.com.jcaguiar.ecommerce.projection.ProdutoReport;
+import br.com.jcaguiar.ecommerce.projection.ProdutoDtoReport;
 import br.com.jcaguiar.ecommerce.repository.ProdutoRepository;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
-public class ProdutoService {
+public class ProdutoService extends MasterService<Produto, Integer> {
+	
+	public ProdutoService(ProdutoRepository jpaRepo) {
+		super(jpaRepo);
+	}
 
-	private final ProdutoRepository PRODUTO_REPO;
-
-	public Produto salvar(Produto produto) {
-		return PRODUTO_REPO.save(produto);
-	}
-	
-	public Optional<Produto> findById(int id) {
-		return PRODUTO_REPO.findById(id);
-	}
-	
-	public List<Produto> findAll(Sort ordene) {
-		return PRODUTO_REPO.findAll(ordene);
-	}
-	
 	public List<Produto> findByNomeContaining(String nome, Sort ordene) {
-		return PRODUTO_REPO.findByNomeContaining(nome, ordene);
+		return ((ProdutoRepository) JPA_REPO).findByNomeContaining(nome, ordene);
 	}
 	
 	public List<Produto> findByDescricaoContaining(String descricao, Sort ordene) {
-		return PRODUTO_REPO.findByDescricaoContaining(descricao, ordene);
+		return ((ProdutoRepository) JPA_REPO).findByDescricaoContaining(descricao, ordene);
 	}
 	
 	public List<Produto> findByModeloContaining(String modelo, Sort ordene) {
-		return PRODUTO_REPO.findByModeloContaining(modelo, ordene);
+		return ((ProdutoRepository) JPA_REPO).findByModeloContaining(modelo, ordene);
 	}
 	
 	public List<Produto> findByCategoriaContaining(Categoria categoria, Sort ordene) {
-		return PRODUTO_REPO.findByCategoriaContaining(categoria, ordene);
+		return ((ProdutoRepository) JPA_REPO).findByCategoriaContaining(categoria, ordene);
 	}
 
-	//ProdutoReport :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public List<ProdutoReport> findAllLimited(Sort ordene) {
-		return PRODUTO_REPO.findAllLimited();
+	
+	@Override
+	public Optional<Produto> findByIdLimited(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public ProdutoReport findByIdLimited(int id) {
-		return PRODUTO_REPO.findByIdLimited(id);
+	@Override
+	public List<ProdutoDtoReport> findAllLimited() {
+		return ((ProdutoRepository) JPA_REPO).findAllLimited();
 	}
 
-	public List<ProdutoReport> findByNomeContainingLimited(String nome) {
-		return PRODUTO_REPO.findByNomeContainingLimited(nome);
+	@Override
+	public List<Produto> findByNome(String nome) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public List<Produto> findByNomeContaining(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Produto> findByNomeContainingLimited(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

@@ -7,7 +7,7 @@ import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.model.Setor;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
+public interface CategoriaRepository extends JpaRepository<Categoria, Short> {
 	
 	Setor findByNome(String nome);
 }

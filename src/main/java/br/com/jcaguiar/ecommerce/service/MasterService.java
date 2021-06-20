@@ -10,52 +10,52 @@ import org.springframework.stereotype.Service;
 @Service
 public abstract class MasterService<OBJ, ID> {
 
-	private JpaRepository<OBJ, ID> jpaRepo;
+	protected final JpaRepository<OBJ, ID> JPA_REPO;
 	
 	public MasterService(JpaRepository<OBJ, ID> jpaRepo) {
-		this.jpaRepo = jpaRepo; 
+		this.JPA_REPO = jpaRepo; 
 	}
 	
 	public OBJ salvar(OBJ objeto) {
-		return jpaRepo.save(objeto);
+		return JPA_REPO.save(objeto);
 	}
 	
 	public List<OBJ> saveAll(Iterable<OBJ> objetos) {
-		return jpaRepo.saveAll(objetos);
+		return JPA_REPO.saveAll(objetos);
 	}
 	
 	public OBJ findOne(ID id) {
-		return jpaRepo.getOne(id);
+		return JPA_REPO.getOne(id);
 	}
 	
 	public Optional<OBJ> findById(ID id) {
-		return jpaRepo.findById(id);
+		return JPA_REPO.findById(id);
 	}
 	
-	public abstract Optional<OBJ> findByIdLimited(ID id);
+	public abstract Optional<?> findByIdLimited(ID id);
 	
 	public List<OBJ> findAllById(Iterable<ID> id) {
-		return jpaRepo.findAllById(id);
+		return JPA_REPO.findAllById(id);
 	}
 	
 	public List<OBJ> findAllById(Iterable<ID> id, Sort ordene) {
-		return jpaRepo.findAllById(id);
+		return JPA_REPO.findAllById(id);
 	}
 	
 	public List<OBJ> findAll() {
-		return jpaRepo.findAll();
+		return JPA_REPO.findAll();
 	}
 	
 	public List<OBJ> findAll(Sort ordene) {
-		return jpaRepo.findAll(ordene);
+		return JPA_REPO.findAll(ordene);
 	}
 	
-	public abstract List<OBJ> findAllLimited();
+	public abstract List<?> findAllLimited();
 	
-	public abstract List<OBJ> findByNome(String nome);
+	public abstract List<?> findByNome(String nome);
 
-	public abstract List<OBJ> findByNomeContaining(String nome);
+	public abstract List<?> findByNomeContaining(String nome);
 
-	public abstract List<OBJ> findByNomeContainingLimited(String nome);
+	public abstract List<?> findByNomeContainingLimited(String nome);
 
 }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 
 @Getter
-final public class ComentarioDto {
+final public class ComentarioDto extends MasterDto {
 	
 	String texto;
 	long reply;

@@ -35,12 +35,13 @@ import lombok.RequiredArgsConstructor;
 public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends MasterDto> {
 
 	private final String PATH; 
-	@Autowired private ModelMapper modelMapper;
-	protected boolean admSql = true;
+	@Autowired
+	protected ModelMapper modelMapper;
+	protected boolean admSql = false;
 	private Class<DTO> classeDto;
 	private Class<OBJ> classeObj;
 	protected final MasterService<OBJ, ID> MASTER_SERVICE;
-	private static final String ADM = "ADMIN";
+	protected static final String ADM = "ADMIN";
 	private static final String[] LOG = {
 			"Consulta Completa",		//0
 			"Consulta Restrita",		//1
@@ -76,6 +77,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	
 	//BUSCA TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@GetMapping
+	@Transactional
 	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
 		//Preparando ordenação
 		final Sort ORDENE = Sort.by("id").ascending();
@@ -83,7 +85,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
 			log(0);//Consulta ADMIN
-			List<?> objetos = MASTER_SERVICE.findAll(ORDENE);
+			List<OBJ> objetos = MASTER_SERVICE.findAll(ORDENE);
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER

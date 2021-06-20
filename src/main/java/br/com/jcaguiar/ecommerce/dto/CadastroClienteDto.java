@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import br.com.jcaguiar.ecommerce.model.Endereco;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 
-final public class CadastroClienteDto {
+final public class CadastroClienteDto extends MasterDto {
 	
 	@NotNull Usuario usuario;
 	@NotNull @NotEmpty @Length(min = 2) String nome;

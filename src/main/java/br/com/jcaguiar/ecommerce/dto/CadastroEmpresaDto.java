@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-final public class CadastroEmpresaDto {
+final public class CadastroEmpresaDto extends MasterDto {
 	
 	@NotNull @NotEmpty @Length(min = 2) String nome;
 	@NotNull @NotEmpty @Length(min = 4) String razao_social;

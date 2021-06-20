@@ -4,7 +4,7 @@ import br.com.jcaguiar.ecommerce.model.Endereco;
 import lombok.Getter;
 
 @Getter
-final public class TransportadorDto {
+final public class TransportadorDto extends MasterDto {
 	
 	String nome;
 	Endereco endereco;

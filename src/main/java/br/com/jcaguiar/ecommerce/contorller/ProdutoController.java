@@ -1,76 +1,77 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jcaguiar.ecommerce.dto.ProdutoDto;
 import br.com.jcaguiar.ecommerce.model.Produto;
-import br.com.jcaguiar.ecommerce.projection.ProdutoReport;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
-import lombok.AllArgsConstructor;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/produto")
-public class ProdutoController {
+public class ProdutoController extends MasterController<Produto, Integer, ProdutoDto>{
 
-	private ProdutoService PRODUTO_SERVICE;
-	final String ADM = "ADMIN";
 	
-	//BUSCA GERAL
+	public ProdutoController(ProdutoService produtoService) {
+		super("produto", produtoService);
+	}
+	
+	@Override
 	@GetMapping
-	public ResponseEntity<List<?>> findAll(HttpServletRequest request) {
+	@Transactional
+	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
+		//Preparando ordenação
 		final Sort ORDENE = Sort.by("id").ascending();
-		if( request.isUserInRole(ADM) ) {
-			System.out.printf("Consulta ADMIN\n");
-			List<Produto> produtos = PRODUTO_SERVICE.findAll(ORDENE);
-			return new ResponseEntity<>(produtos, HttpStatus.FOUND);
-		}
-		System.out.printf("Consulta USER\n");
-		List<ProdutoReport> produtosReport = PRODUTO_SERVICE.findAllLimited(ORDENE);
-		return new ResponseEntity<>(produtosReport, HttpStatus.FOUND);
-	}
-	
-	//BUSCA ESPECIFICA ID
-	@GetMapping("/{var}")
-	public ResponseEntity<?> findById(@PathVariable(name = "var")String var, HttpServletRequest request) {
-		try {
-			final int ID = Integer.parseInt(var);
-			final Sort ORDENE = Sort.by("id").ascending();
-			if( request.isUserInRole(ADM) ) {
-				System.out.printf("Consulta ADMIN\n");
-				final Optional<Produto> produtos = PRODUTO_SERVICE.findById(ID);
-				return new ResponseEntity<>(produtos, HttpStatus.FOUND);
+		
+		//Usuário da consulta ADMIN?
+		if( request.isUserInRole(ADM) || admSql ) {
+			log(0);//Consulta ADMIN
+			List<Produto> produtos = MASTER_SERVICE.findAll(ORDENE);
+			List<ProdutoDto> dtos = new ArrayList<ProdutoDto>();
+			for(Produto prod : produtos) {
+				dtos.add( new ProdutoDto(prod) );
 			}
-			System.out.printf("Consulta USER\n");
-			final ProdutoReport produtosLimit = PRODUTO_SERVICE.findByIdLimited(ID);
-			return new ResponseEntity<>(produtosLimit, HttpStatus.FOUND);
+			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		}
-		catch (NumberFormatException e) {
-			return findByeNome(var, request);
-		}
+		log(1);//Consulta USER
+		List<?> objetosReport = MASTER_SERVICE.findAllLimited();
+		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
-	
-	//BUSCA ESPECIFICA NOME
-	public ResponseEntity<List<?>> findByeNome(String nome, HttpServletRequest request) {
-		final Sort ORDENE = Sort.by("id").ascending();
-		if( request.isUserInRole(ADM) ) {
-			System.out.printf("Consulta ADMIN\n");
-			final List<Produto> produtos = PRODUTO_SERVICE.findByNomeContaining(nome, ORDENE);
-			return new ResponseEntity<>(produtos, HttpStatus.FOUND);
-		}
-		System.out.printf("Consulta USER\n");
-		final List<ProdutoReport> produtosLimit = PRODUTO_SERVICE.findByNomeContainingLimited(nome);
-		return new ResponseEntity<>(produtosLimit, HttpStatus.FOUND);
+
+	@Override
+	public ResponseEntity<?> atualizar(@Valid Produto objeto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public ResponseEntity<?> atualizarTodos(@Valid List<Produto> objeto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<?> deletar(@Valid Produto objeto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<?> deletarTodos(@Valid List<Produto> objeto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -8,7 +8,7 @@ import br.com.jcaguiar.ecommerce.model.Usuario;
 import lombok.Getter;
 
 @Getter
-final public class CadastroTransportadorDto {
+final public class CadastroTransportadorDto extends MasterDto {
 	
 	@NotNull Empresa<Short> empresa;
 	@NotNull Usuario usuario;

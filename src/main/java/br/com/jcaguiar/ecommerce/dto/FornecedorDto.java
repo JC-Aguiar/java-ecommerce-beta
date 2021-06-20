@@ -7,7 +7,7 @@ import br.com.jcaguiar.ecommerce.model.Fornece;
 import lombok.Getter;
 
 @Getter
-final public class FornecedorDto {
+final public class FornecedorDto extends MasterDto {
 	
 	String nome;
 	List<Fornece> fornece;

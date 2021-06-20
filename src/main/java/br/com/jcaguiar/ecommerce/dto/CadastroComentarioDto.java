@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 
-final public class CadastroComentarioDto {
+final public class CadastroComentarioDto extends MasterDto {
 	
 	@NotNull Usuario usuario;
 	@NotNull Produto produto;

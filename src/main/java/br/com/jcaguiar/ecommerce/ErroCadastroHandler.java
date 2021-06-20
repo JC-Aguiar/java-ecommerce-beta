@@ -30,8 +30,10 @@ public final class ErroCadastroHandler {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ErroCadastroDto> handler(MethodArgumentNotValidException exc) {
-		//Preparando listas
+		//Coletando atributos inválidos
 		List<FieldError> listaErro = exc.getBindingResult().getFieldErrors();
+		
+		//Preparando lista DTO
 		List<ErroCadastroDto> listaErroDto = new ArrayList<ErroCadastroDto>();
 		
 		//Iterando listas
