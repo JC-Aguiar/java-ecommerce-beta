@@ -1,13 +1,20 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.modelmapper.ConfigurationException;
+import org.modelmapper.MappingException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.jcaguiar.ecommerce.dto.CadastroCategoriaDto;
 import br.com.jcaguiar.ecommerce.model.Categoria;
@@ -18,7 +25,7 @@ import br.com.jcaguiar.ecommerce.service.CategoriaService;
 public class CategoriaController extends MasterController<Categoria, Short, CadastroCategoriaDto> {
 
 	public CategoriaController(CategoriaService categoriaService) {
-		super("categoria", categoriaService);
+		super(Categoria.class, CadastroCategoriaDto.class, "categoria", categoriaService);
 	}
 
 	@Override
@@ -43,6 +50,19 @@ public class CategoriaController extends MasterController<Categoria, Short, Cada
 	public ResponseEntity<?> deletarTodos(@Valid List<Categoria> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	@Override
+	protected Categoria converter(CadastroCategoriaDto objetoDto)
+	throws IllegalArgumentException, ConfigurationException, MappingException {
+		return modelMapper.map(objetoDto, Categoria.class);
+	}
+	
+	@Override
+	protected CadastroCategoriaDto converter(Categoria objeto)
+	throws IllegalArgumentException, ConfigurationException, MappingException {
+		return modelMapper.map(objeto, CadastroCategoriaDto.class);
 	}
 	
 //	@Autowired

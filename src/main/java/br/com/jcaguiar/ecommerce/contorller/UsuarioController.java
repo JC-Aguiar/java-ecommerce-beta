@@ -19,7 +19,7 @@ public class UsuarioController extends MasterController<Usuario, Integer, Usuari
 
 	
 	public UsuarioController(UsuarioService userService) {
-		super("user", userService);
+		super(Usuario.class, UsuarioDto.class, "user", userService);
 	}
 
 	@Override

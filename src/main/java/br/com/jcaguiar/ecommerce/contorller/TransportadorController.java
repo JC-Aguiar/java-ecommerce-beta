@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.TransportadorService;
 public class TransportadorController extends MasterController<Transportador, Short, TransportadorDto> {
 
 	public TransportadorController(TransportadorService transpService) {
-		super("transp", transpService);
+		super(Transportador.class, TransportadorDto.class, "transp", transpService);
 	}
 
 	@Override

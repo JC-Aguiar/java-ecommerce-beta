@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.CarrinhoService;
 public class CarrinhoController extends MasterController<Carrinho, Long, CarrinhoDto> {
 
 	public CarrinhoController(CarrinhoService carrinhoService) {
-		super("carrinho", carrinhoService);
+		super(Carrinho.class, CarrinhoDto.class, "carrinho", carrinhoService);
 	}
 
 	@Override

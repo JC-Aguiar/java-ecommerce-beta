@@ -1,7 +1,6 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +33,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends MasterDto> {
 
-	private final String PATH; 
-	@Autowired
-	protected ModelMapper modelMapper;
+	
 	protected boolean admSql = false;
-	private Class<DTO> classeDto;
-	private Class<OBJ> classeObj;
+	
+	@Autowired protected ModelMapper modelMapper;
+	protected final Class<OBJ> classeModelo;
+	protected final Class<DTO> classeDto;
+	private final String PATH;
 	protected final MasterService<OBJ, ID> MASTER_SERVICE;
 	protected static final String ADM = "ADMIN";
 	private static final String[] LOG = {
@@ -55,10 +55,10 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	//CADASTRAR UM ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@PostMapping
 	@Transactional
-	public ResponseEntity<?> salvar(@RequestBody @Valid DTO objDto, HttpServletRequest request, UriComponentsBuilder uriBuilder) throws Exception {
+	public ResponseEntity<?> salvar(@RequestBody @Valid DTO objDto, HttpServletRequest request, UriComponentsBuilder uriBuilder) throws Exception {		
 		//Convertendo DTO e Salvando
 		final OBJ OBJ_MODEL = converter(objDto);
-		final ID OBJ_MODEL_ID = OBJ_MODEL.getId();
+		final ID OBJ_MODEL_ID = (ID) OBJ_MODEL.getId();
 		MASTER_SERVICE.salvar(OBJ_MODEL);
 		
 		//Montando URI de retorno
@@ -68,7 +68,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 				.buildAndExpand(OBJ_MODEL_ID)
 				.toUri();
 		
-		//Retornando HttpStatus, Url e Objeto 
+		//Retornando HttpStatus, URL e DTO 
 		return ResponseEntity
 				.created(uri)
 				.body(objDto);
@@ -175,25 +175,16 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request);	
 	
 	
-	//CONVERSOR UNITÁRIO: MODELO -> DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	protected DTO converter(OBJ objeto) throws IllegalArgumentException, ConfigurationException, MappingException {
-		return modelMapper.map(objeto, classeDto);
+	//CONVERSOR: MODELO -> DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	protected DTO converter(OBJ modelo) throws IllegalArgumentException, ConfigurationException, MappingException {
+		return (DTO) modelMapper.map(modelo, classeDto );
 	}
 	
 	
-	//CONVERSOR UNITÁRIO: DTO -> MODELO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	protected OBJ converter(DTO objetoDto) throws IllegalArgumentException, ConfigurationException, MappingException {
-		return modelMapper.map(objetoDto, classeObj);
-	}
-	
-	
-	//CONVERSOR PLURAL: DTOS -> MODELOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	protected List<OBJ> converterMuitos(List<DTO> objetosDto) throws IllegalArgumentException, ConfigurationException, MappingException {
-		List<OBJ> objetosModel = new ArrayList<OBJ>();
-		for(DTO dto : objetosDto) {
-			objetosModel.add( modelMapper.map(dto, classeObj) );
-		}
-		return objetosModel;
+	//CONVERSOR: DTO -> MODELO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	protected OBJ converter(DTO dto)
+	throws IllegalArgumentException, ConfigurationException, MappingException {
+		return (OBJ) modelMapper.map(dto, classeModelo );
 	}
 	
 	

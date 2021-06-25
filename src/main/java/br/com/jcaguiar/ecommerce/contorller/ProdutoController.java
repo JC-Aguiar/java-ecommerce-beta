@@ -24,7 +24,7 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 
 	
 	public ProdutoController(ProdutoService produtoService) {
-		super("produto", produtoService);
+		super(Produto.class, ProdutoDto.class, "produto", produtoService);
 	}
 	
 	@Override

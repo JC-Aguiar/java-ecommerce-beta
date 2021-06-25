@@ -27,7 +27,6 @@ final public class ProdutoDto extends MasterDto {
 	List<String> imagem = new ArrayList<String>();
 	
 	public ProdutoDto(Produto produto) {
-		super();
 		this.id = produto.getId();
 		this.categoria = produto.getCategoria().getNome();
 		this.nome = produto.getNome();
@@ -50,8 +49,5 @@ final public class ProdutoDto extends MasterDto {
 			this.imagem.add( img.getImagem() );
 		});
 	}
-	
-	
-	
 	
 }

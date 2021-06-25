@@ -1,5 +1,6 @@
 package br.com.jcaguiar.ecommerce.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public abstract class MasterService<OBJ, ID> {
 
 	protected final JpaRepository<OBJ, ID> JPA_REPO;
+	protected final List<Object> DTO = new ArrayList<>();
 	
 	public MasterService(JpaRepository<OBJ, ID> jpaRepo) {
 		this.JPA_REPO = jpaRepo; 

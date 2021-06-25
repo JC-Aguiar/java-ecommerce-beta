@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.FornecedorService;
 public class FornecedorController extends MasterController<Fornecedor, Short, FornecedorDto> {
 
 	public FornecedorController(FornecedorService fornecedorService) {
-		super("fornecedor", fornecedorService);
+		super(Fornecedor.class, FornecedorDto.class, "fornecedor", fornecedorService);
 	}
 
 	@Override

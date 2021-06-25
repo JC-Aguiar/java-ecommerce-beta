@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.NotaFiscalService;
 public class NotaFiscalController extends MasterController<NotaFiscal, Long, NotaFiscalDto> {
 
 	public NotaFiscalController(NotaFiscalService nfService) {
-		super("nf", nfService);
+		super(NotaFiscal.class, NotaFiscalDto.class, "nf", nfService);
 	}
 
 	@Override
