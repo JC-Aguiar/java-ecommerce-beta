@@ -1,20 +1,21 @@
 package br.com.jcaguiar.ecommerce.projection;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public interface ProdutoReport {
+public interface ProdutoAdmReport {
 
 	Integer getId();
 	String getCategoria();
-	List<String> getMarca();
 	String getNome();
 	String detDescricao();
 	String getModelo();
-	long getValor();
+	BigDecimal getValor();
+	List<String> getMarca();
 	List<String> getFornece();
-	int getEstoque();
 	String getTamanho();
 	String getMedidas();
+	int getEstoque();
 	int getAcessos();
 	int getVotos();
 	int getNota();

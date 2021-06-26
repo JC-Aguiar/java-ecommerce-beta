@@ -26,6 +26,10 @@ final public class ProdutoDto extends MasterDto {
 	int nota;
 	List<String> imagem = new ArrayList<String>();
 	
+	public ProdutoDto() {
+		
+	}
+	
 	public ProdutoDto(Produto produto) {
 		System.out.printf("CRIANDO DTO\n");
 		this.id = produto.getId();

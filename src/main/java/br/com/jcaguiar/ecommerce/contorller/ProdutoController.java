@@ -1,6 +1,5 @@
 package br.com.jcaguiar.ecommerce.contorller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.dto.ProdutoDto;
-import br.com.jcaguiar.ecommerce.model.ImagemProduto;
-import br.com.jcaguiar.ecommerce.model.Marca;
 import br.com.jcaguiar.ecommerce.model.Produto;
+import br.com.jcaguiar.ecommerce.projection.ProdutoAdmReport;
 import br.com.jcaguiar.ecommerce.service.FornecedorService;
 import br.com.jcaguiar.ecommerce.service.ImagemProdutoService;
 import br.com.jcaguiar.ecommerce.service.MarcaService;
@@ -46,24 +44,12 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
 			log(0);//Consulta ADMIN
-			List<Produto> produtos = MASTER_SERVICE.findAll();
-			
-			List<ProdutoDto> dtos = new ArrayList<>();
-			
-			for(Produto prod : produtos) {
-				List<Marca> marca = marcaService.findByProduto(prod);
-				prod.setMarca(marca);
-				List<ImagemProduto> imagens = imagensService.findByProduto(prod);
-				prod.setImagem(imagens);
-				
-				dtos.add( new ProdutoDto(prod) );
-			}
-			
-			return new ResponseEntity<>(dtos, HttpStatus.OK);
+			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findTodos();			
+			return new ResponseEntity<>(produtos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		List<?> objetosReport = MASTER_SERVICE.findAllLimited();
-		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
+		List<?> produtos = MASTER_SERVICE.findAllLimited();
+		return new ResponseEntity<>(produtos, HttpStatus.OK);
 	}
 
 	@Override

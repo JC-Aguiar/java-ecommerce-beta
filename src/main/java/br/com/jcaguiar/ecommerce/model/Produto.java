@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,13 +38,13 @@ final public class Produto extends EntidadeData<Integer> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "produto_marca", 
 		joinColumns = { @JoinColumn(name = "produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
 	private List<Fornece> fornece = new ArrayList<>();
 	private String nome;
 	private String descricao;
@@ -56,7 +57,7 @@ final public class Produto extends EntidadeData<Integer> {
 	private int votos;
 	private int nota;
 	
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagem = new ArrayList<>();
 	
 }

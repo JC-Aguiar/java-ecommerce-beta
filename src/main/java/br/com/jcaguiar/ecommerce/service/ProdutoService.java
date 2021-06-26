@@ -3,12 +3,14 @@ package br.com.jcaguiar.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.model.Produto;
-import br.com.jcaguiar.ecommerce.projection.ProdutoDtoReport;
+import br.com.jcaguiar.ecommerce.projection.ProdutoAdmReport;
+import br.com.jcaguiar.ecommerce.projection.ProdutoUserReport;
 import br.com.jcaguiar.ecommerce.repository.ProdutoRepository;
 
 @Service
@@ -42,8 +44,9 @@ public class ProdutoService extends MasterService<Produto, Integer> {
 	}
 
 	@Override
-	public List<ProdutoDtoReport> findAllLimited() {
-		return ((ProdutoRepository) JPA_REPO).findAllLimited();
+	@Cacheable("ProdutoUser")
+	public List<ProdutoUserReport> findAllLimited() {
+		return ((ProdutoRepository) JPA_REPO).findTodosUser();
 	}
 
 	@Override
@@ -62,6 +65,11 @@ public class ProdutoService extends MasterService<Produto, Integer> {
 	public List<Produto> findByNomeContainingLimited(String nome) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Cacheable("ProdutoAdm")
+	public List<ProdutoAdmReport> findTodos() {
+		return ((ProdutoRepository) JPA_REPO).findTodosAdm();
 	}
 
 	

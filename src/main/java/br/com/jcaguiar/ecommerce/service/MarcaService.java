@@ -1,5 +1,6 @@
 package br.com.jcaguiar.ecommerce.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,12 @@ public class MarcaService extends MasterService<Marca, Short> {
 	
 	public List<Marca> findByProduto(Produto produto){
 		System.out.printf("CONSULTANDO MARCA\n");
-		return ((MarcaRepository) JPA_REPO).findByProduto(produto);
+		List<Marca> marcas = new ArrayList<Marca>();
+		List<String> nomes = ((MarcaRepository) JPA_REPO).findMarcasDoProduto( produto );
+		nomes.forEach(n->{
+			marcas.add( Marca.builder().nome(n).build() );
+		});
+		return marcas;
 	}
 
 	@Override

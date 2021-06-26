@@ -12,6 +12,6 @@ import br.com.jcaguiar.ecommerce.model.Produto;
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Short> {
 	
-	@Query("SELECT m FROM marca m WHERE m.produto = :produto")
-	List<Marca> findByProduto(Produto produto);
+	@Query("SELECT m.nome FROM marca m WHERE m.id = 1")
+	List<String> findMarcasDoProduto(Produto produto);
 }
