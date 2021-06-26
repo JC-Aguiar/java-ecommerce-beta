@@ -1,5 +1,7 @@
 package br.com.jcaguiar.ecommerce.repository;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
@@ -15,6 +17,22 @@ import br.com.jcaguiar.ecommerce.projection.ProdutoDtoReport;
 @Cacheable("Produto")
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
+	
+
+	@Query(nativeQuery = true, value
+			= "SELECT p.id, c.nome as categoria, p.nome, p.descricao, p.modelo, p.valor, m.nome as marca, f.nome as fornacedor, "
+			+ "p.tamanho, p.medidas, p.estoque, p.acessos, p.votos, p.nota, ip.imagem as imagem "
+			+ "FROM produto p "
+			+ "JOIN produto_marca pm ON p.id = pm.produto_id "
+				+ "LEFT JOIN marca m ON pm.marca_id = m.id "
+			+ "JOIN fornece fr ON p.id = fr.produto_id "
+				+ "LEFT JOIN fornecedor f ON fr.fornecedor_id = f.id "
+			+ "JOIN categoria c ON p.categoria_id = c.id "
+			+ "JOIN imagem_produto ip ON p.id = ip.produto_id ")
+	List<Produto> findTodos();
+	
+	@Query("SELECT m.nome FROM produto p, marca m WHERE p = :produto")
+	List<String> findMarcas(Produto produto);
 	
 	List<Produto> findByNomeContaining(String nome, Sort ordene);
 

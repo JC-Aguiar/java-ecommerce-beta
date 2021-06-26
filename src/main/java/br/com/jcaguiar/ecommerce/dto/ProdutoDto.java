@@ -27,6 +27,7 @@ final public class ProdutoDto extends MasterDto {
 	List<String> imagem = new ArrayList<String>();
 	
 	public ProdutoDto(Produto produto) {
+		System.out.printf("CRIANDO DTO\n");
 		this.id = produto.getId();
 		this.categoria = produto.getCategoria().getNome();
 		this.nome = produto.getNome();

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.dto.ProdutoDto;
+import br.com.jcaguiar.ecommerce.model.ImagemProduto;
+import br.com.jcaguiar.ecommerce.model.Marca;
 import br.com.jcaguiar.ecommerce.model.Produto;
+import br.com.jcaguiar.ecommerce.service.FornecedorService;
+import br.com.jcaguiar.ecommerce.service.ImagemProdutoService;
+import br.com.jcaguiar.ecommerce.service.MarcaService;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController extends MasterController<Produto, Integer, ProdutoDto>{
 
+	@Autowired private ImagemProdutoService imagensService;
+	@Autowired private MarcaService marcaService;
+	@Autowired private FornecedorService fornecedorService;
 	
 	public ProdutoController(ProdutoService produtoService) {
 		super(Produto.class, ProdutoDto.class, "produto", produtoService);
@@ -37,11 +46,19 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
 			log(0);//Consulta ADMIN
-			List<Produto> produtos = MASTER_SERVICE.findAll(ORDENE);
-			List<ProdutoDto> dtos = new ArrayList<ProdutoDto>();
+			List<Produto> produtos = MASTER_SERVICE.findAll();
+			
+			List<ProdutoDto> dtos = new ArrayList<>();
+			
 			for(Produto prod : produtos) {
+				List<Marca> marca = marcaService.findByProduto(prod);
+				prod.setMarca(marca);
+				List<ImagemProduto> imagens = imagensService.findByProduto(prod);
+				prod.setImagem(imagens);
+				
 				dtos.add( new ProdutoDto(prod) );
 			}
+			
 			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER

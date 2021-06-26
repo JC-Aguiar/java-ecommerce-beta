@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import br.com.jcaguiar.ecommerce.model.Marca;
+import br.com.jcaguiar.ecommerce.model.ImagemProduto;
 import br.com.jcaguiar.ecommerce.model.Produto;
 
 @Repository
-public interface MarcaRepository extends JpaRepository<Marca, Short> {
+public interface ImagemProdutoRepository extends JpaRepository<ImagemProduto, Long> {
 	
-	@Query("SELECT m FROM marca m WHERE m.produto = :produto")
-	List<Marca> findByProduto(Produto produto);
+	@Query("SELECT ip.imagem FROM imagem_produto ip WHERE ip.produto = :produto")
+	List<ImagemProduto> findByProduto(Produto produto);
 }

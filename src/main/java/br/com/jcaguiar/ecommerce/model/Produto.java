@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,11 +34,11 @@ final public class Produto extends EntidadeData<Integer> {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
 	
 	@ManyToMany
-	@JoinTable(name = "produto_marca",
+	@JoinTable(name = "produto_marca", 
 		joinColumns = { @JoinColumn(name = "produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
