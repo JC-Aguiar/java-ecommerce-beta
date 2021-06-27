@@ -1,7 +1,5 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,12 +24,12 @@ final public class Comentario extends EntidadeData<Long> {
 	private Long id;
 	
 	@ManyToOne
-	private Usuario usuario;
+	private Cliente cliente;
 	
 	@ManyToOne
 	private Produto produto;
 	private String texto;
 	private long reply;
-	private final LocalDateTime data_cadastro = LocalDateTime.now();
+	//private final LocalDateTime data_cadastro = LocalDateTime.now();
 
 }

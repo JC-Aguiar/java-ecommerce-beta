@@ -37,7 +37,7 @@ final public class NotaFiscal implements Entidade<Long> {
 	
 	private String numero;
 	private String serie;
-	private BigDecimal valor;
+	//private BigDecimal valor;
 	private final LocalDateTime data_emissao = LocalDateTime.now();
 	private String nop;
 	private BigDecimal total;

@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @Entity(name = "pedido")
-final public class Pedido extends EntidadeData<Long> {
+final public class Pedido implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
