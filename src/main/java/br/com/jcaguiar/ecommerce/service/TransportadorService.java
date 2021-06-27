@@ -16,12 +16,12 @@ public class TransportadorService extends MasterService<Transportador, Short> {
 	}
 
 	@Override
-	public Optional<Transportador> findByIdLimited(Short id) {
+	public Optional<Transportador> findByIdUser(Short id) {
 		return null;
 	}
 
 	@Override
-	public List<Transportador> findAllLimited() {
+	public List<Transportador> findAllBasic() {
 		return null;
 	}
 
@@ -31,7 +31,7 @@ public class TransportadorService extends MasterService<Transportador, Short> {
 	}
 
 	@Override
-	public List<Transportador> findByNomeContainingLimited(String nome) {
+	public List<Transportador> findByNomeContainingBasic(String nome) {
 		return null;
 	}
 

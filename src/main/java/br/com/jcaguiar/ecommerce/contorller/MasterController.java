@@ -24,22 +24,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.jcaguiar.ecommerce.dto.MasterDto;
 import br.com.jcaguiar.ecommerce.model.Entidade;
 import br.com.jcaguiar.ecommerce.service.MasterService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor 
-public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends MasterDto> {
+public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 
-	
 	protected boolean admSql = false;
 	
 	@Autowired protected ModelMapper modelMapper;
 	protected final Class<OBJ> classeModelo;
 	protected final Class<DTO> classeDto;
-	private final String PATH;
+	private final String URL;
 	protected final MasterService<OBJ, ID> MASTER_SERVICE;
 	protected static final String ADM = "ADMIN";
 	private static final String[] LOG = {
@@ -62,9 +60,9 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 		MASTER_SERVICE.salvar(OBJ_MODEL);
 		
 		//Montando URI de retorno
-		final String URL = String.format("/%s/{id}", PATH);
+		final String PATH = String.format("/%s/{id}", URL);
 		URI uri = uriBuilder
-				.path(URL)
+				.path(PATH)
 				.buildAndExpand(OBJ_MODEL_ID)
 				.toUri();
 		
@@ -89,7 +87,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		List<?> objetosReport = MASTER_SERVICE.findAllLimited();
+		List<?> objetosReport = MASTER_SERVICE.findAllBasic();
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
@@ -108,7 +106,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 			return new ResponseEntity<>(objeto, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		final Optional<?> objetoReport = MASTER_SERVICE.findByIdLimited(id);
+		final Optional<?> objetoReport = MASTER_SERVICE.findByIdBasic(id);
 		
 		return new ResponseEntity<>(objetoReport, HttpStatus.OK);
 	}
@@ -131,7 +129,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO extends
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);
-		final List<?> objetosReport = MASTER_SERVICE.findByNomeContainingLimited(nome);
+		final List<?> objetosReport = MASTER_SERVICE.findByNomeContainingBasic(nome);
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}

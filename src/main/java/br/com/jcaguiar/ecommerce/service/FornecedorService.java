@@ -16,12 +16,12 @@ public class FornecedorService extends MasterService<Fornecedor, Short> {
 	}
 
 	@Override
-	public Optional<Fornecedor> findByIdLimited(Short id) {
+	public Optional<Fornecedor> findByIdUser(Short id) {
 		return null;
 	}
 
 	@Override
-	public List<Fornecedor> findAllLimited() {
+	public List<Fornecedor> findAllBasic() {
 		return null;
 	}
 
@@ -31,7 +31,7 @@ public class FornecedorService extends MasterService<Fornecedor, Short> {
 	}
 
 	@Override
-	public List<Fornecedor> findByNomeContainingLimited(String nome) {
+	public List<Fornecedor> findByNomeContainingBasic(String nome) {
 		return null;
 	}
 

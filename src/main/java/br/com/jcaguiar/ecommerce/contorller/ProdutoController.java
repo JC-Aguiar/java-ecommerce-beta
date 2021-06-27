@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jcaguiar.ecommerce.dto.ProdutoDto;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.projection.ProdutoAdmReport;
-import br.com.jcaguiar.ecommerce.service.FornecedorService;
-import br.com.jcaguiar.ecommerce.service.ImagemProdutoService;
-import br.com.jcaguiar.ecommerce.service.MarcaService;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController extends MasterController<Produto, Integer, ProdutoDto>{
-
-	@Autowired private ImagemProdutoService imagensService;
-	@Autowired private MarcaService marcaService;
-	@Autowired private FornecedorService fornecedorService;
 	
 	public ProdutoController(ProdutoService produtoService) {
 		super(Produto.class, ProdutoDto.class, "produto", produtoService);
@@ -44,11 +36,11 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
 			log(0);//Consulta ADMIN
-			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findTodos();			
+			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findAll();			
 			return new ResponseEntity<>(produtos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		List<?> produtos = MASTER_SERVICE.findAllLimited();
+		List<?> produtos = MASTER_SERVICE.findAllBasic();
 		return new ResponseEntity<>(produtos, HttpStatus.OK);
 	}
 

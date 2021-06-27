@@ -22,13 +22,13 @@ public final class ImagemProdutoService extends MasterService<ImagemProduto, Lon
 	}
 
 	@Override
-	public Optional<?> findByIdLimited(Long id) {
+	public Optional<?> findByIdUser(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<?> findAllLimited() {
+	public List<?> findAllBasic() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -46,7 +46,7 @@ public final class ImagemProdutoService extends MasterService<ImagemProduto, Lon
 	}
 
 	@Override
-	public List<?> findByNomeContainingLimited(String nome) {
+	public List<?> findByNomeContainingBasic(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

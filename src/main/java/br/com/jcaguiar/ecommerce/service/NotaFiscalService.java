@@ -16,12 +16,12 @@ public class NotaFiscalService extends MasterService<NotaFiscal, Long> {
 	}
 
 	@Override
-	public Optional<NotaFiscal> findByIdLimited(Long id) {
+	public Optional<NotaFiscal> findByIdUser(Long id) {
 		return null;
 	}
 
 	@Override
-	public List<NotaFiscal> findAllLimited() {
+	public List<NotaFiscal> findAllBasic() {
 		return null;
 	}
 
@@ -31,7 +31,7 @@ public class NotaFiscalService extends MasterService<NotaFiscal, Long> {
 	}
 
 	@Override
-	public List<NotaFiscal> findByNomeContainingLimited(String nome) {
+	public List<NotaFiscal> findByNomeContainingBasic(String nome) {
 		return null;
 	}
 

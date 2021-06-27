@@ -17,12 +17,12 @@ public class PedidoService extends MasterService<Pedido, Long> {
 	}
 
 	@Override
-	public Optional<Acesso> findByIdLimited(Long id) {
+	public Optional<Acesso> findByIdUser(Long id) {
 		return null;
 	}
 
 	@Override
-	public List<Acesso> findAllLimited() {
+	public List<Acesso> findAllBasic() {
 		return null;
 	}
 
@@ -32,7 +32,7 @@ public class PedidoService extends MasterService<Pedido, Long> {
 	}
 
 	@Override
-	public List<Acesso> findByNomeContainingLimited(String nome) {
+	public List<Acesso> findByNomeContainingBasic(String nome) {
 		return null;
 	}
 

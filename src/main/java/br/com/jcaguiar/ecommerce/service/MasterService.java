@@ -5,59 +5,62 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-@Service
-public abstract class MasterService<OBJ, ID> {
+import br.com.jcaguiar.ecommerce.repository.MasterRepository;
 
-	protected final JpaRepository<OBJ, ID> JPA_REPO;
+@Service
+public abstract class MasterService<OBJ, ID, VO, VO_BASIC> {
+
+	protected final MasterRepository<OBJ, ID,  VO, VO_BASIC> JPA_REPO;
 	protected final List<Object> DTO = new ArrayList<>();
 	
-	public MasterService(JpaRepository<OBJ, ID> jpaRepo) {
+	public MasterService(MasterRepository<OBJ, ID, VO, VO_BASIC> jpaRepo) {
 		this.JPA_REPO = jpaRepo; 
 	}
 	
-	public OBJ salvar(OBJ objeto) {
+	//SALVAR ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	public Object salvar(OBJ objeto) {
 		return JPA_REPO.save(objeto);
 	}
 	
-	public List<OBJ> saveAll(Iterable<OBJ> objetos) {
+	public List<?> saveAll(Iterable<OBJ> objetos) {
 		return JPA_REPO.saveAll(objetos);
 	}
 	
-	public OBJ findOne(ID id) {
-		return JPA_REPO.getOne(id);
-	}
-	
-	public Optional<OBJ> findById(ID id) {
-		return JPA_REPO.findById(id);
-	}
-	
-	public abstract Optional<?> findByIdLimited(ID id);
-	
-	public List<OBJ> findAllById(Iterable<ID> id) {
-		return JPA_REPO.findAllById(id);
-	}
-	
-	public List<OBJ> findAllById(Iterable<ID> id, Sort ordene) {
-		return JPA_REPO.findAllById(id);
-	}
-	
-	public List<OBJ> findAll() {
+	//BUSQUE TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	public List<?> findAll() {
 		return JPA_REPO.findAll();
 	}
 	
-	public List<OBJ> findAll(Sort ordene) {
-		return JPA_REPO.findAll(ordene);
+	public List<?> findAll(Sort ordene) {
+		return JPA_REPO.findAll();
 	}
 	
-	public abstract List<?> findAllLimited();
+	public abstract List<?> findAllBasic();
 	
+	public abstract List<?> findAllBasic(Sort ordene);
+	
+	//BUSQUE POR ID ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	public Object findOne(ID id) {
+		return JPA_REPO.getOne(id);
+	}
+	
+	public Optional<?> findById(ID id) {
+		return JPA_REPO.findById(id);
+	}
+	
+	public abstract Object findOneBasic(ID id);
+	
+	public abstract Optional<?> findByIdBasic(ID id);
+	
+	//BUSQUE POR NOME ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public abstract List<?> findByNome(String nome);
 
 	public abstract List<?> findByNomeContaining(String nome);
+	
+	public abstract List<?> findByNomeBasic(String nome);
 
-	public abstract List<?> findByNomeContainingLimited(String nome);
+	public abstract List<?> findByNomeContainingBasic(String nome);
 
 }

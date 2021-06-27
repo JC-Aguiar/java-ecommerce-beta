@@ -16,13 +16,13 @@ public class CategoriaService extends MasterService<Categoria, Short> {
 	}
 
 	@Override
-	public Optional<?> findByIdLimited(Short id) {
+	public Optional<?> findByIdUser(Short id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<?> findAllLimited() {
+	public List<?> findAllBasic() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,7 +40,7 @@ public class CategoriaService extends MasterService<Categoria, Short> {
 	}
 
 	@Override
-	public List<?> findByNomeContainingLimited(String nome) {
+	public List<?> findByNomeContainingBasic(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

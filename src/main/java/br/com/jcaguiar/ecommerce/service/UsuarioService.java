@@ -16,13 +16,13 @@ public class UsuarioService extends MasterService<Usuario, Integer> {
 	}
 
 	@Override
-	public Optional<Usuario> findByIdLimited(Integer id) {
+	public Optional<Usuario> findByIdUser(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Usuario> findAllLimited() {
+	public List<Usuario> findAllBasic() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +34,7 @@ public class UsuarioService extends MasterService<Usuario, Integer> {
 	}
 
 	@Override
-	public List<Usuario> findByNomeContainingLimited(String nome) {
+	public List<Usuario> findByNomeContainingBasic(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

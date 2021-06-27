@@ -16,12 +16,12 @@ public class CarrinhoService extends MasterService<Carrinho, Long> {
 	}
 
 	@Override
-	public Optional<Carrinho> findByIdLimited(Long id) {
+	public Optional<Carrinho> findByIdUser(Long id) {
 		return null;
 	}
 
 	@Override
-	public List<Carrinho> findAllLimited() {
+	public List<Carrinho> findAllBasic() {
 		return null;
 	}
 
@@ -31,7 +31,7 @@ public class CarrinhoService extends MasterService<Carrinho, Long> {
 	}
 
 	@Override
-	public List<Carrinho> findByNomeContainingLimited(String nome) {
+	public List<Carrinho> findByNomeContainingBasic(String nome) {
 		return null;
 	}
 
