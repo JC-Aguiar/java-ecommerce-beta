@@ -26,7 +26,7 @@ final public class Voto implements Entidade<Integer> {
 	private Integer id;
 	
 	@ManyToOne
-	private Usuario usuario;
+	private Cliente cliente;
 	
 	@ManyToOne
 	private Produto produto;
