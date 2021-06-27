@@ -5,27 +5,40 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import br.com.jcaguiar.ecommerce.projection.MasterVO;
+
+/** PADRÃO DE RETORNO PARA CONSULTAS
+ * Inteface que define alguns padrões de consulta, permitindo
+ * conversão automática de uma Entidade para DTO/VO.
+ * Basta que o Repositório alvo defina o retorno dos métodos
+ * com classes herdeiras da "MasterVO".
+ * 
+ * @author JM Costal Aguiar
+ *
+ * @param <OBJ> the name of Class Entity 
+ * @param <ID> the id type of this same Class Entity
+ */
 @Repository
-public interface MasterRepository<OBJ, ID, VO, VO_BASIC> extends JpaRepository<OBJ, ID> {
+public interface MasterRepository<OBJ, ID> extends JpaRepository<OBJ, ID> {
 	
-	abstract List<VO> findTodos();
+	List<? extends MasterVO> findTodosAdm();
 	
-	abstract List<VO_BASIC> findTodosBasic();
+	List<? extends MasterVO> findTodos();
 	
-	abstract VO findId(ID id);
+	MasterVO findIdAdm(ID id);
+		
+	MasterVO findId(ID id);
 	
-	abstract VO_BASIC findIdBasic(ID id);
+	MasterVO findEntidadeAdm(OBJ entidade);
 	
-	abstract VO findEntidade(OBJ entidade);
+	MasterVO findEntidade(OBJ entidade);
 	
-	abstract VO_BASIC findEntidadeBasic(OBJ entidade);
-	
-	abstract List<VO> findByNome(String nome);
+	List<? extends MasterVO> findByNomeAdm(String nome);
 
-	abstract List<VO_BASIC> findByNomeBasic(String nome);
+	List<? extends MasterVO> findByNome(String nome);
 	
-	abstract List<VO> findByNomeContaining(String nome);
+	List<? extends MasterVO> findByNomeContainingAdm(String nome);
 
-	abstract List<VO_BASIC> findByNomeContainingBasic(String nome);
+	List<? extends MasterVO> findByNomeContaining(String nome);
 
 }

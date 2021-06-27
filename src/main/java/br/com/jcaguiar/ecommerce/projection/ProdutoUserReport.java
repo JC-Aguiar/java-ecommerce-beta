@@ -3,7 +3,7 @@ package br.com.jcaguiar.ecommerce.projection;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ProdutoUserReport {
+public interface ProdutoUserReport extends MasterVO {
 
 	//Integer getId();
 	String getCategoria();

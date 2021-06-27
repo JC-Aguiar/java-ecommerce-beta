@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jcaguiar.ecommerce.dto.ProdutoDto;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.projection.ProdutoAdmReport;
+import br.com.jcaguiar.ecommerce.projection.ProdutoUserReport;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
 
 @RestController
@@ -36,11 +37,11 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql ) {
 			log(0);//Consulta ADMIN
-			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findAll();			
+			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findTodosAdm();			
 			return new ResponseEntity<>(produtos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		List<?> produtos = MASTER_SERVICE.findAllBasic();
+		List<ProdutoUserReport> produtos = ((ProdutoService) MASTER_SERVICE).findTodos();
 		return new ResponseEntity<>(produtos, HttpStatus.OK);
 	}
 

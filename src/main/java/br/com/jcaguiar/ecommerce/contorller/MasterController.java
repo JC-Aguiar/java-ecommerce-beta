@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.jcaguiar.ecommerce.model.Entidade;
+import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import br.com.jcaguiar.ecommerce.service.MasterService;
 import lombok.RequiredArgsConstructor;
 
@@ -87,7 +88,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		List<?> objetosReport = MASTER_SERVICE.findAllBasic();
+		List<?> objetosReport = MASTER_SERVICE.findTodos();
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
@@ -102,13 +103,13 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 		//Usuário da consulta ADMIN?
 		if( request.isUserInRole(ADM) || admSql) {
 			log(0);//Consulta ADMIN
-			final Optional<?> objeto = MASTER_SERVICE.findById(id);
-			return new ResponseEntity<>(objeto, HttpStatus.OK);
+			final Optional<?> OBJ_VO = MASTER_SERVICE.findById(id);
+			return new ResponseEntity<>(OBJ_VO, HttpStatus.OK);
 		}
 		log(1);//Consulta USER
-		final Optional<?> objetoReport = MASTER_SERVICE.findByIdBasic(id);
+		final MasterVO OBJ_VO = MASTER_SERVICE.findId(id);
 		
-		return new ResponseEntity<>(objetoReport, HttpStatus.OK);
+		return new ResponseEntity<>(OBJ_VO, HttpStatus.OK);
 	}
 	
 	
@@ -125,11 +126,11 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 		
 		if( request.isUserInRole(ADM) || admSql) {
 			log(0);
-			final List<?> objetos = MASTER_SERVICE.findByNomeContaining(nome);
+			final List<?> objetos = MASTER_SERVICE.findByNomeContainingAdm(nome);
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);
-		final List<?> objetosReport = MASTER_SERVICE.findByNomeContainingBasic(nome);
+		final List<?> objetosReport = MASTER_SERVICE.findByNomeContaining(nome);
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}
@@ -143,11 +144,11 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 		
 		if( request.isUserInRole(ADM) || admSql) {
 			log(0);
-			final List<?> objetos = MASTER_SERVICE.findByNome(nome);
+			final List<?> objetos = MASTER_SERVICE.findByNomeAdm(nome);
 			return new ResponseEntity<>(objetos, HttpStatus.OK);
 		}
 		log(1);
-		final List<?> objetosReport = MASTER_SERVICE.findByNomeContaining(nome);
+		final List<?> objetosReport = MASTER_SERVICE.findByNomeContainingAdm(nome);
 		
 		return new ResponseEntity<>(objetosReport, HttpStatus.OK);
 	}

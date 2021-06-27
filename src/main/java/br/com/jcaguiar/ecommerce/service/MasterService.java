@@ -7,60 +7,69 @@ import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import br.com.jcaguiar.ecommerce.repository.MasterRepository;
 
 @Service
-public abstract class MasterService<OBJ, ID, VO, VO_BASIC> {
+public abstract class MasterService<OBJ, ID> {
 
-	protected final MasterRepository<OBJ, ID,  VO, VO_BASIC> JPA_REPO;
+	protected final MasterRepository<OBJ, ID> JPA_REPO;
 	protected final List<Object> DTO = new ArrayList<>();
 	
-	public MasterService(MasterRepository<OBJ, ID, VO, VO_BASIC> jpaRepo) {
+	public MasterService(MasterRepository<OBJ, ID> jpaRepo) {
 		this.JPA_REPO = jpaRepo; 
 	}
 	
 	//SALVAR ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public Object salvar(OBJ objeto) {
+	public OBJ salvar(OBJ objeto) {
 		return JPA_REPO.save(objeto);
 	}
 	
-	public List<?> saveAll(Iterable<OBJ> objetos) {
+	public List<OBJ> saveAll(Iterable<OBJ> objetos) {
 		return JPA_REPO.saveAll(objetos);
 	}
 	
 	//BUSQUE TODOS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public List<?> findAll() {
+	public List<OBJ> findAll() {
 		return JPA_REPO.findAll();
 	}
 	
-	public List<?> findAll(Sort ordene) {
+	public List<OBJ> findAll(Sort ordene) {
 		return JPA_REPO.findAll();
 	}
 	
-	public abstract List<?> findAllBasic();
+	public abstract List<? extends MasterVO> findTodos();
 	
-	public abstract List<?> findAllBasic(Sort ordene);
+	public abstract List<? extends MasterVO> findTodos(Sort ordene);
+	
+	public abstract List<? extends MasterVO> findTodosAdm();
+	
+	public abstract List<? extends MasterVO> findTodosAdm(Sort ordene);
 	
 	//BUSQUE POR ID ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public Object findOne(ID id) {
+	public OBJ findOne(ID id) {
 		return JPA_REPO.getOne(id);
 	}
 	
-	public Optional<?> findById(ID id) {
+	public Optional<OBJ> findById(ID id) {
 		return JPA_REPO.findById(id);
 	}
 	
-	public abstract Object findOneBasic(ID id);
+	public abstract MasterVO findId(ID id);
 	
-	public abstract Optional<?> findByIdBasic(ID id);
+	public abstract MasterVO findIdAdm(ID id);
+	
+	public abstract MasterVO findEntidade(OBJ entidade);
+	
+	public abstract MasterVO findEntidadeAdm(OBJ entidade);
 	
 	//BUSQUE POR NOME ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public abstract List<?> findByNome(String nome);
+	public abstract List<? extends MasterVO> findByNome(String nome);
 
-	public abstract List<?> findByNomeContaining(String nome);
+	public abstract List<? extends MasterVO> findByNomeAdm(String nome);
 	
-	public abstract List<?> findByNomeBasic(String nome);
+	public abstract List<? extends MasterVO> findByNomeContaining(String nome);
 
-	public abstract List<?> findByNomeContainingBasic(String nome);
+	public abstract List<? extends MasterVO> findByNomeContainingAdm(String nome);
 
 }
