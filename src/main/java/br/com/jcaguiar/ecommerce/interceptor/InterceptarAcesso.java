@@ -50,7 +50,7 @@ public class InterceptarAcesso implements HandlerInterceptor {
 	final private Usuario getUsuarioLogin(HttpServletRequest request) {
 		try {
 			final String USER_NAME = request.getUserPrincipal().getName();
-			return userService.findByNomeContainingBasic(USER_NAME).get(0);
+			return (Usuario) userService.findByNomeContaining(USER_NAME).get(0);
 		}
 		catch (Exception e) {
 			return Usuario.builder().email("{Usuario-não-logado}").build();
