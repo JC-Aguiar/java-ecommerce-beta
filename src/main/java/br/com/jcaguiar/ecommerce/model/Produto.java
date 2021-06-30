@@ -44,7 +44,7 @@ final public class Produto extends EntidadeData<Integer> {
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Fornece> fornece = new ArrayList<>();
 	private String nome;
 	private String descricao;
@@ -60,4 +60,6 @@ final public class Produto extends EntidadeData<Integer> {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagem = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Comentario> comentario = new ArrayList<>();
 }

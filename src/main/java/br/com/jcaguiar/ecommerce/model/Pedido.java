@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,10 +32,10 @@ final public class Pedido implements Entidade<Long> {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Carrinho carrinho;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)

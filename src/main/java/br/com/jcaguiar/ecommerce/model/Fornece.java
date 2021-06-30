@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ final public class Fornece extends EntidadeData<Integer> {
 	@ManyToOne
 	private Produto produto;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Fornecedor fornecedor;
 	
 }

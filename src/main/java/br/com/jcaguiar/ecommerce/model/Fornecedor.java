@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -22,10 +23,10 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = "fornecedor")
 final public class Fornecedor extends Empresa<Short> {
 	
-	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private final List<Fornece> fornece = new ArrayList<>();
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Endereco endereco;
 
 }

@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Entity(name = "transportador")
 final public class Transportador extends Empresa<Short> {
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Endereco endereco;
 
 }

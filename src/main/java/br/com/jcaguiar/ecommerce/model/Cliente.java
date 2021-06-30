@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -29,11 +30,11 @@ final public class Cliente extends Usuario {
 	//@OneToOne
 	//private Usuario usuario;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id")
 	private final List<Endereco> endereco = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private final List<Cartao> cartao = new ArrayList<>();
 	private String nome;
 	private String sobrenome;

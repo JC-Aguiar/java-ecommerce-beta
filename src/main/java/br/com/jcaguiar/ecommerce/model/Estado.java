@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ final public class Estado implements Entidade<Short> {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Short id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Pais pais;
 	private String nome;
 	private String sigla;

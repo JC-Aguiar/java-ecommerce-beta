@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,10 +29,10 @@ final public class Cartao implements Entidade<Integer> {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy = "cartao")
+	@OneToMany(mappedBy = "cartao", fetch = FetchType.LAZY)
 	private final List<Pagamento> pagamento = new ArrayList<>();
 	private String numero;
 	private LocalDateTime data_validade;
