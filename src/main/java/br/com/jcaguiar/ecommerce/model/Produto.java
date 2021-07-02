@@ -53,6 +53,7 @@ final public class Produto extends EntidadeData<Integer> {
 	private int estoque;
 	private String tamanho;
 	private String medidas;
+	private String material;
 	private int acessos;
 	private int votos;
 	private int nota;
