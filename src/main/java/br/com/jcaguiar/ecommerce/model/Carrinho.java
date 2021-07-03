@@ -31,4 +31,6 @@ final public class Carrinho implements Entidade<Long> {
 	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
 	private final List<ItemCarrinho> item = new ArrayList<>();
 	private BigDecimal total;
+	private short quantidade;
+	private List<String> aviso;
 }

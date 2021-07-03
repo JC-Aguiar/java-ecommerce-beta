@@ -30,7 +30,7 @@ final public class Pagamento implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pedido pedido;
 	
-	private String CartaoNumero;
+	private String cartaoNumero;
 	private LocalDateTime cartaoDataValidade;
 	private String cartaoTitular;
 	private String cartaoCpf;
@@ -38,10 +38,10 @@ final public class Pagamento implements Entidade<Long> {
 	private String cartaoToken;
 	private byte parcelas;
 	private BigInteger subtotal;
-	private final LocalDateTime data_pagamento = LocalDateTime.now();
+	private LocalDateTime data_pagamento = LocalDateTime.now();
 	
 	public void setPagamento(Cartao cartao, BigInteger subtotal, String token, byte parcelas) {
-		this.CartaoNumero = cartao.getNumero();
+		this.cartaoNumero = cartao.getNumero();
 		this.cartaoDataValidade = cartao. getData_validade();
 		this.cartaoTitular = cartao.getTitular();
 		this.cartaoCpf = cartao.getCpf();

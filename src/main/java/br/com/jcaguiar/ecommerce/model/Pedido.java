@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -59,17 +58,13 @@ final public class Pedido implements Entidade<Long> {
 	private List<String> produtoMaterial = new ArrayList<>();
 	
 	//INFORMAÇÕES DO COMPRADOR
-	private String compradorPais;
-	private String compradorDocumento;
 	private String compradorNome;
+	private String compradorDocumento;
+	private String compradorEndereco;
 	private String compradorCidade;
 	private String compradorCep;
-	private String compradorRua;
-	private String compradorNumero;
-	private String compradorComplemento;
 	private String compradorBairro;
-	
-	
+	private String compradorPais;
 	
 	public void addProduto(String produtoNome, String produtoModelo, List<String> produtoMarca, 
 	BigDecimal produtoValor, String produtoTamanho, String produtoMedidas, String produtoMaterial) {

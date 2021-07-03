@@ -31,8 +31,11 @@ final public class Cliente extends Usuario {
 	//private Usuario usuario;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id")	//?
 	private final List<Endereco> endereco = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Pedido> pedido;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private final List<Cartao> cartao = new ArrayList<>();
