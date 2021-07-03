@@ -1,5 +1,6 @@
 package br.com.jcaguiar.ecommerce.model;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -27,11 +28,27 @@ final public class Pagamento implements Entidade<Long> {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Cartao cartao;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
 	private Pedido pedido;
+	
+	private String CartaoNumero;
+	private LocalDateTime cartaoDataValidade;
+	private String cartaoTitular;
+	private String cartaoCpf;
+	private String cartaoAgencia;
+	private String cartaoToken;
 	private byte parcelas;
+	private BigInteger subtotal;
 	private final LocalDateTime data_pagamento = LocalDateTime.now();
+	
+	public void setPagamento(Cartao cartao, BigInteger subtotal, String token, byte parcelas) {
+		this.CartaoNumero = cartao.getNumero();
+		this.cartaoDataValidade = cartao. getData_validade();
+		this.cartaoTitular = cartao.getTitular();
+		this.cartaoCpf = cartao.getCpf();
+		this.cartaoAgencia = cartao.getAgencia();
+		this.subtotal = subtotal;
+		this.cartaoToken = token;
+		this.parcelas = parcelas;
+	}
 
 }

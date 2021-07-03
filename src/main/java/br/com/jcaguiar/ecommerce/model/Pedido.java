@@ -36,6 +36,20 @@ final public class Pedido implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY) //PRECISA DE CASCATE?
+	private final List<Pagamento> pagamento = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY) //PRECISA DE CASCATE?
+	private final List<NotaFiscal> nf = new ArrayList<>();
+	
+	//INFORMAÇÕES DO PEDIDO
+	private String numero;
+	private short status;
+	private short quantidadeProdutos;
+	private BigDecimal total;	
+	private LocalDateTime data_pedido = LocalDateTime.now();
+	
+	//INFORMAÇÕES DO PRODUTO
 	private List<String> produtoNome = new ArrayList<>();
 	private List<String> produtoModelo = new ArrayList<>();
 	private List<String[]> produtoMarca = new ArrayList<>();
@@ -44,17 +58,20 @@ final public class Pedido implements Entidade<Long> {
 	private List<String> produtoMedidas = new ArrayList<>();
 	private List<String> produtoMaterial = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private final List<Pagamento> pagamento = new ArrayList<>();
+	//INFORMAÇÕES DO COMPRADOR
+	private String compradorPais;
+	private String compradorDocumento;
+	private String compradorNome;
+	private String compradorCidade;
+	private String compradorCep;
+	private String compradorRua;
+	private String compradorNumero;
+	private String compradorComplemento;
+	private String compradorBairro;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private final List<NotaFiscal> nf = new ArrayList<>();
-	private short status;
-	private BigDecimal total;
-	private final LocalDateTime data_pedido = LocalDateTime.now();
 	
 	
-	public void produto (String produtoNome, String produtoModelo, List<String> produtoMarca, 
+	public void addProduto(String produtoNome, String produtoModelo, List<String> produtoMarca, 
 	BigDecimal produtoValor, String produtoTamanho, String produtoMedidas, String produtoMaterial) {
 		this.produtoNome.add(produtoNome);
 		this.produtoModelo.add(produtoModelo);
@@ -63,6 +80,7 @@ final public class Pedido implements Entidade<Long> {
 		this.produtoTamanho.add(produtoTamanho);
 		this.produtoMedidas.add(produtoMedidas);
 		this.produtoMaterial.add(produtoMaterial);
+		quantidadeProdutos++;
 	}
 	
 	public PedidoProdutoDto getProduto(int index) {
@@ -77,20 +95,22 @@ final public class Pedido implements Entidade<Long> {
 				.build();
 	}
 	
-	public List<PedidoProdutoDto> getProduto() {
+	public List<PedidoProdutoDto> getProdutos() {
 		List<PedidoProdutoDto> produtos = new ArrayList<PedidoProdutoDto>();
-		produtos.addAll( 
-				PedidoProdutoDto.builder()
-					.nome( getProdutoNome() )
-					.modelo( getProdutoModelo() )
-					.marca( getProdutoMarca() ))
-					.valor( getProdutoValor() )
-					.tamanho( getProdutoTamanho() )
-					.medidas( getProdutoMedidas() )
-					.material( getProdutoMaterial() )
-					.build()
-				);
-		return 
+		for(int i = 0; i < quantidadeProdutos; i++) {
+			produtos.add( 
+					PedidoProdutoDto.builder()
+						.nome( getProdutoNome().get(i) )
+						.modelo( getProdutoModelo().get(i) )
+						.marca( Arrays.asList( getProdutoMarca().get(i) ))
+						.valor( getProdutoValor().get(i) )
+						.tamanho( getProdutoTamanho().get(i) )
+						.medidas( getProdutoMedidas().get(i) )
+						.material( getProdutoMaterial().get(i) )
+						.build()
+			);
+		}
+		return produtos;
 	}
 	
 }
