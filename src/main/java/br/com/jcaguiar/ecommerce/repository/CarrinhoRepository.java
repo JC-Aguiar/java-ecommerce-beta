@@ -24,7 +24,7 @@ public interface CarrinhoRepository extends MasterRepository<Carrinho, Long> {
 					+ "LEFT JOIN usuario u ON c.id = u.carrinho_id "
 					+ "LEFT JOIN item_carrinho i ON c.id = i.carrinho_id "
 					+ "WHERE c.id = ?1")
-	ProdutoAdmReport findCarrinhoId(long id);
+	ProdutoAdmReport findMeuCarrinho(long id);
 	
 	ProdutoAdmReport findTotalAndQuantidadeById(long id);	
 

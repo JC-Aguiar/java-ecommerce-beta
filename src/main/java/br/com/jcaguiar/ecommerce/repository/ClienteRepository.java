@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Endereco;
-import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.projection.ClientesReport;
 
 @Repository
@@ -24,9 +23,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	List<Cliente> findByCpfContaining(String cpf, Sort sort);
 	
 	List<Cliente> findByEndereco(Endereco endereco, Sort sort);
-	
-	//ClienteInfoLimitada ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	
+
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
@@ -45,4 +42,20 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 					+ "WHERE c.nome like %?1% AND u.id = c.usuario_id")
 	List<ClientesReport> findByNomeContainingLimited(String name);
 
+	@Query(nativeQuery = true,
+			value = "SELECT  u as usuario, c.nome, c.sobrenome, c.cpf, c.phone, "
+					+ "e as endereco, c.data_nascimento, c.idade, c.sexo, c.votos "
+					+ "FROM cliente c, usuario u "
+					+ "LEFT JOIN endereco e ON e.id = c.endereco_id"
+					+ "WHERE c.id = ?1 AND u.id = c.usuario_id")
+	ClientesReport findMeuCliente(int id);
+	
+	@Query(nativeQuery = true,
+			value = "SELECT  c.nome, c.sobrenome, c.nome as cidade, u.foto "
+					+ "FROM cliente c, usuario u "
+					+ "LEFT JOIN endereco e ON e.id = c.endereco_id "
+					+ "INNER JOIN cidade c ON c.id = e.cidade_id "
+					+ "WHERE u.id = c.usuario_id")
+	List<ClientesReport> findOutrosClientes();
+	
 }

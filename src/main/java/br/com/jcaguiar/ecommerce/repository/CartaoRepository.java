@@ -16,6 +16,6 @@ public interface CartaoRepository extends JpaRepository<Cartao, Integer> {
 					+ "WHERE cr.id = ?1")
 	ProdutoAdmReport findCartaoId(long id);
 	
-	ProdutoAdmReport findPagamentoById(long id);
+	ProdutoAdmReport findPagamentoById(long id);	//REVISAR! Talvez seja mais adequado na classe Pagamento
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,11 +31,13 @@ final public class Cliente extends Usuario {
 	//@OneToOne
 	//private Usuario usuario;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")	//?
-	private final List<Endereco> endereco = new ArrayList<>();
+	@OneToOne
+	private Endereco endereco;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "id")	//?
+	private final List<Endereco> outrosEnderecos = new ArrayList<>();
+	
+	@OneToMany
 	private List<Pedido> pedido;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
