@@ -26,7 +26,7 @@ final public class Fornecedor extends Empresa<Short> {
 	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private final List<Fornece> fornece = new ArrayList<>();
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	private Endereco endereco;
 
 }
