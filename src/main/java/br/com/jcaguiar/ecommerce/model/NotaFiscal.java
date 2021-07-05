@@ -12,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.jcaguiar.ecommerce.Proprietario;
+import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +26,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "nota_fiscal")
-final public class NotaFiscal implements Entidade<Long> {
+final public class NotaFiscal implements Entidade<Long>, MasterVO {
 
-	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY) @JsonIgnore
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
