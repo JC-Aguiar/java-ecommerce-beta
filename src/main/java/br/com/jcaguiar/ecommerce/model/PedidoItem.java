@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Entity(name = "carrinho_item")
+@Entity(name = "pedido_item")
 final public class PedidoItem implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)

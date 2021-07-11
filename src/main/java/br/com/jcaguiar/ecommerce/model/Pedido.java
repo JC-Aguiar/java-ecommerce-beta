@@ -43,7 +43,7 @@ final public class Pedido implements Entidade<Long> {
 	
 	//INFORMAÇÕES DO PRODUTO
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<PedidoItem> item = new ArrayList<>();
+	private List<PedidoItem> itens = new ArrayList<>();
 	
 	//INFORMAÇÕES DO COMPRADOR
 	private String compradorNome;
