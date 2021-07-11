@@ -16,5 +16,8 @@ public final class PedidoProdutoDto extends MasterDto {
 	private String tamanho;
 	private String medidas;
 	private String material;
+	
+	public final static void addListaDeMarcas() {
+	}
 
 }

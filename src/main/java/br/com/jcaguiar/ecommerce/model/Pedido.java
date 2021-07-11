@@ -51,7 +51,7 @@ final public class Pedido implements Entidade<Long> {
 	//INFORMAÇÕES DO PRODUTO
 	private List<String> produtoNome = new ArrayList<>();
 	private List<String> produtoModelo = new ArrayList<>();
-	private List<String[]> produtoMarca = new ArrayList<>();
+	private List<String> produtoMarca = new ArrayList<>();
 	private List<BigDecimal> produtoValor = new ArrayList<>();
 	private List<String> produtoTamanho = new ArrayList<>();
 	private List<String> produtoMedidas = new ArrayList<>();
@@ -66,11 +66,11 @@ final public class Pedido implements Entidade<Long> {
 	private String compradorBairro;
 	private String compradorPais;
 	
-	public void addProduto(String produtoNome, String produtoModelo, List<String> produtoMarca, 
+	public void addProduto(String produtoNome, String produtoModelo, String produtoMarca, 
 	BigDecimal produtoValor, String produtoTamanho, String produtoMedidas, String produtoMaterial) {
 		this.produtoNome.add(produtoNome);
 		this.produtoModelo.add(produtoModelo);
-		this.produtoMarca.add( (String[]) produtoMarca.toArray() );
+		this.produtoMarca.add( produtoMarca );
 		this.produtoValor.add(produtoValor);
 		this.produtoTamanho.add(produtoTamanho);
 		this.produtoMedidas.add(produtoMedidas);
@@ -82,7 +82,7 @@ final public class Pedido implements Entidade<Long> {
 		return PedidoProdutoDto.builder()
 				.nome( getProdutoNome().get(index) )
 				.modelo( getProdutoModelo().get(index) )
-				.marca( Arrays.asList( getProdutoMarca().get(index) ))
+				.marca( getProdutoMarca().get(index) )
 				.valor( getProdutoValor().get(index) )
 				.tamanho( getProdutoTamanho().get(index) )
 				.medidas( getProdutoMedidas().get(index) )
@@ -97,7 +97,7 @@ final public class Pedido implements Entidade<Long> {
 					PedidoProdutoDto.builder()
 						.nome( getProdutoNome().get(i) )
 						.modelo( getProdutoModelo().get(i) )
-						.marca( Arrays.asList( getProdutoMarca().get(i) ))
+						.marca( getProdutoMarca().get(i) )
 						.valor( getProdutoValor().get(i) )
 						.tamanho( getProdutoTamanho().get(i) )
 						.medidas( getProdutoMedidas().get(i) )
