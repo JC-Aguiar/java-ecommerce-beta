@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import br.com.jcaguiar.ecommerce.model.ItemCarrinho;
+import br.com.jcaguiar.ecommerce.model.CarrinhoItem;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.projection.ItemCarrinhoReport;
 
 @Repository
-public interface ItemCarrinhoRepository extends MasterRepository<ItemCarrinho, Long> {
+public interface ItemCarrinhoRepository extends MasterRepository<CarrinhoItem, Long> {
 
 	@Query("SELECT ic.produto.nome, ic FROM ItemCarrinho ic ")
 	List<ItemCarrinhoReport> findTodosAdm();
@@ -18,7 +18,7 @@ public interface ItemCarrinhoRepository extends MasterRepository<ItemCarrinho, L
 	@Query("SELECT ic.produto.nome, ic.quantidade, ic.total, ic.data_carrinho "
 			+ "FROM ItemCarrinho ic "
 			+ "WHERE ic = ?1")
-	ItemCarrinhoReport findItem(ItemCarrinho item);
+	ItemCarrinhoReport findItem(CarrinhoItem item);
 	
 	@Query("SELECT ic.produto.nome, ic.quantidade, ic.total, ic.data_carrinho "
 			+ "FROM ItemCarrinho ic "

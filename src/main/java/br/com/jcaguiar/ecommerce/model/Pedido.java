@@ -3,7 +3,6 @@ package br.com.jcaguiar.ecommerce.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -78,32 +77,32 @@ final public class Pedido implements Entidade<Long> {
 		quantidadeProdutos++;
 	}
 	
-	public PedidoProdutoDto getProduto(int index) {
-		return PedidoProdutoDto.builder()
+	public PedidoProdutoDto getProdutoDto(int index) {
+		PedidoProdutoDto produto = PedidoProdutoDto.builder()
 				.nome( getProdutoNome().get(index) )
 				.modelo( getProdutoModelo().get(index) )
-				.marca( getProdutoMarca().get(index) )
 				.valor( getProdutoValor().get(index) )
 				.tamanho( getProdutoTamanho().get(index) )
 				.medidas( getProdutoMedidas().get(index) )
 				.material( getProdutoMaterial().get(index) )
 				.build();
+		produto.setListaDeMarcas( getProdutoMarca().get(index) );
+		return produto;
 	}
 	
-	public List<PedidoProdutoDto> getProdutos() {
+	public List<PedidoProdutoDto> getAllProdutosDto() {
 		List<PedidoProdutoDto> produtos = new ArrayList<PedidoProdutoDto>();
 		for(int i = 0; i < quantidadeProdutos; i++) {
-			produtos.add( 
-					PedidoProdutoDto.builder()
+			PedidoProdutoDto prod = PedidoProdutoDto.builder()
 						.nome( getProdutoNome().get(i) )
 						.modelo( getProdutoModelo().get(i) )
-						.marca( getProdutoMarca().get(i) )
 						.valor( getProdutoValor().get(i) )
 						.tamanho( getProdutoTamanho().get(i) )
 						.medidas( getProdutoMedidas().get(i) )
 						.material( getProdutoMaterial().get(i) )
-						.build()
-			);
+						.build();
+			prod.setListaDeMarcas( getProdutoMarca().get(i) );
+			produtos.add(prod);
 		}
 		return produtos;
 	}

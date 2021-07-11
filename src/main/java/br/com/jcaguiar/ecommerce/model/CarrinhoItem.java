@@ -21,8 +21,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Entity(name = "item_carrinho")
-final public class ItemCarrinho implements Entidade<Long> {
+@Entity(name = "carrinho_item")
+final public class CarrinhoItem implements Entidade<Long> {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

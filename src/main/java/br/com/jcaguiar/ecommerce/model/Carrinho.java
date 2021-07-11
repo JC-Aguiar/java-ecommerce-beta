@@ -29,7 +29,7 @@ final public class Carrinho implements Entidade<Long> {
 	private Long id;
 	
 	@OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL)
-	private final List<ItemCarrinho> item = new ArrayList<>();
+	private final List<CarrinhoItem> item = new ArrayList<>();
 	private BigDecimal total;
 	private short quantidade;
 	private List<String> avisos;
