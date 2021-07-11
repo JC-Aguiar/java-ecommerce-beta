@@ -50,18 +50,11 @@ final public class PedidoProduto extends EntidadeData<Integer> {
 	private String descricao;
 	private String modelo;
 	private BigDecimal valor;
-	private short estoque;
 	private String tamanho;
 	private String medidas;
 	private String material;
-	private int acessos;
-	private int votos;
-	private short nota;
 	private String codigo;
 	
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagem = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Comentario> comentario = new ArrayList<>();
 }
