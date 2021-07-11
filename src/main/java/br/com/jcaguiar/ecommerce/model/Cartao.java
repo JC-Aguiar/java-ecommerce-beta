@@ -32,8 +32,6 @@ final public class Cartao implements Entidade<Integer> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy = "cartao", fetch = FetchType.LAZY)
-	private final List<Pagamento> pagamento = new ArrayList<>();
 	private String numero;
 	private LocalDateTime data_validade;
 	private String titular;
