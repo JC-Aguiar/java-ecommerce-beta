@@ -44,7 +44,7 @@ final public class Pedido implements Entidade<Long> {
 	private String numero;
 	private short status;
 	private short quantidadeProdutos;
-	private BigDecimal total;	
+	private BigDecimal total;
 	private LocalDateTime data_pedido = LocalDateTime.now();
 	
 	//INFORMAÇÕES DO PRODUTO
