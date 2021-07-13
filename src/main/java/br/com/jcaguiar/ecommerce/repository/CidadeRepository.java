@@ -13,11 +13,7 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
 
 	List<Cidade> findByNomeContaining(String nome, Sort ordene);
 	
-	List<Cidade> findNomeAndEstado();
-	
 	List<Cidade> findNomeAndEstadoById(int id);
-	
-	List<Cidade> findNome();
 	
 	List<Cidade> findNomeById(int id);
 	

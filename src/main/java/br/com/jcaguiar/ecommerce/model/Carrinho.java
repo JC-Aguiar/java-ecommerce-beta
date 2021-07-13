@@ -32,5 +32,5 @@ final public class Carrinho implements Entidade<Long> {
 	private final List<CarrinhoItem> item = new ArrayList<>();
 	private BigDecimal total;
 	private short quantidade;
-	private List<String> avisos;
+	private String avisos;
 }

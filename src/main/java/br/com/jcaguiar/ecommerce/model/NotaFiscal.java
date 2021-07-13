@@ -40,8 +40,8 @@ final public class NotaFiscal implements Entidade<Long>, MasterVO {
 	private String numero;
 	private String serie;
 	private boolean nf_saida = true;	//false = ENTRADA[0]; true = SAÍDA[1]
-	private LocalDateTime data_emissao = LocalDateTime.now();
-	private LocalDateTime data_vencimento;
+	private LocalDateTime dataEmissao = LocalDateTime.now();
+	private LocalDateTime dataVencimento;
 	private String nop;
 	private BigDecimal total;
 	
