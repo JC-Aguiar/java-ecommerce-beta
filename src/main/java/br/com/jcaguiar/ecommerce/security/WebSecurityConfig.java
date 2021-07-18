@@ -1,4 +1,4 @@
-package br.com.jcaguiar.ecommerce.contorller;
+package br.com.jcaguiar.ecommerce.security;
 
 import javax.sql.DataSource;
 
@@ -15,7 +15,10 @@ import org.springframework.stereotype.Controller;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	private DataSource dataSource;
+	private DataSource dataSource; //Remover se não utilizado mais
+	
+	@Autowired
+	private LoginService loginService;
  
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -33,25 +36,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.httpBasic();
 		http.cors().and().csrf().disable();
-	}	
-	
-	/*
-	 * @Bean
-	 * 
-	 * @Override public UserDetailsService userDetailsService() { List<Usuario>
-	 * usuarios = usuarioRep.findAll(); List<UserDetails> users = new
-	 * ArrayList<UserDetails>(); for(Usuario usuario : usuarios) { users.add(
-	 * User.withDefaultPasswordEncoder() .username( usuario.getEmail() ) .password(
-	 * usuario.getSenha() ) .roles( usuario.isAdm()? "ADM" : "USER" ) .build() ); }
-	 * return new InMemoryUserDetailsManager(users); }
-	 */
+	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		//Método de criptografia de senhas 
 		final BCryptPasswordEncoder ENCRIPT = new BCryptPasswordEncoder();
-		 auth.jdbcAuthentication()
-		 	.dataSource(dataSource)
-		 	.passwordEncoder(ENCRIPT);
+		
+		//Método provedor de autenticação
+		auth.userDetailsService(loginService).passwordEncoder(ENCRIPT);
+		
+		
+//		final BCryptPasswordEncoder ENCRIPT = new BCryptPasswordEncoder();
+//		 auth.jdbcAuthentication()
+//		 	.dataSource(dataSource)
+//		 	.passwordEncoder(ENCRIPT);
 		 
 	}
 }
