@@ -43,9 +43,6 @@ final public class PedidoProduto extends EntidadeData<Integer> {
 		joinColumns = { @JoinColumn(name = "produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Fornece> fornece = new ArrayList<>();
 	private String nome;
 	private String descricao;
 	private String modelo;

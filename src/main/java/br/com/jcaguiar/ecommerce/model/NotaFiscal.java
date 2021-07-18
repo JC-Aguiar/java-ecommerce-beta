@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,11 +36,12 @@ final public class NotaFiscal implements Entidade<Long>, MasterVO {
 	private Pedido pedido;
 	
 	//INFORMAÇÕES DA NOTA
+	private String arquivoXml;
 	private String numero;
 	private String serie;
 	private boolean nf_saida = true;	//false = ENTRADA[0]; true = SAÍDA[1]
-	private LocalDateTime data_emissao = LocalDateTime.now();
-	private LocalDateTime data_vencimento;
+	private LocalDateTime dataEmissao = LocalDateTime.now();
+	private LocalDateTime dataVencimento;
 	private String nop;
 	private BigDecimal total;
 	
@@ -76,26 +78,26 @@ final public class NotaFiscal implements Entidade<Long>, MasterVO {
 	private String transportadorInscEstadual;
 	
 	//INFORMAÇÕES GERAIS DA MERCADORIA
-	private short mercadoriaQuantidade;
+	@OneToMany
+	private List<PedidoItem> itens = new ArrayList<>();
 	private String mercadoriaEspecie;
-	private String mercadoriaMarca;
 	private String mercadoriaNumeracao;
 	private double mercadoriaPesoBruto;
 	private double mercadoriaPesoLiquido;
 	
 	//INFORMAÇÕES DE CADA MERCADORIA
-	private List<String> mercadoriaCodigo = new ArrayList<>();
-	private List<String> mercadoriaDescricao = new ArrayList<>();
-	private List<String> mercadoriaNcm = new ArrayList<>();
-	private List<String> mercadoriaCst = new ArrayList<>();
-	private List<String> mercadoriaCfop = new ArrayList<>();
-	private List<String> mercadoriaUn = new ArrayList<>();
-	private List<Short> mercadoriaQunantidade = new ArrayList<>();
-	private List<BigDecimal> mercadoriaValorUnitario = new ArrayList<>();
-	private List<BigDecimal> mercadoriaValorTotal = new ArrayList<>();
-	private List<BigDecimal> mercadoriaIcmsBase = new ArrayList<>();
-	private List<BigDecimal> mercadoriaIcmsTotal = new ArrayList<>();
-	private List<BigDecimal> mercadoriaIcmsAliquota = new ArrayList<>();
-	private List<BigDecimal> mercadoriaIpi = new ArrayList<>();
-	private List<BigDecimal> mercadoriaIpiAliquota = new ArrayList<>();
+//	private List<String> mercadoriaCodigo = new ArrayList<>();
+//	private List<String> mercadoriaDescricao = new ArrayList<>();
+//	private List<String> mercadoriaNcm = new ArrayList<>();
+//	private List<String> mercadoriaCst = new ArrayList<>();
+//	private List<String> mercadoriaCfop = new ArrayList<>();
+//	private List<String> mercadoriaUn = new ArrayList<>();
+//	private List<Short> mercadoriaQunantidade = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaValorUnitario = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaValorTotal = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaIcmsBase = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaIcmsTotal = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaIcmsAliquota = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaIpi = new ArrayList<>();
+//	private List<BigDecimal> mercadoriaIpiAliquota = new ArrayList<>();
 }

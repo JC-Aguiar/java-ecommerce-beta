@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Carrinho;
+import br.com.jcaguiar.ecommerce.projection.CarrinhoReport;
 import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import br.com.jcaguiar.ecommerce.repository.CarrinhoRepository;
 
@@ -65,25 +66,25 @@ public class CarrinhoService extends MasterService<Carrinho, Long> {
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNome(String nome) {
+	public List<CarrinhoReport> findByNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeAdm(String nome) {
+	public List<CarrinhoReport> findByNomeAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeContaining(String nome) {
+	public List<CarrinhoReport> findByNomeContaining(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeContainingAdm(String nome) {
+	public List<CarrinhoReport> findByNomeContainingAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

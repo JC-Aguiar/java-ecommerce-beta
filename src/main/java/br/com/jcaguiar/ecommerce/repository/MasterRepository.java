@@ -1,11 +1,7 @@
 package br.com.jcaguiar.ecommerce.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import br.com.jcaguiar.ecommerce.projection.MasterVO;
+import org.springframework.data.repository.NoRepositoryBean;
 
 /** PADRÃO DE RETORNO PARA CONSULTAS
  * Inteface que define alguns padrões de consulta, permitindo
@@ -18,27 +14,27 @@ import br.com.jcaguiar.ecommerce.projection.MasterVO;
  * @param <OBJ> the name of Class Entity 
  * @param <ID> the id type of this same Class Entity
  */
-@Repository
+@NoRepositoryBean
 public interface MasterRepository<OBJ, ID> extends JpaRepository<OBJ, ID> {
 	
-	List<? extends MasterVO> findTodosAdm();
+//	List<? extends MasterVO> findTodosAdm();
+//	
+//	List<? extends MasterVO> findTodos();
+//	
+//	MasterVO findIdAdm(ID id);
+//		
+//	MasterVO findId(ID id);
+//	
+//	MasterVO findEntidadeAdm(OBJ entidade);
+//	
+//	MasterVO findEntidade(OBJ entidade);
 	
-	List<? extends MasterVO> findTodos();
-	
-	MasterVO findIdAdm(ID id);
-		
-	MasterVO findId(ID id);
-	
-	MasterVO findEntidadeAdm(OBJ entidade);
-	
-	MasterVO findEntidade(OBJ entidade);
-	
-	List<? extends MasterVO> findByNomeAdm(String nome);
-
-	List<? extends MasterVO> findByNome(String nome);
-	
-	List<? extends MasterVO> findByNomeContainingAdm(String nome);
-
-	List<? extends MasterVO> findByNomeContaining(String nome);
+//	List<? extends MasterVO> findByNomeAdm(String nome);
+//
+//	List<? extends MasterVO> findByNome(String nome);
+//	
+//	List<? extends MasterVO> findByNomeContainingAdm(String nome);
+//
+//	List<? extends MasterVO> findByNomeContaining(String nome);
 
 }
