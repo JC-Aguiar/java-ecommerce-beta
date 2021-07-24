@@ -1,7 +1,9 @@
 package br.com.jcaguiar.ecommerce.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,13 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		//Método provedor de autenticação
 		auth.userDetailsService(loginService).passwordEncoder(ENCRIPT);
-		
-		
-//		final BCryptPasswordEncoder ENCRIPT = new BCryptPasswordEncoder();
-//		 auth.jdbcAuthentication()
-//		 	.dataSource(dataSource)
-//		 	.passwordEncoder(ENCRIPT);
-		 
+	}
+	
+	//MÉTODO PARA CRIAR BEAN DO AUTHENTICATION MANAGER (USADO NO LOGIN_CONTROLLER)
+	@Override
+	@Bean
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
 	}
 }
 
