@@ -19,6 +19,9 @@ public final class LoginController {
 	@Autowired
 	private AuthenticationManager gerenteLogin;
 	
+	@Autowired
+	private TokenService tokenService;
+	
 	//Lógica padrão de Autenticação 
 	@PostMapping
 	public ResponseEntity<?> eutenticar(@RequestBody @Valid LoginDto login) {
@@ -30,6 +33,14 @@ public final class LoginController {
 			//Se usuário está cadastrado: 200 OK
 			UsernamePasswordAuthenticationToken autenticarDados = login.getToken();
 			Authentication userAutenticado = gerenteLogin.authenticate(autenticarDados);
+			String token = tokenService.createToken(userAutenticado);
+			
+			//Criando objeto Token com autenticação do tipo Barer (conceitos HTTP) 
+			TokenDto tokenDto = new TokenDto(token, "Bearer");
+			
+			//Log interno
+			System.out.printf("Token: %s\n", token );
+			
 			return ResponseEntity.ok().build();
 		}
 		catch (Exception e) {
