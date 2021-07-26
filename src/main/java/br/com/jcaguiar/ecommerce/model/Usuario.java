@@ -28,24 +28,27 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity(name = "usuario")
 public class Usuario extends EntidadeData<Integer> implements UserDetails {
-	
-	//?
-	private static final long serialVersionUID = 1L;
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Perfil perfil;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Cliente cliente;
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Carrinho carrinho;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private final List<Perfil> perfil = new ArrayList<Perfil>();
-	
+	private static final long serialVersionUID = 1L; //?
 	@Column(unique=true, nullable=false) //se tiver com problemas na persistência, remover/pesquisar
 	private String email;
 	private String senha;
 	private boolean empresa;
 	private String foto;
+	
+	
 	
 	@Override
 	public List<Perfil> getAuthorities() {

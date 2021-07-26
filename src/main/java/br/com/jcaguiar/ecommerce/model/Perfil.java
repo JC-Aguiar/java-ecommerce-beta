@@ -25,7 +25,7 @@ final public class Perfil extends EntidadeData<Integer> implements GrantedAuthor
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "perfil")
 	private Usuario usuario;
 	private String nome;
 	

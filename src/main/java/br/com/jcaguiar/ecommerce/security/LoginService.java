@@ -19,7 +19,9 @@ public class LoginService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		System.out.printf("<LOGIN SERVICE>\n");
 		Optional<Usuario> usuario = userService.findByEmail(email);
+		System.out.printf("</LOGIN SERVICE>\n");
 		if( !usuario.isPresent() ) {
 			throw new UsernameNotFoundException("Credenciais inválidas.");
 		}

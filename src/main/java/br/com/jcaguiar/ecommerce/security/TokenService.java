@@ -13,10 +13,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public final class TokenService {
 
 	public String createToken(Authentication userAutenticado) {
+		System.out.printf("<LOGIN SERVICE>\n");
 		Usuario user = (Usuario) userAutenticado.getPrincipal();
 		Date hoje = new Date();
 		Date validade = new Date(hoje.getTime() + 1800000 );
 		String segredo = "AAAAB3NzaC1yc2EAAAADAQABAAABAQCu9uKkd/f23+CSmwp/Sx72HkRu1wW5Qn238DRzTW7IZWJi2IruikgxXewhaL9ncS8Bm437ScfmjjewLZuVxyRwMs2vBCb4yuXvYl4v2gd+vjw3QdlpHOplTE3BzA1LPco8vVEevBO9j8vFJoHcYjdwnhaOVqFl2Nm+I2WEBFVlnJtWV/zmdmVZxrCxvYEuZ1kLigfA9dtwtOEWrvcieIg132rB73HgmnjhKUKjBjbXzDEW0drgUnjt/Q8Jr/ix6IgPX6F71V6bwkJb0POv/rOHXOnh8gshgZQMgvrQ9/IFk6Ko+FBtMenqIeEZyNnB0chwo2SPAyOdo5w9y6XxcIQ9 ";
+		System.out.printf("</LOGIN SERVICE>\n");
 		return Jwts.builder()
 				.setIssuer("API ECOMMERCE")
 				.setSubject( user.getId().toString() )

@@ -7,6 +7,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -23,13 +26,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @Entity(name = "cliente")
-final public class Cliente extends Usuario {
+final public class Cliente {
 	
-	//@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	//private Integer id;
+	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
-	//@OneToOne
-	//private Usuario usuario;
+	@OneToOne(mappedBy = "cliente")
+	private Usuario usuario;
 	
 	@OneToOne
 	private Endereco endereco;
@@ -37,7 +40,7 @@ final public class Cliente extends Usuario {
 	@OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "id")	//?
 	private final List<Endereco> outrosEnderecos = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedido;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

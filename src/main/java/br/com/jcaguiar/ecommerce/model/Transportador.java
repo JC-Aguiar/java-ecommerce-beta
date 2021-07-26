@@ -24,7 +24,7 @@ final public class Transportador extends Empresa<Short> {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Endereco endereco;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "transportador", fetch = FetchType.LAZY)
 	private List<NotaFiscal> nf;
 
 }

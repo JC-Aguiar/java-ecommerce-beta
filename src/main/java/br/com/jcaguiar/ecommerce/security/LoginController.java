@@ -25,31 +25,33 @@ public final class LoginController {
 	//Lógica padrão de Autenticação 
 	@PostMapping
 	public ResponseEntity<?> eutenticar(@RequestBody @Valid LoginDto login) {
-		//Log interno
+		System.out.printf("<LOGIN CONTROLER>\n");
 		System.out.printf("E-mail: %s. Senha: %s.\n", login.getEmail(), login.getSenha());
 		
-		//Através do AuthenticationManager.authenticate irá consultar as configurações do Spring e irá chamar o provedor LoginService
+		//Se usuário cadastrado: 200 OK
+		//Senão: 400 BAD REQUEST
 		try {
-			//Se usuário está cadastrado: 200 OK
+			System.out.printf("Preparando Token...\n");
 			UsernamePasswordAuthenticationToken autenticarDados = login.getToken();
+			
+			System.out.printf("Autenticando via AuthenticationManager...\n");
 			Authentication userAutenticado = gerenteLogin.authenticate(autenticarDados);
+			//Através do AuthenticationManager.authenticate o sistema consultará as configurações do Spring, chamando o provedor LoginService
+			
+			System.out.printf("Criando Token...\n");
 			String token = tokenService.createToken(userAutenticado);
 			
-			//Criando objeto Token com autenticação do tipo Barer (conceitos HTTP) 
 			TokenDto tokenDto = new TokenDto(token, "Bearer");
-			
-			//Log interno
 			System.out.printf("Token: %s\n", token );
+			System.out.printf("</LOGIN CONTROLER>\n");
+			//Criando objeto Token com autenticação do tipo Barer (conceitos HTTP)
 			
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(tokenDto);
 		}
 		catch (Exception e) {
-			//Usuário não identificado: 400 BAD REQUEST
+			System.out.printf("</LOGIN CONTROLER>\n");
 			return ResponseEntity.badRequest().build();
 		}
-		
-		
-		
 		
 	}
 	
