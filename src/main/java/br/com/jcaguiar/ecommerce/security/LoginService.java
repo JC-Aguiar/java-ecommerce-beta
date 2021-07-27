@@ -21,10 +21,12 @@ public class LoginService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		System.out.printf("<LOGIN SERVICE>\n");
 		Optional<Usuario> usuario = userService.findByEmail(email);
+		System.out.printf("%s\n", usuario.get().getEmail());
 		System.out.printf("</LOGIN SERVICE>\n");
 		if( !usuario.isPresent() ) {
 			throw new UsernameNotFoundException("Credenciais inválidas.");
 		}
+		System.out.printf("usuário identificado\n");
 		return usuario.get();
 	}
 
