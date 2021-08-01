@@ -15,7 +15,7 @@ public final class LoginDto extends MasterDto {
 	@NotNull @NotEmpty @Length(min = 7) public String email;
 	@NotNull @NotEmpty @Length(min = 7) public String senha;
 	
-	public UsernamePasswordAuthenticationToken getToken() {
+	public UsernamePasswordAuthenticationToken autenticar() {
 		return new UsernamePasswordAuthenticationToken(email, senha);
 	}
 	

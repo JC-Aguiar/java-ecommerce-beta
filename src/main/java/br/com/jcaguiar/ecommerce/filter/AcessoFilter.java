@@ -1,4 +1,4 @@
-package br.com.jcaguiar.ecommerce.interceptor;
+package br.com.jcaguiar.ecommerce.filter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.ProdutoService;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
 
 @Configuration
-public class InterceptarAcesso implements HandlerInterceptor {
+public class AcessoFilter implements HandlerInterceptor {
 
 	@Autowired UsuarioService userService;
 	@Autowired ProdutoService prodService;

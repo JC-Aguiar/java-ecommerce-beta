@@ -10,28 +10,30 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	//@Autowired
-	//private DataSource dataSource; //Remover se não utilizado mais
-	
-	@Autowired
-	private LoginService loginService;
+	@Autowired private TokenService tokenService;
+	@Autowired private LoginService loginService;
  
 	//MÉTODO PARA CONFIGURAR AUTORIZAÇÕES
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		Class<UsernamePasswordAuthenticationFilter> filtroAntes = UsernamePasswordAuthenticationFilter.class;
+		AutenticarTokenFilter filtroToken = new AutenticarTokenFilter(tokenService);
+		
 		http
 			.authorizeRequests().mvcMatchers("/adm/**").hasRole("ADMIN").and()
 			.authorizeRequests().mvcMatchers("/user/**").hasRole("USER").and()
 			.authorizeRequests().mvcMatchers( HttpMethod.POST, "/login" ).permitAll()
 			.anyRequest().authenticated().and()
 			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and().addFilterBefore(filtroToken, filtroAntes);
 	}
 	
 	//MÉTODO PARA CONFIGURAR AUTENTICAÇÃO

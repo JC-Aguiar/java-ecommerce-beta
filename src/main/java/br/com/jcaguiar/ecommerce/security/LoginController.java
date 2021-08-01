@@ -31,15 +31,15 @@ public final class LoginController {
 		//Se usuário cadastrado: 200 OK
 		//Senão: 400 BAD REQUEST
 		try {
-			System.out.printf("Preparando Token...\n");
-			UsernamePasswordAuthenticationToken autenticarDados = login.getToken();
+			System.out.printf("Realizando Autenticação...\n");
+			UsernamePasswordAuthenticationToken autenticarDados = login.autenticar();
 			
 			System.out.printf("Autenticando via AuthenticationManager...\n");
 			Authentication userAutenticado = gerenteLogin.authenticate(autenticarDados);
 			//Através do AuthenticationManager.authenticate o sistema consultará as configurações do Spring, chamando o provedor LoginService
 			
 			System.out.printf("Criando Token...\n");
-			String token = tokenService.createToken(userAutenticado);
+			String token = tokenService.newToken(userAutenticado);
 			
 			TokenDto tokenDto = new TokenDto(token, "Bearer");
 			System.out.printf("Token: %s\n", token );
