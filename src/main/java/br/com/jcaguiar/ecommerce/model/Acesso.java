@@ -25,7 +25,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity(name = "acesso")
 final public class Acesso implements Entidade<Long> {
-	
+	/**CONCEITO
+	 * 
+	 */
+	/**ATRIBUTOS
+	 * 
+	 */
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -38,15 +43,20 @@ final public class Acesso implements Entidade<Long> {
 	final private LocalDateTime data_acesso = LocalDateTime.now();
 	private Duration duracao;
 	
-	
-	public String print() throws ParseException {
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	/**REPORTAR RELATÓRIO
+	 * Retorna texto dos atributos de acesso no padrão < Console.Log > 
+	 * @return
+	 * @throws ParseException
+	 */
+	public String report() throws ParseException {
 		return String.format(
-				"INTERCEPTADOR DE ACESSO {\n"
+				"<FILTRO DE ACESSOS> \n"
 				+ "\tACESSO:   %s\n"
 				+ "\tUSER:     %s\n"
 				+ "\tURL:      %s\n"
 				+ "\tDURAÇÃO:  %d.%ds\n"
-				+ "}\n", 
+				+ "</FILTRO DE ACESSOS> \n", 
 				DataFormato.formatar(data_acesso), usuario.getEmail(), url, duracao.getSeconds(), duracao.getNano());
 	}
 

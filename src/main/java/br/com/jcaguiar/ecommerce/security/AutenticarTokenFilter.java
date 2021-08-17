@@ -9,63 +9,78 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-final public class AutenticarTokenFilter extends OncePerRequestFilter{
+import br.com.jcaguiar.ecommerce.Console;
 
+final public class AutenticarTokenFilter extends OncePerRequestFilter{
+	/**CONCEITO
+	 * 
+	 */
+	/**ATRIBUTOS
+	 * 
+	 */
 	private TokenService tokenService;
 	
 		
-	//CONSTRUTOR
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	/**CONSTRUTOR
+	 * 
+	 * @param tokenService
+	 */
 	public AutenticarTokenFilter(TokenService tokenService) {
 		this.tokenService = tokenService;
 	}
 
 
-	//MÉTODO PRINCIPAL NO QUAL O FILTRO É CHAMADO
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	/**MÉTODO PRINCIPAL DO FILTRO
+	 * Filtro chamado antes do Filtro de autenticação UsernamePasswordAuthenticationFilter
+	 * Token é coletado no Header da requisição através do método getRequestHeader
+	 * Seguindo adiante na filtragem através do < filterChain.doFilter >
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 	throws ServletException, IOException {
-		//Coletando token de autenticação Bearer
-		String token = getClienteToken(request);
+		Console.log("<FILTRO DE AUTENTICAÇAO> \n");
+		String token = getRequestHeader(request);
 		boolean login = tokenService.validar(token);
-		
-		//Seguindo adiante na filtragem
+		Console.log("</FILTRO DE AUTENTICAÇAO> \n");
 		filterChain.doFilter(request, response); 
 	}
 
 	
-	//MÉTODO PARA COLETAR HEADER DE AUTENTICAÇÃO
-	private String getClienteToken(HttpServletRequest request) {
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	/**MÉTODO PARA COLETAR HEADER DE AUTENTICAÇÃO
+	 * 1) Definindo atributos
+	 * 
+	 * 2) Autorização do Header
+	 * 				request:		chamando propriedades da requisição HTTP
+	 * 				getHeader:		coletando atributo "Authorization"
+	 * 
+	 * 				header.startsWith(tipo):
+	 * 								se o header "Authentication" começa com o texto da variavel "tipo",
+	 * 								o token será este mesmo Header sem o prefixo do "tipo" e sem espaços em branco 
+	 * 
+	 * @param request
+	 * @return
+	 */
+	private String getRequestHeader(HttpServletRequest request) {
 		String tipo = "Bearer";
 		String header = request.getHeader("Authorization");
 		String token = null;
 		
-		
 		try {
 			if(header.startsWith(tipo)) {
 				token = header.substring(tipo.length()).trim();
-				log( String.format("TOKEN: [%s] %s", tipo, token));
-				//Buscando token para Autenticação Bearer 
-				//Se o Header "Authentication" começa com a mesma definição da variavel "tipo",
-				//o token será esse mesmo Header sem o prefixo do tipo e sem os espaços em branco 
+				Console.log( String.format("TOKEN: [%s] %s \n", tipo, token) );
 			}
 			else {
-				log("ERRO NA AUTENTICAÇÃO: Header da requisição diferente de Bearer.");
+				Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição diferente de Bearer. \n");
 			}
 		}
 		catch (NullPointerException e) {
-			log("ERRO NA AUTENTICAÇÃO: Header da requisição sem Bearer informado.");
+			Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição sem Bearer informado. \n");
 		}
 		return token;
-	}
-	
-	
-	//MÉTODO PARA MONITORAR O SISTEMA
-	public void log(String mensagem) {
-		System.out.printf(
-				"INTERCEPTADOR DE AUTENTICAÇAO {\n"
-				+ "\t%s\n"
-				+ "}\n", 
-				mensagem);
 	}
 
 }

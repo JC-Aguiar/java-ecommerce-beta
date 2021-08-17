@@ -42,7 +42,7 @@ public class AcessoFilter implements HandlerInterceptor {
 		
 		Acesso acesso = (Acesso) request.getAttribute("acesso");
 		acesso.setDuracao( Duration.between(acesso.getData_acesso(), LocalDateTime.now()) );
-		System.out.printf( acesso.print() );
+		System.out.printf( acesso.report() );
 		//HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 	
