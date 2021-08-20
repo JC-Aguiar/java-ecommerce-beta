@@ -40,10 +40,11 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 	throws ServletException, IOException {
-		Console.log("<FILTRO DE AUTENTICAÇAO> \n");
+		Console.log("<FILTRO DE AUTENTICAÇAO>", +1);
 		String token = getRequestHeader(request);
 		boolean login = tokenService.validar(token);
-		Console.log("</FILTRO DE AUTENTICAÇAO> \n");
+		Console.log( Boolean.toString(login) );
+		Console.log("</FILTRO DE AUTENTICAÇAO>", -1);
 		filterChain.doFilter(request, response); 
 	}
 
@@ -71,14 +72,14 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 			if(header.startsWith(tipo)) {
 				token = header.substring(tipo.length());
 				token = token.trim();
-				Console.log( String.format("TOKEN: [%s] %s \n", tipo, token) );
+				Console.log( String.format("TOKEN: [%s] %s", tipo, token) );
 			}
 			else {
-				Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição diferente de Bearer. \n");
+				Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição diferente de Bearer.");
 			}
 		}
 		catch (NullPointerException e) {
-			Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição sem Bearer informado. \n");
+			Console.log("ERRO NA AUTENTICAÇÃO: Header da requisição sem Bearer informado.");
 		}
 		return token;
 	}

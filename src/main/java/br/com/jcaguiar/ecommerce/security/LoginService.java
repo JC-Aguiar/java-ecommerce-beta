@@ -31,14 +31,13 @@ public class LoginService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Console.log("<LOGIN SERVICE> \n");
-		Optional<Usuario> usuario = userService.findByEmail(email);		
-		Console.log( String.format("%s\n", usuario.get().getEmail()) );
+		Console.log("<LOGIN SERVICE>", +1);
+		Optional<Usuario> usuario = userService.findByEmail(email);
 		if( !usuario.isPresent() ) {
 			throw new UsernameNotFoundException("Credenciais inválidas.");
 		}
-		Console.log("usuário identificado\n");
-		Console.log("</LOGIN SERVICE> \n");
+		Console.log( String.format("Usuário identificado: %s", usuario.get().getEmail()) );
+		Console.log("</LOGIN SERVICE>", -1);
 		
 		return usuario.get();
 	}

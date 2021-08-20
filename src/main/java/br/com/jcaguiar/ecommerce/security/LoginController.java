@@ -66,24 +66,20 @@ public final class LoginController {
 	 */ 
 	@PostMapping
 	public ResponseEntity<?> autenticar(@RequestBody @Valid LoginDto login) {
-		Console.log("<LOGIN CONTROLER> \n");
-		Console.log( String.format("Dados coletados: [e-mail]: %s, [senha]: %s.\n", login.getEmail(), login.getSenha() ));
+		Console.log("<LOGIN CONTROLER>", +1);
+		Console.log( String.format("Dados coletados: [e-mail]: %s, [senha]: %s", login.getEmail(), login.getSenha() ));
 		try {
 			UsernamePasswordAuthenticationToken autenticarDados = login.compilarDados();
 			Authentication userAutenticado = gerenteLogin.authenticate(autenticarDados);
-			Console.log("Realizando Autenticação...\n");
-			
+			Console.log("Realizando Autenticação..");
 			String token = tokenService.newToken(userAutenticado);
-			Console.log("Criando Token...\n");
-			
 			TokenDto tokenDto = new TokenDto(token, "Bearer");
-			Console.log( String.format( "Token: %s\n", token ) );
-			Console.log("</LOGIN CONTROLER>\n");
-			
+			Console.log( String.format( "Token: %s", token ) );
+			Console.log("</LOGIN CONTROLER>", -1);
 			return ResponseEntity.ok(tokenDto);
 		}
 		catch (Exception e) {
-			Console.log("</LOGIN CONTROLER> \n");
+			Console.log("</LOGIN CONTROLER>", -1);
 			return ResponseEntity.badRequest().build();
 		}
 		

@@ -53,7 +53,7 @@ public final class TokenService {
 	 * @return
 	 */
 	public String newToken(Authentication userAutenticado) {
-		Console.log("<TOKEN SERVICE>\n");
+		Console.log("<TOKEN SERVICE>", +1);
 		Usuario user = (Usuario) userAutenticado.getPrincipal();
 		Date hoje = new Date();
 		Date validade = new Date(hoje.getTime() + tempoLogin);
@@ -64,7 +64,8 @@ public final class TokenService {
 				.setExpiration(validade)
 				.signWith(SignatureAlgorithm.HS256, segredo)
 				.compact();
-		Console.log("</TOKEN SERVICE>\n");
+		Console.log("Token criado.");
+		Console.log("</TOKEN SERVICE>.", -1);
 		return token;
 	}
 
@@ -82,23 +83,24 @@ public final class TokenService {
 		try {
 			//Processando token Jwt
 			Jwts.parser().setSigningKey(segredo).parseClaimsJws(token);
+			Console.log("Usuário logado com sucesso");
 			return true;
 		}
 		catch (MalformedJwtException e) {
 			//Erro padrão JWT
-			Console.log("A criptografia do token não é um JWT válido\n");
+			Console.log("AVISO: A criptografia do token não é um JWT válido");
 		}
 		catch (SignatureException e) {
 			//Erro na assinatura do token
-			Console.log("Assinatura do token não é compatível\n");
+			Console.log("AVISO: Assinatura do token não é compatível");
 		}
 		catch (ExpiredJwtException e) {
 			//Erro validade expirada
-			Console.log("Token com tempo de validade expirado\n");
+			Console.log("AVISO: Token com tempo de validade expirado");
 		}
 		catch (IllegalArgumentException e) {
 			//Erro token sem conteúdo
-			Console.log("Token com valores incorretos (vazio, nulo ou em branco)\n");
+			Console.log("AVISO: Token com valores incorretos (vazio, nulo ou em branco)");
 		}
 		return false;
 	}
