@@ -1,4 +1,4 @@
-package br.com.jcaguiar.ecommerce.interceptor;
+package br.com.jcaguiar.ecommerce.filter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import br.com.jcaguiar.ecommerce.service.ProdutoService;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
 
 @Configuration
-public class InterceptarAcesso implements HandlerInterceptor {
+public class AcessoFilter implements HandlerInterceptor {
 
 	@Autowired UsuarioService userService;
 	@Autowired ProdutoService prodService;
@@ -42,7 +42,7 @@ public class InterceptarAcesso implements HandlerInterceptor {
 		
 		Acesso acesso = (Acesso) request.getAttribute("acesso");
 		acesso.setDuracao( Duration.between(acesso.getData_acesso(), LocalDateTime.now()) );
-		System.out.printf( acesso.print() );
+		System.out.printf( acesso.report() );
 		//HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 	

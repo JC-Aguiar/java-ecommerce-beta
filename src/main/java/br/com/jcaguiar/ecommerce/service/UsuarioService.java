@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class UsuarioService extends MasterService<Usuario, Integer> {
 	
 	public UsuarioService(UsuarioRepository userRepo) {
 		super(userRepo);
+	}
+	
+	public Optional<Usuario> findByEmail(String email) {
+		return  ((UsuarioRepository) JPA_REPO).findByEmail(email);
 	}
 
 	@Override

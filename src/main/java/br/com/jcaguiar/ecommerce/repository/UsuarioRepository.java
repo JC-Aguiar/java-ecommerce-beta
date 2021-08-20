@@ -1,8 +1,7 @@
 package br.com.jcaguiar.ecommerce.repository;
 
-import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.Usuario;
@@ -10,10 +9,10 @@ import br.com.jcaguiar.ecommerce.model.Usuario;
 @Repository
 public interface UsuarioRepository extends MasterRepository<Usuario, Integer> {
 	
-	List<Usuario> findByEmail(String email, Sort sort);
+	Optional<Usuario> findByEmail(String email);
 	
-	List<Usuario> findByEmailContaining(String email, Sort sort);
+	Optional<Usuario> findByEmailContaining(String email);
 	
-	List<Usuario> deleteByEmail(String email, Sort sort);
+	Optional<Usuario> deleteByEmail(String email);
 
 }

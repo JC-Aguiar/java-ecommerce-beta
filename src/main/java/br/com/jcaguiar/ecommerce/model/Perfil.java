@@ -1,12 +1,12 @@
 package br.com.jcaguiar.ecommerce.model;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,16 +20,18 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity(name = "perfil")
-final public class Perfil implements Entidade<Integer> {
+final public class Perfil extends EntidadeData<Integer> implements GrantedAuthority {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "perfil")
 	private Usuario usuario;
 	private String nome;
-	final private LocalDateTime data_cadastro = LocalDateTime.now();
-	private boolean ativo;
-	private LocalDateTime data_removido;
+	
+	@Override
+	public String getAuthority() {
+		return this.nome;
+	}
 
 }

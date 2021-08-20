@@ -1,13 +1,8 @@
 package br.com.jcaguiar.ecommerce.repository;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.CarrinhoItem;
-import br.com.jcaguiar.ecommerce.model.Usuario;
-import br.com.jcaguiar.ecommerce.projection.CarrinhoItemReport;
 
 @Repository
 public interface CarrinhoItemRepository extends MasterRepository<CarrinhoItem, Long> {

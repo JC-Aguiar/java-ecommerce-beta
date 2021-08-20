@@ -18,9 +18,9 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class EntidadeData<ID> implements Entidade<ID> {
 	
-	private boolean ativo = true;
-	private LocalDateTime data_cadastro = LocalDateTime.now();
-	private LocalDateTime data_ativo;
-	private LocalDateTime data_desativo;
+	protected boolean ativo = true;
+	protected LocalDateTime data_cadastro = LocalDateTime.now();
+	protected LocalDateTime data_ativo;
+	protected LocalDateTime data_desativo;
 
 }

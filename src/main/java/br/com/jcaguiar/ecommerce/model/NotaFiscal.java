@@ -68,6 +68,8 @@ final public class NotaFiscal implements Entidade<Long>, MasterVO {
 	private String destinatarioInscEstadual;
 	
 	//INFORMAÇÕES DO TRANSPORTADOR
+	@ManyToOne
+	private Transportador transportador;
 	private String transportadorNome;
 	private String transportadorFrete;
 	private String transportadorPlaca;

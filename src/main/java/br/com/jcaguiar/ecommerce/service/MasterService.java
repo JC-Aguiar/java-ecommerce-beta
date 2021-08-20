@@ -1,6 +1,5 @@
 package br.com.jcaguiar.ecommerce.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,7 @@ import br.com.jcaguiar.ecommerce.repository.MasterRepository;
 public abstract class MasterService<OBJ, ID> {
 
 	protected final MasterRepository<OBJ, ID> JPA_REPO;
-	protected final List<Object> DTO = new ArrayList<>();
+	//protected final List<Object> DTO = new ArrayList<>();
 	
 	public MasterService(MasterRepository<OBJ, ID> jpaRepo) {
 		this.JPA_REPO = jpaRepo; 
