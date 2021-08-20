@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.security;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -129,8 +130,12 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 			SecurityContextHolder.getContext().setAuthentication(dadosUsuario);
 			Console.log( "Usuário Autenticado com sucesso.");
 			return true;
-		} catch (NumberFormatException e) {
-			Console.log("ERRO: Id do usuário informado no token não é um número válido");
+		}
+		catch (NumberFormatException e) {
+			Console.log("ERRO: Id do usuário informado no token não é um número válido.");
+		}
+		catch (NoSuchElementException e) {
+			Console.log("ERRO: Usuário do token não identificado.");
 		}
 		return false;
 	}
