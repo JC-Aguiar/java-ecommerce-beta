@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 
+import br.com.jcaguiar.ecommerce.service.UsuarioService;
+
 @Controller
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired private TokenService tokenService;
 	@Autowired private LoginService loginService;
+	@Autowired UsuarioService userService;
  
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CONFIGURAR AUTORIZAÇÕES
@@ -39,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		Class<UsernamePasswordAuthenticationFilter> filtroAntes = UsernamePasswordAuthenticationFilter.class;
-		AutenticarTokenFilter filtroToken = new AutenticarTokenFilter(tokenService);
+		AutenticarTokenFilter filtroToken = new AutenticarTokenFilter(tokenService, userService);
 		
 		http
 			.authorizeRequests().mvcMatchers("/adm/**").hasRole("ADMIN").and()

@@ -62,7 +62,7 @@ public final class TokenService {
 				.setSubject( user.getId().toString() )
 				.setIssuedAt(hoje)
 				.setExpiration(validade)
-				.signWith(SignatureAlgorithm.HS256, segredo)
+				.signWith(SignatureAlgorithm.HS256,segredo)
 				.compact();
 		Console.log("Token criado.");
 		Console.log("</TOKEN SERVICE>.", -1);
@@ -79,12 +79,13 @@ public final class TokenService {
 	 * 		parseClaimsJws: 	Converta o playload (usuário).
 	 *
 	 */
-	public boolean validar(String token) {
+	public int validar(String token) {
 		try {
 			//Processando token Jwt
-			Jwts.parser().setSigningKey(segredo).parseClaimsJws(token);
+			String userIdString = Jwts.parser().setSigningKey(segredo).parseClaimsJws(token).getBody().getSubject();
+			Integer userId = Integer.parseInt(userIdString); 
 			Console.log("Usuário logado com sucesso");
-			return true;
+			return userId;
 		}
 		catch (MalformedJwtException e) {
 			//Erro padrão JWT
@@ -102,7 +103,7 @@ public final class TokenService {
 			//Erro token sem conteúdo
 			Console.log("AVISO: Token com valores incorretos (vazio, nulo ou em branco)");
 		}
-		return false;
+		return -1;
 	}
 	
 }
