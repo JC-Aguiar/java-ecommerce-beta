@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +55,6 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 		String token = getRequestHexToken(request);
 		int userioId = tokenService.validar(token);
 		autenticarUsuario(userioId);
-		Console.log( "Usuário Autenticado com sucesso.");
 		Console.log("</FILTRO DE AUTENTICAÇAO>", -1);
 		filterChain.doFilter(request, response); 
 	}
@@ -129,6 +127,7 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 					usuario.getAuthorities()
 			);
 			SecurityContextHolder.getContext().setAuthentication(dadosUsuario);
+			Console.log( "Usuário Autenticado com sucesso.");
 			return true;
 		} catch (NumberFormatException e) {
 			Console.log("ERRO: Id do usuário informado no token não é um número válido");
