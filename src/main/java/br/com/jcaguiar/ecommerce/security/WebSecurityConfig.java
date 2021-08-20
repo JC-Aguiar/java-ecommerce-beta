@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired private LoginService loginService;
  
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	/**MÉTODO PARA CONFIGURAR AUTORIZAÇÕES
+	/**CONFIGURAR AUTORIZAÇÕES
 	 * Configurando quais URLs possuem quais restrições
 	 * 1) URLs com "/adm" só podem ser acessadas por usuários logados com perfil ADM
 	 * 2) URLs com "/user" só podem ser acessadas pelo pelo próprio usuário logado

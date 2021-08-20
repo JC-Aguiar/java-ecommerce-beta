@@ -20,7 +20,7 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 	 */
 	private TokenService tokenService;
 	
-		
+
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CONSTRUTOR
 	 * 
@@ -49,16 +49,16 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	/**MÉTODO PARA COLETAR HEADER DE AUTENTICAÇÃO
+	/**COLETAR HEADER DE AUTENTICAÇÃO
 	 * 1) Definindo atributos
 	 * 
 	 * 2) Autorização do Header
-	 * 				request:		chamando propriedades da requisição HTTP
-	 * 				getHeader:		coletando atributo "Authorization"
+	 * 		request:		chamando propriedades da requisição HTTP
+	 * 		getHeader:		coletando atributo "Authorization"
 	 * 
-	 * 				header.startsWith(tipo):
-	 * 								se o header "Authentication" começa com o texto da variavel "tipo",
-	 * 								o token será este mesmo Header sem o prefixo do "tipo" e sem espaços em branco 
+	 * 		header.startsWith(tipo):
+	 * 						se o header "Authentication" começa com o texto da variavel "tipo",
+	 * 						o token será este mesmo Header sem o prefixo do "tipo" e sem espaços em branco 
 	 * 
 	 * @param request
 	 * @return
@@ -67,10 +67,10 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 		String tipo = "Bearer";
 		String header = request.getHeader("Authorization");
 		String token = null;
-		
 		try {
 			if(header.startsWith(tipo)) {
-				token = header.substring(tipo.length()).trim();
+				token = header.substring(tipo.length());
+				token = token.trim();
 				Console.log( String.format("TOKEN: [%s] %s \n", tipo, token) );
 			}
 			else {
