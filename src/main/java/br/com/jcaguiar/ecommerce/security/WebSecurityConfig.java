@@ -30,13 +30,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CONFIGURAR AUTORIZAÇÕES
-	 * Configurando quais URLs possuem quais restrições
-	 * 1) URLs com "/adm" só podem ser acessadas por usuários logados com perfil ADM
-	 * 2) URLs com "/user" só podem ser acessadas pelo pelo próprio usuário logado
-	 * 3) Requisição POST para a URL "/login" é liberada a todos
-	 * 4) Quais outras URLs acessadas, estão liberadas 
-	 * 5) CSRF desabilitado (desnecessário para API de Microserviço)
-	 * 6) Definindo política 
+	 * Configurando restrições de acesso aos end-points da API (1 ~ 6)
+	 * Configurando método de login personalizado (7)
+	 * 1) URLs restritas
+	 * 		> authorizeRequests().mvcMatchers("/adm/**"):
+	 * 				Configuração de URLs "/adm"
+	 * 		> hasRole("ADMIN"):
+	 * 				Define que somente usuários logados com perfil ADM tem acesso
+	 * 
+	 * 2) URLs privados
+	 * 		> authorizeRequests().mvcMatchers("/user/**"):
+	 * 				URLs "/user" só podem ser acessadas pelo pelo próprio usuário logado
+	 * 		> hasRole("USER"):
+	 * 				Define que somente usuários logados com perfil USER tem acesso
+	 * 
+	 * 3) URL login
+	 * 		> authorizeRequests().mvcMatchers( HttpMethod.POST, "/login" ):
+	 * 				Configuração de requisição POST para a URL "/login"
+	 * 		> permitAll():
+	 * 				 Define permissáo de acesso liberado a todos
+	 * 			
+	 * 4) Outras URLs
+	 * 		> anyRequest():
+	 * 				Configuração para quaisqueres outras URLs
+	 * 		> permitAll():
+	 * 				 Define permissáo de acesso liberado a todos
+	 * 
+	 * 5) Inativando CSRF
+	 * 		> csrf().disable():
+	 * 				Método do Spring Security + método de desativação
+	 * 
+	 * 6) Aplicando API REST
+	 * 		> sessionManagement():
+	 * 				Método responsável pela configuração das sessões (login)
+	 * 		> sessionCreationPolicy():
+	 * 				Configurando política/estilo de sessão 
+	 * 		> SessionCreationPolicy.STATELESS:
+	 * 				Definindo a API como REST
+	 * 
+	 *  7) Add Filtro póprio de login
+	 *  	> addFilterBefore():
+	 *  			Inserindo um filtro específico na cadeia padrão de filtros do Spring
+	 *  	> filtroToken:
+	 *  			Filtro personalizado a ser inserido (AutenticarTokenFilter)
+	 *  	> filtroAntes:
+	 * 				Filtro que será chamado depois (UsernamePasswordAuthenticationFilter)
+	 * 
 	 * @param HttpSecurity
 	 */
 	@Override
@@ -48,10 +87,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().mvcMatchers("/adm/**").hasRole("ADMIN").and()
 			.authorizeRequests().mvcMatchers("/user/**").hasRole("USER").and()
 			.authorizeRequests().mvcMatchers( HttpMethod.POST, "/login" ).permitAll()
-			.anyRequest().authenticated().and()
+			.anyRequest().permitAll().and()
 			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().addFilterBefore(filtroToken, filtroAntes);
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.addFilterBefore(filtroToken, filtroAntes);
 	}
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
