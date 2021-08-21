@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -25,7 +25,7 @@ final public class Perfil extends EntidadeData<Integer> implements GrantedAuthor
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@OneToOne(mappedBy = "perfil")
+	@ManyToOne
 	private Usuario usuario;
 	private String nome;
 	
