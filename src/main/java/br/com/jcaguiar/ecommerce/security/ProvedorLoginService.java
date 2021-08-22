@@ -13,7 +13,7 @@ import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
 
 @Service
-public class LoginService implements UserDetailsService {
+public class ProvedorLoginService implements UserDetailsService {
 	/**CONCEITO
 	 * 
 	 */
@@ -36,10 +36,15 @@ public class LoginService implements UserDetailsService {
 		if( !usuario.isPresent() ) {
 			throw new UsernameNotFoundException("Credenciais inválidas.");
 		}
-		Console.log( String.format("Usuário identificado: %s", usuario.get().getEmail()) );
+		Console.log(String.format(
+				"Usuário identificado: %s",
+				usuario.get().getEmail())
+		);
 		Console.log("</LOGIN SERVICE>", -1);
 		
 		return usuario.get();
 	}
+	
+	
 
 }

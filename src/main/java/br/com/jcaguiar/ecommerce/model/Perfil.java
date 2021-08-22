@@ -1,10 +1,12 @@
 package br.com.jcaguiar.ecommerce.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -25,13 +27,28 @@ final public class Perfil extends EntidadeData<Integer> implements GrantedAuthor
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@OneToOne(mappedBy = "perfil")
+	@ManyToOne
 	private Usuario usuario;
-	private String nome;
+	
+	@Enumerated(EnumType.STRING) private PerfilTipo nome;
 	
 	@Override
 	public String getAuthority() {
-		return this.nome;
+		return this.nome.toString();
 	}
+	
+	public enum PerfilTipo {
+        ADM("ROLE_ADM"), STAFF("ROLE_STAFF"), USER("ROLE_USER");
+        private String tipo;
+
+        private PerfilTipo(String tipo) {
+            this.tipo = tipo;
+        }
+
+        @Override
+        public String toString() {
+            return this.tipo;
+        }
+    }
 
 }

@@ -40,7 +40,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	protected final Class<DTO> classeDto;
 	private final String URL;
 	protected final MasterService<OBJ, ID> MASTER_SERVICE;
-	protected static final String ADM = "ADMIN";
+	protected static final String ADM = "ROLE_ADM";
 	private static final String[] LOG = {
 			"Consulta Completa",		//0
 			"Consulta Restrita",		//1

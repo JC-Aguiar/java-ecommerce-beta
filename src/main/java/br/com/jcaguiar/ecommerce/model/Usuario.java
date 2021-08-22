@@ -32,8 +32,8 @@ public class Usuario extends EntidadeData<Integer> implements UserDetails {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Perfil perfil;
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Perfil> perfil;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Cliente cliente;
@@ -52,7 +52,15 @@ public class Usuario extends EntidadeData<Integer> implements UserDetails {
 	
 	@Override
 	public List<Perfil> getAuthorities() {
-		return null;
+		return this.perfil;
+	}
+	
+	public String getAuthoritiesToString() {
+		List<String> perfis = new ArrayList<String>();
+		this.perfil.forEach(perfil -> {
+			perfis.add( perfil.getAuthority() );
+		});
+		return perfis.toString();
 	}
 	
 	@Override

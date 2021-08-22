@@ -1,6 +1,7 @@
 package br.com.jcaguiar.ecommerce.security;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.servlet.FilterChain;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.jcaguiar.ecommerce.Console;
+import br.com.jcaguiar.ecommerce.model.Perfil;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
 
@@ -54,8 +56,10 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 	throws ServletException, IOException {
 		Console.log("<FILTRO DE AUTENTICAÇAO>", +1);
 		String token = getRequestHexToken(request);
-		int userioId = tokenService.validar(token);
-		autenticarUsuario(userioId);
+		int userId = tokenService.validar(token);
+		if(userId != -1) {
+			autenticarUsuario(userId);
+		}
 		Console.log("</FILTRO DE AUTENTICAÇAO>", -1);
 		filterChain.doFilter(request, response); 
 	}
@@ -122,13 +126,18 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 	private boolean autenticarUsuario(int userioId) {
 		try {
 			Usuario usuario = userService.findById(userioId).get();
+			List<Perfil> userPerfil = usuario.getAuthorities();
+			String userPerfilString = usuario.getAuthoritiesToString();
 			Authentication dadosUsuario = new UsernamePasswordAuthenticationToken(
 					usuario,
 					null,
-					usuario.getAuthorities()
+					userPerfil
 			);
 			SecurityContextHolder.getContext().setAuthentication(dadosUsuario);
-			Console.log( "Usuário Autenticado com sucesso.");
+			Console.log(String.format(
+					"Usuário autenticado com sucesso. Perfil de acesso: %s",
+					userPerfilString
+			));
 			return true;
 		}
 		catch (NumberFormatException e) {
