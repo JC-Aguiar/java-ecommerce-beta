@@ -135,7 +135,7 @@ final public class AutenticarTokenFilter extends OncePerRequestFilter{
 			);
 			SecurityContextHolder.getContext().setAuthentication(dadosUsuario);
 			Console.log(String.format(
-					"Usuário Autenticado com sucesso. Perfil de acesso: %s",
+					"Usuário autenticado com sucesso. Perfil de acesso: %s",
 					userPerfilString
 			));
 			return true;

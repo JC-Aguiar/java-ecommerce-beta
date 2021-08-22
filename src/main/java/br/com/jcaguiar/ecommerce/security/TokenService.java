@@ -2,11 +2,13 @@ package br.com.jcaguiar.ecommerce.security;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.model.Usuario;
+import br.com.jcaguiar.ecommerce.service.UsuarioService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -26,6 +28,8 @@ public final class TokenService {
 	 */
 	private String segredo = "AAAAB3NzaC1yc2EAAAADAQABAAABAQCu9uKkd/f23+CSmwp/Sx72HkRu1wW5Qn238DRzTW7IZWJi2IruikgxXewhaL9ncS8Bm437ScfmjjewLZuVxyRwMs2vBCb4yuXvYl4v2gd+vjw3QdlpHOplTE3BzA1LPco8vVEevBO9j8vFJoHcYjdwnhaOVqFl2Nm+I2WEBFVlnJtWV/zmdmVZxrCxvYEuZ1kLigfA9dtwtOEWrvcieIg132rB73HgmnjhKUKjBjbXzDEW0drgUnjt/Q8Jr/ix6IgPX6F71V6bwkJb0POv/rOHXOnh8gshgZQMgvrQ9/IFk6Ko+FBtMenqIeEZyNnB0chwo2SPAyOdo5w9y6XxcIQ9 ";
 	private int tempoLogin = 1800000;
+	
+	@Autowired private UsuarioService userService;
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CRIANDO TOKEN APÓS LOGIN
@@ -54,19 +58,27 @@ public final class TokenService {
 	 */
 	public String newToken(Authentication userAutenticado) {
 		Console.log("<TOKEN SERVICE>", +1);
-		Usuario user = (Usuario) userAutenticado.getPrincipal();
-		Date hoje = new Date();
-		Date validade = new Date(hoje.getTime() + tempoLogin);
-		String token = Jwts.builder()
-				.setIssuer("API ECOMMERCE")
-				.setSubject( user.getId().toString() )
-				.setIssuedAt(hoje)
-				.setExpiration(validade)
-				.signWith(SignatureAlgorithm.HS256,segredo)
-				.compact();
-		Console.log("Token criado.");
-		Console.log("</TOKEN SERVICE>.", -1);
-		return token;
+		try {
+			Usuario usuario = userService.findByEmail( userAutenticado.getName() ).get();
+			Date hoje = new Date();
+			Date validade = new Date(hoje.getTime() + tempoLogin);
+			String token = Jwts.builder()
+					.setIssuer("API ECOMMERCE")
+					.setSubject( usuario.getId().toString() )
+					.setIssuedAt(hoje)
+					.setExpiration(validade)
+					.signWith(SignatureAlgorithm.HS256,segredo)
+					.compact();
+			Console.log("Token JWT criado com sucesso.");
+			return token;
+		}
+		catch (Exception e) {
+			Console.log("ERRO AUTORIZAÇÃO: Usuário nulo.");
+			return "";
+		}
+		finally {
+			Console.log("</TOKEN SERVICE>.", -1);
+		}
 	}
 
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +53,7 @@ public final class LoginController {
 	 * 			Authentication:
 	 * 					Através do "AuthenticationManager.authenticate" o sistema consultará
 	 * 					as configurações do Spring, chamando o provedor de autenticação 
-	 * 					"LoginService", pois este consta usando a interface "UserDetailsService".
+	 * 					"ProvedorLoginService", pois este consta usando a interface "UserDetailsService".
 	 * 
 	 * 2) Criando Token:
 	 * 					Através do método "tokenService.newToken", será gerado um token JWT usando
@@ -69,18 +70,27 @@ public final class LoginController {
 		Console.log("<LOGIN CONTROLER>", +1);
 		Console.log( String.format("Dados coletados: [e-mail]: %s, [senha]: %s", login.getEmail(), login.getSenha() ));
 		try {
+			Console.log("Compilando Autenticação...");
 			UsernamePasswordAuthenticationToken autenticarDados = login.compilarDados();
+			Console.log("Realizando Autenticação...");
 			Authentication userAutenticado = gerenteLogin.authenticate(autenticarDados);
-			Console.log("Realizando Autenticação..");
+			Console.log("Criando Token...");
 			String token = tokenService.newToken(userAutenticado);
 			TokenDto tokenDto = new TokenDto(token, "Bearer");
-			Console.log( String.format( "Token: %s", token ) );
-			Console.log("</LOGIN CONTROLER>", -1);
+			Console.log( String.format(
+					"Token: %s",
+					token 
+			));
 			return ResponseEntity.ok(tokenDto);
 		}
+		catch (AuthenticationException e) {
+			return ResponseEntity.status(401).build();
+		}
 		catch (Exception e) {
-			Console.log("</LOGIN CONTROLER>", -1);
 			return ResponseEntity.badRequest().build();
+		}
+		finally {
+			Console.log("</LOGIN CONTROLER>", -1);
 		}
 		
 	}

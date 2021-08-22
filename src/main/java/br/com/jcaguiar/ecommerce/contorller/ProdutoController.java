@@ -20,7 +20,7 @@ import br.com.jcaguiar.ecommerce.projection.ProdutoUserReport;
 import br.com.jcaguiar.ecommerce.service.ProdutoService;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("**/produto")
 public class ProdutoController extends MasterController<Produto, Integer, ProdutoDto>{
 	
 	public ProdutoController(ProdutoService produtoService) {

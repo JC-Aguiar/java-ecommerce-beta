@@ -25,8 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 
 	 */
 	@Autowired private TokenService tokenService;
-	@Autowired private LoginService loginService;
-	@Autowired UsuarioService userService;
+	@Autowired private ProvedorLoginService provedorLoginService;
+	@Autowired private ProvedorAutorizarService provedorAuth;
+	@Autowired private UsuarioService userService;
  
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CONFIGURAR AUTORIZAÇÕES
@@ -84,8 +85,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		AutenticarTokenFilter filtroToken = new AutenticarTokenFilter(tokenService, userService);
 		
 		http
-			.authorizeRequests().mvcMatchers("/adm/**").hasRole("ADMIN").and()
-			.authorizeRequests().mvcMatchers("/user/**").hasRole("USER").and()
+			.authorizeRequests().mvcMatchers("/adm/**").hasAnyRole("ADM").and()
+			.authorizeRequests().mvcMatchers("/user/**").hasAnyRole("USER").and()
 			.authorizeRequests().mvcMatchers( HttpMethod.POST, "/login" ).permitAll()
 			.anyRequest().permitAll().and()
 			.csrf().disable()
@@ -97,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	/**CONFIGURAR AUTENTICAÇÃO
 	 * Método que configura amdefine autenticação:
 	 * 1) Definindo algoritmo de criptografia para senhas
-	 * 2) Definindo LoginService como provedor de autenticação, através da interface UserDetailsService
+	 * 2) Definindo ProvedorLoginService como provedor de autenticação, através da interface UserDetailsService
 	 *  
 	 * @param AuthenticationManagerBuilder
 	 */
@@ -106,8 +107,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		//Classe de criptografia de senhas 
 		final BCryptPasswordEncoder ENCRIPT = new BCryptPasswordEncoder();
 		
-		//Método provedor de autenticação
-		auth.userDetailsService(loginService).passwordEncoder(ENCRIPT);
+		//Definindo provedor de autenticação
+		//Definindo provedor de autorização
+		auth.userDetailsService(provedorLoginService).passwordEncoder(ENCRIPT).and()
+			.authenticationProvider(provedorAuth);
 	}
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
