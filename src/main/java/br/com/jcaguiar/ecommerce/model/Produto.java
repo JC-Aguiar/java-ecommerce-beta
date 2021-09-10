@@ -30,11 +30,12 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Entity(name = "produto")
 @ToString
-final public class Produto extends EntidadeData<Integer> {
+public class Produto extends EntidadeData<Integer> {
 	
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
+	//ATRIBUTOS DIRETOS --------------------------------------------------------
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
 	
@@ -43,25 +44,26 @@ final public class Produto extends EntidadeData<Integer> {
 		joinColumns = { @JoinColumn(name = "produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Fornece> fornece = new ArrayList<>();
 	private String nome;
 	private String descricao;
 	private String modelo;
 	private BigDecimal valor;
 	private short estoque;
-	private String tamanho;
+	private char tamanho;
 	private String medidas;
 	private String material;
-	private int acessos;
-	private int votos;
-	private short nota;
 	private String codigo;
+	
+	//ATRIBUTOS INDIRETOS  -----------------------------------------------------
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Fornece> fornece = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagem = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comentario> comentario = new ArrayList<>();
+	private int acessos;
+	private int votos;
+	private short nota;
 }
