@@ -11,16 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+@SuperBuilder(toBuilder = true)
 @Entity(name = "pedido_item")
 final public class PedidoItem implements Entidade<Long> {
 
@@ -35,5 +35,4 @@ final public class PedidoItem implements Entidade<Long> {
 	private short quantidade;
 	private BigDecimal total;
 	private final LocalDateTime data_carrinho = LocalDateTime.now();
-	
 }
