@@ -35,7 +35,7 @@ public class ProvedorLoginService implements UserDetailsService {
 		Optional<Usuario> usuario = userService.findByEmail(email);
 		if( !usuario.isPresent() ) {
 			throw new UsernameNotFoundException("Credenciais inválidas.");
-		}
+		}	
 		Console.log(String.format(
 				"Usuário identificado: %s",
 				usuario.get().getEmail())
