@@ -1,32 +1,38 @@
 package br.com.jcaguiar.ecommerce.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.Console;
-import br.com.jcaguiar.ecommerce.model.Marca;
-import br.com.jcaguiar.ecommerce.model.Produto;
+import br.com.jcaguiar.ecommerce.model.Setor;
 import br.com.jcaguiar.ecommerce.projection.MasterVO;
-import br.com.jcaguiar.ecommerce.repository.MarcaRepository;
+import br.com.jcaguiar.ecommerce.repository.SetorRepository;
 
 @Service
-public class MarcaService extends MasterService<Marca, Short> {
+public class SetorService extends MasterService<Setor, Short> {
 
-	public MarcaService(MarcaRepository jpaRepo) {
+	public SetorService(SetorRepository jpaRepo) {
 		super(jpaRepo);
 	}
 	
-	public List<Marca> findByProduto(Produto produto){
-		System.out.printf("CONSULTANDO MARCA\n");
-		List<Marca> marcas = new ArrayList<Marca>();
-		List<String> nomes = ((MarcaRepository) JPA_REPO).findMarcasDoProduto( produto );
-		nomes.forEach(n->{
-			marcas.add( Marca.builder().nome(n).build() );
-		});
-		return marcas;
+	public Setor validarByNome(String nome) {
+		Console.log("<SETOR-SERVICE>", +1);
+		List<Setor> setores = findObjectByNome(nome);
+		Setor setor;
+		if( setores.size() == 0 ) {
+			setor = Setor.builder()
+					.nome(nome)
+					.build();
+			Console.log(String.format("Novo Setor criado: %s", nome));
+		}
+		else {
+			setor = setores.get(0);
+			Console.log(String.format("Setor %s Identificado", nome));
+		}
+		Console.log("</SETOR-SERVICE>", -1);
+		return setor;
 	}
 
 	@Override
@@ -66,13 +72,13 @@ public class MarcaService extends MasterService<Marca, Short> {
 	}
 
 	@Override
-	public MasterVO findEntidade(Marca entidade) {
+	public MasterVO findEntidade(Setor entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findEntidadeAdm(Marca entidade) {
+	public MasterVO findEntidadeAdm(Setor entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -88,6 +94,17 @@ public class MarcaService extends MasterService<Marca, Short> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
+	public List<Setor> findObjectByNome(String nome) {
+		return ((SetorRepository) JPA_REPO).findAllByNomeContaining(nome);
+	}
+
+
+	public List<Setor> findSetorByNomeAdm(String nome) {
+		
+		return null;
+	}
 
 	@Override
 	public List<? extends MasterVO> findByNomeContaining(String nome) {
@@ -101,32 +118,6 @@ public class MarcaService extends MasterService<Marca, Short> {
 		return null;
 	}
 
-	public Marca validarByNome(String nome) {
-		Console.log("<MARCA-SERVICE>", +1);
-		List<Marca> marcas = findEntentyByNome(nome);
-		Marca marca;
-		if( marcas.size() == 0 ) {
-			marca = Marca.builder()
-					.nome(nome)
-					.build();
-			Console.log(String.format("Criada nova Marca: %s", nome));
-		}
-		else {
-			marca = marcas.get(0);
-			Console.log(String.format("Marca %s identificada", nome));
-		}
-		Console.log("</MARCA-SERVICE>", -1);
-		return marca;
-	}
 	
-	private List<Marca> findEntentyByNome(String nome) {
-		List<Marca> marcas = ((MarcaRepository) JPA_REPO).findAllByNomeContaining(nome);
-		Console.log("Marcas coletadas: " + marcas.size() );
-		return marcas;
-	}
-	
-	public void deletar(Marca marca) {
-		((MarcaRepository) JPA_REPO).delete(marca);
-	}
 
 }

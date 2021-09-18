@@ -89,6 +89,10 @@ public class ProdutoService extends MasterService<Produto, Integer> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void removeAll() {
+		((ProdutoRepository) JPA_REPO).deleteAll();
+	}
 
 	
 }

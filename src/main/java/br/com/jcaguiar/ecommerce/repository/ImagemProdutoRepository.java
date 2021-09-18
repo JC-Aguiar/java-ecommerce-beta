@@ -11,6 +11,6 @@ import br.com.jcaguiar.ecommerce.model.Produto;
 @Repository
 public interface ImagemProdutoRepository extends MasterRepository<ImagemProduto, Long> {
 	
-	@Query("SELECT ip.imagem FROM imagem_produto ip WHERE ip.produto = :produto")
-	List<ImagemProduto> findByProduto(Produto produto);
+//	@Query("SELECT ip.imagem FROM imagem_produto ip WHERE ip.id = :produto")
+//	List<ImagemProduto> findByProduto(Produto produto);
 }

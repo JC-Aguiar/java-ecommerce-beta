@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import scala.Char;
 
 @Getter
 @Setter
@@ -39,7 +40,7 @@ public class Produto extends EntidadeData<Integer> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "produto_marca", 
 		joinColumns = { @JoinColumn(name = "produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
@@ -49,7 +50,7 @@ public class Produto extends EntidadeData<Integer> {
 	private String modelo;
 	private BigDecimal valor;
 	private short estoque;
-	private char tamanho;
+	private String tamanho;
 	private String medidas;
 	private String material;
 	private String codigo;
@@ -66,4 +67,20 @@ public class Produto extends EntidadeData<Integer> {
 	private int acessos;
 	private int votos;
 	private short nota;
+	
+	public void addImagem(ImagemProduto img) {
+		this.imagem.add(img);
+	}
+	
+	public void addImagem(List<ImagemProduto> img) {
+		this.imagem.addAll(img);
+	}
+	
+	public void addMarca(Marca marca) {
+		this.marca.add(marca);
+	}
+	
+	public void addMarca(List<Marca> marca) {
+		this.marca.addAll(marca);
+	}
 }
