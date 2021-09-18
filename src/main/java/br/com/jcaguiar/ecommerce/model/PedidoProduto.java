@@ -36,12 +36,12 @@ final public class PedidoProduto extends EntidadeData<Integer> {
 	private Categoria categoria;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "produto_marca", 
-		joinColumns = { @JoinColumn(name = "produto_id") },
+	@JoinTable(name = "pedido_produto_marca", 
+		joinColumns = { @JoinColumn(name = "pedido_produto_id") },
 		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
 	private List<Marca> marca = new ArrayList<>();
 	private String nome;
-	private String descricao;
+	private String descricao; 
 	private String modelo;
 	private BigDecimal valor;
 	private short estoque;
@@ -51,15 +51,18 @@ final public class PedidoProduto extends EntidadeData<Integer> {
 	private String codigo;
 	
 	//ATRIBUTOS INDIRETOS  -----------------------------------------------------
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Fornece> fornece = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagem = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Comentario> comentario = new ArrayList<>();
+	
 	private int acessos;
+	
 	private int votos;
+	
 	private short nota;
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.model.Categoria;
+import br.com.jcaguiar.ecommerce.model.Setor;
 import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import br.com.jcaguiar.ecommerce.repository.CategoriaRepository;
 
@@ -86,6 +88,35 @@ public class CategoriaService extends MasterService<Categoria, Short> {
 	public List<? extends MasterVO> findByNomeContainingAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Categoria validarByNome(Setor setor, String nomeCategoria) {
+		Console.log("<CATEGORIA-SERVICE>", +1);
+		List<Categoria> categorias = findCategoriaBySetorAndNome(setor, nomeCategoria);
+		Categoria categoria;
+		if( categorias.size() == 0 ) {
+			categoria = Categoria.builder()
+					.setor(setor)
+					.nome(nomeCategoria)
+					.build();
+			Console.log(String.format(
+					"Nova Categoria criada: %s [Setor %s]",
+					nomeCategoria, setor.getNome()
+			));
+		}
+		else {
+			categoria = categorias.get(0);
+			Console.log(String.format(
+					"Categoria %s Identificada",
+					nomeCategoria
+			));
+		}
+		Console.log("<CATEGORIA-SERVICE>", -1);
+		return categoria;
+	}
+	
+	public List<Categoria> findCategoriaBySetorAndNome(Setor setor, String nomeCategoria) {
+		return ((CategoriaRepository) JPA_REPO).findAllBySetorAndNomeContaining(setor, nomeCategoria);
 	}
 
 }

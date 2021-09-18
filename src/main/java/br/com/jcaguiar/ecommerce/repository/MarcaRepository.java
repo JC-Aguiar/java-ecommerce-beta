@@ -13,4 +13,9 @@ public interface MarcaRepository extends MasterRepository<Marca, Short> {
 	
 	@Query("SELECT m.nome FROM marca m WHERE m.id = 1")
 	List<String> findMarcasDoProduto(Produto produto);
+	
+	
+	List<Marca> findByNome(String nome);
+	
+	List<Marca> findAllByNomeContaining(String nome);
 }
