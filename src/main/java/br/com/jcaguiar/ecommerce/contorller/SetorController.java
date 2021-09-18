@@ -21,7 +21,7 @@ public class SetorController {
 	public ModelAndView add(@PathVariable String nome) {
 		String mensagem;
 		ModelAndView pagina = new ModelAndView("Generico/mensagem");
-		if( setorRep.findAllByNomeContaining(nome) == null ) {
+		if( setorRep.findByNome(nome) == null ) {
 			Setor setor = Setor.builder()
 					.nome(nome)
 					.build();
@@ -40,7 +40,7 @@ public class SetorController {
 	public ModelAndView del(@PathVariable String nome) {
 		String mensagem;
 		ModelAndView pagina = new ModelAndView("Generico/mensagem");
-		if( setorRep.findAllByNomeContaining(nome) != null ) {
+		if( setorRep.findByNome(nome) != null ) {
 			Setor setor = Setor.builder()
 					.nome(nome)
 					.build();

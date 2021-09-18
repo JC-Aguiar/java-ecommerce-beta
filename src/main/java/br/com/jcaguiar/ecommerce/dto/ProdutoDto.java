@@ -8,7 +8,7 @@ import br.com.jcaguiar.ecommerce.model.Produto;
 import lombok.Getter;
 
 @Getter
-final public class ProdutoAdmDTO extends MasterDto {
+final public class ProdutoDto extends MasterDto {
 	
 	int id;
 	String categoria;
@@ -18,19 +18,19 @@ final public class ProdutoAdmDTO extends MasterDto {
 	BigDecimal valor;
 	List<String> marca = new ArrayList<String>();
 	List<String> fornacedor = new ArrayList<String>();
-	char tamanho;
+	String tamanho;
 	String medidas;
-	short estoque;
+	int estoque;
 	int acessos;
 	int votos;
 	int nota;
 	List<String> imagem = new ArrayList<String>();
 	
-	public ProdutoAdmDTO() {
+	public ProdutoDto() {
 		
 	}
 	
-	public ProdutoAdmDTO(Produto produto) {
+	public ProdutoDto(Produto produto) {
 		System.out.printf("CRIANDO DTO\n");
 		this.id = produto.getId();
 		this.categoria = produto.getCategoria().getNome();

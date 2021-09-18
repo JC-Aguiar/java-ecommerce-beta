@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.model.Marca;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.projection.MasterVO;
@@ -99,34 +98,6 @@ public class MarcaService extends MasterService<Marca, Short> {
 	public List<? extends MasterVO> findByNomeContainingAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public Marca validarByNome(String nome) {
-		Console.log("<MARCA-SERVICE>", +1);
-		List<Marca> marcas = findEntentyByNome(nome);
-		Marca marca;
-		if( marcas.size() == 0 ) {
-			marca = Marca.builder()
-					.nome(nome)
-					.build();
-			Console.log(String.format("Criada nova Marca: %s", nome));
-		}
-		else {
-			marca = marcas.get(0);
-			Console.log(String.format("Marca %s identificada", nome));
-		}
-		Console.log("</MARCA-SERVICE>", -1);
-		return marca;
-	}
-	
-	private List<Marca> findEntentyByNome(String nome) {
-		List<Marca> marcas = ((MarcaRepository) JPA_REPO).findAllByNomeContaining(nome);
-		Console.log("Marcas coletadas: " + marcas.size() );
-		return marcas;
-	}
-	
-	public void deletar(Marca marca) {
-		((MarcaRepository) JPA_REPO).delete(marca);
 	}
 
 }

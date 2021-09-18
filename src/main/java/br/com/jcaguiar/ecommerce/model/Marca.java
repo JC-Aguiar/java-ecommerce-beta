@@ -1,9 +1,14 @@
 package br.com.jcaguiar.ecommerce.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,14 +28,6 @@ final public class Marca implements Entidade<Short> {
 	private Short id;
 	private String nome;
 	
-//	@ManyToMany(mappedBy = "marca", fetch = FetchType.LAZY)
-//	private final List<Produto> produto = new ArrayList<>();
-//	
-//	public void addProduto(Produto prod) {
-//		this.produto.add(prod);
-//	}
-//	
-//	public void addProduto(List<Produto> prod) {
-//		this.produto.addAll(prod);
-//	}
+	@ManyToMany(mappedBy = "marca", fetch = FetchType.LAZY)
+	private final List<Produto> produto = new ArrayList<>();
 }

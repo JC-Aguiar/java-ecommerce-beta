@@ -19,8 +19,10 @@ final public class ProdutoDto2 extends MasterDto {
 	String descricao;
 	String modelo;
 	BigDecimal valor;
-	char tamanho;
+	String tamanho;
 	String medidas;
+	int votos;
+	int nota;
 	List<ImagemProduto> imagem;
 	
 	public boolean disponivel(int estoque) {

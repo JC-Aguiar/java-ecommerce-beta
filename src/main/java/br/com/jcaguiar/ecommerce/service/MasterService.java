@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.projection.MasterVO;
 import br.com.jcaguiar.ecommerce.repository.MasterRepository;
 
@@ -22,7 +21,6 @@ public abstract class MasterService<OBJ, ID> {
 	
 	//SALVAR ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public OBJ salvar(OBJ objeto) {
-		//Console.log("SALVANDO ENTIDADE");
 		return JPA_REPO.save(objeto);
 	}
 	

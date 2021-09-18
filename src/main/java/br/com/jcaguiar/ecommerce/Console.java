@@ -27,11 +27,8 @@ public final class Console {
 		for(int i = 0; i < LV; i++) {
 			System.out.printf("\t");
 		}
-		System.out.println(txt);
-	}
-	
-	public static void log(Number txt) {
-		log(String.valueOf(txt));
+		System.out.printf(txt);
+		System.out.println();
 	}
 	
 	/**LOG DO SISTEMA COM LEVEL DE ESPAÇAMENTO
@@ -43,10 +40,6 @@ public final class Console {
 		LV += lv<0 ? lv : 0;
 		log(txt);
 		LV += lv>0 ? lv : 0;
-	}
-	
-	public static void log(Number txt, int lv) {
-		log(String.valueOf(txt), lv);
 	}
 	
 	/**AUMENTANDO ESPAÇAMENTO
