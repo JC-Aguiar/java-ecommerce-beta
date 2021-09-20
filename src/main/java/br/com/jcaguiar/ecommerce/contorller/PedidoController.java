@@ -9,16 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.dto.PedidoDto;
+import br.com.jcaguiar.ecommerce.dto.PedidoPOST;
 import br.com.jcaguiar.ecommerce.model.Pedido;
 import br.com.jcaguiar.ecommerce.service.PedidoService;
 
 @RestController
 @RequestMapping("/pedido")
-public class PedidoController extends MasterController<Pedido, Long, PedidoDto> {
+public class PedidoController extends MasterController<Pedido, Long, PedidoPOST> {
 
 	public PedidoController(PedidoService pedidoService) {
-		super(Pedido.class, PedidoDto.class, "pedido", pedidoService);
+		super(Pedido.class, PedidoPOST.class, "pedido", pedidoService);
 	}
 
 	@Override

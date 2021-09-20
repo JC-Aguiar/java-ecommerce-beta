@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.jcaguiar.ecommerce.Proprietario;
-import br.com.jcaguiar.ecommerce.projection.MasterVO;
+import br.com.jcaguiar.ecommerce.projection.MasterGET;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "nota_fiscal")
-final public class NotaFiscal implements Entidade<Long>, MasterVO {
+final public class NotaFiscal implements Entidade<Long>, MasterGET {
 
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY) @JsonIgnore
 	private Long id;

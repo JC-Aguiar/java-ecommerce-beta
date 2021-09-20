@@ -6,8 +6,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Carrinho;
-import br.com.jcaguiar.ecommerce.projection.CarrinhoReport;
-import br.com.jcaguiar.ecommerce.projection.MasterVO;
+import br.com.jcaguiar.ecommerce.projection.CarrinhoGET;
+import br.com.jcaguiar.ecommerce.projection.MasterGET;
 import br.com.jcaguiar.ecommerce.repository.CarrinhoRepository;
 
 @Service
@@ -18,73 +18,73 @@ public class CarrinhoService extends MasterService<Carrinho, Long> {
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodos() {
+	public List<? extends MasterGET> findTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodos(Sort ordene) {
+	public List<? extends MasterGET> findTodos(Sort ordene) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodosAdm() {
+	public List<? extends MasterGET> findTodosAdm() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodosAdm(Sort ordene) {
+	public List<? extends MasterGET> findTodosAdm(Sort ordene) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findId(Long id) {
+	public MasterGET findId(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findIdAdm(Long id) {
+	public MasterGET findIdAdm(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findEntidade(Carrinho entidade) {
+	public MasterGET findEntidade(Carrinho entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findEntidadeAdm(Carrinho entidade) {
+	public MasterGET findEntidadeAdm(Carrinho entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CarrinhoReport> findByNome(String nome) {
+	public List<CarrinhoGET> findByNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CarrinhoReport> findByNomeAdm(String nome) {
+	public List<CarrinhoGET> findByNomeAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CarrinhoReport> findByNomeContaining(String nome) {
+	public List<CarrinhoGET> findByNomeContaining(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CarrinhoReport> findByNomeContainingAdm(String nome) {
+	public List<CarrinhoGET> findByNomeContainingAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

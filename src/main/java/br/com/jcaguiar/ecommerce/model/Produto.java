@@ -16,35 +16,30 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import scala.Char;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
-@AllArgsConstructor
 @Entity(name = "produto")
-@ToString
 public class Produto extends EntidadeData<Integer> {
 	
-	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
-	
-	//ATRIBUTOS DIRETOS --------------------------------------------------------
+
+	// ATRIBUTOS DIRETOS --------------------------------------------------------
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "produto_marca", 
-		joinColumns = { @JoinColumn(name = "produto_id") },
-		inverseJoinColumns = { @JoinColumn(name = "marca_id") })
-	private List<Marca> marca = new ArrayList<>();
+	@JoinTable(	name = "produto_marca",
+				joinColumns = { @JoinColumn(name = "produto_id") },
+				inverseJoinColumns = { @JoinColumn(name = "marca_id") })
+	final private List<Marca> marca = new ArrayList<>();
 	private String nome;
 	private String descricao;
 	private String modelo;
@@ -54,33 +49,33 @@ public class Produto extends EntidadeData<Integer> {
 	private String medidas;
 	private String material;
 	private String codigo;
-	
-	//ATRIBUTOS INDIRETOS  -----------------------------------------------------
+
+	// ATRIBUTOS INDIRETOS -----------------------------------------------------
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Fornece> fornece = new ArrayList<>();
-	
+	final private List<Fornece> fornece = new ArrayList<>();
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ImagemProduto> imagem = new ArrayList<>();
-	
+	final private List<ImagemProduto> imagem = new ArrayList<>();
+
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Comentario> comentario = new ArrayList<>();
+	final private List<Comentario> comentario = new ArrayList<>();
 	private int acessos;
 	private int votos;
 	private short nota;
-	
-	public void addImagem(ImagemProduto img) {
+
+	public void setImagem(ImagemProduto img) {
 		this.imagem.add(img);
 	}
-	
-	public void addImagem(List<ImagemProduto> img) {
+
+	public void setImagem(List<ImagemProduto> img) {
 		this.imagem.addAll(img);
 	}
-	
-	public void addMarca(Marca marca) {
+
+	public void setMarca(Marca marca) {
 		this.marca.add(marca);
 	}
-	
-	public void addMarca(List<Marca> marca) {
+
+	public void setMarca(List<Marca> marca) {
 		this.marca.addAll(marca);
 	}
 }

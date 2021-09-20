@@ -7,34 +7,34 @@ import org.springframework.data.repository.NoRepositoryBean;
  * Inteface que define alguns padrões de consulta, permitindo
  * conversão automática de uma Entidade para DTO/VO.
  * Basta que o Repositório alvo defina o retorno dos métodos
- * com classes herdeiras da "MasterVO".
+ * com classes herdeiras da "MasterGET".
  * 
  * @author JM Costal Aguiar
  *
- * @param <OBJ> the name of Class Entity 
+ * @param <Produto> the name of Class Entity 
  * @param <ID> the id type of this same Class Entity
  */
 @NoRepositoryBean
 public interface MasterRepository<OBJ, ID> extends JpaRepository<OBJ, ID> {
 	
-//	List<? extends MasterVO> findTodosAdm();
+//	List<? extends MasterGET> findTodosAdm();
 //	
-//	List<? extends MasterVO> findTodos();
+//	List<? extends MasterGET> findTodos();
 //	
-//	MasterVO findIdAdm(ID id);
+//	MasterGET findIdAdm(ID id);
 //		
-//	MasterVO findId(ID id);
+//	MasterGET findId(ID id);
 //	
-//	MasterVO findEntidadeAdm(OBJ entidade);
+//	MasterGET findEntidadeAdm(Produto entidade);
 //	
-//	MasterVO findEntidade(OBJ entidade);
+//	MasterGET findEntidade(Produto entidade);
 	
-//	List<? extends MasterVO> findByNomeAdm(String nome);
+//	List<? extends MasterGET> findByNomeAdm(String nome);
 //
-//	List<? extends MasterVO> findByNome(String nome);
+//	List<? extends MasterGET> findByNome(String nome);
 //	
-//	List<? extends MasterVO> findByNomeContainingAdm(String nome);
+//	List<? extends MasterGET> findByNomeContainingAdm(String nome);
 //
-//	List<? extends MasterVO> findByNomeContaining(String nome);
+//	List<? extends MasterGET> findByNomeContaining(String nome);
 
 }

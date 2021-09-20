@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.model.Marca;
 import br.com.jcaguiar.ecommerce.model.Produto;
-import br.com.jcaguiar.ecommerce.projection.MasterVO;
+import br.com.jcaguiar.ecommerce.projection.MasterGET;
 import br.com.jcaguiar.ecommerce.repository.MarcaRepository;
 
 @Service
@@ -30,73 +30,73 @@ public class MarcaService extends MasterService<Marca, Short> {
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodos() {
+	public List<? extends MasterGET> findTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodos(Sort ordene) {
+	public List<? extends MasterGET> findTodos(Sort ordene) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodosAdm() {
+	public List<? extends MasterGET> findTodosAdm() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findTodosAdm(Sort ordene) {
+	public List<? extends MasterGET> findTodosAdm(Sort ordene) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findId(Short id) {
+	public MasterGET findId(Short id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findIdAdm(Short id) {
+	public MasterGET findIdAdm(Short id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findEntidade(Marca entidade) {
+	public MasterGET findEntidade(Marca entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MasterVO findEntidadeAdm(Marca entidade) {
+	public MasterGET findEntidadeAdm(Marca entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNome(String nome) {
+	public List<? extends MasterGET> findByNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeAdm(String nome) {
+	public List<? extends MasterGET> findByNomeAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeContaining(String nome) {
+	public List<? extends MasterGET> findByNomeContaining(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<? extends MasterVO> findByNomeContainingAdm(String nome) {
+	public List<? extends MasterGET> findByNomeContainingAdm(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

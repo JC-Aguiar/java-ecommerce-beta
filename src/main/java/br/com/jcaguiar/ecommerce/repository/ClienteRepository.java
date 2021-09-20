@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Endereco;
-import br.com.jcaguiar.ecommerce.projection.ClientesReport;
+import br.com.jcaguiar.ecommerce.projection.ClientesGET;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
@@ -28,19 +28,19 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE c.id = ?1 AND u.id = c.usuario_id")
-	ClientesReport findByIdLimited(int id);
+	ClientesGET findByIdLimited(int id);
 	
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE u.id = c.usuario_id")
-	List<ClientesReport> findAllLimited();	
+	List<ClientesGET> findAllLimited();	
 
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.cpf, c.phone, u.email "
 					+ "FROM cliente c, usuario u "
 					+ "WHERE c.nome like %?1% AND u.id = c.usuario_id")
-	List<ClientesReport> findByNomeContainingLimited(String name);
+	List<ClientesGET> findByNomeContainingLimited(String name);
 
 	@Query(nativeQuery = true,
 			value = "SELECT  u as usuario, c.nome, c.sobrenome, c.cpf, c.phone, "
@@ -48,7 +48,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 					+ "FROM cliente c, usuario u "
 					+ "LEFT JOIN endereco e ON e.id = c.endereco_id"
 					+ "WHERE c.id = ?1 AND u.id = c.usuario_id")
-	ClientesReport findMeuCliente(int id);
+	ClientesGET findMeuCliente(int id);
 	
 	@Query(nativeQuery = true,
 			value = "SELECT  c.nome, c.sobrenome, c.nome as cidade, u.foto "
@@ -56,6 +56,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 					+ "LEFT JOIN endereco e ON e.id = c.endereco_id "
 					+ "INNER JOIN cidade c ON c.id = e.cidade_id "
 					+ "WHERE u.id = c.usuario_id")
-	List<ClientesReport> findOutrosClientes();
+	List<ClientesGET> findOutrosClientes();
 	
 }

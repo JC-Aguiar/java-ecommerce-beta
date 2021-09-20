@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.modelmapper.ConfigurationException;
+import org.modelmapper.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -21,14 +23,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.Console;
-import br.com.jcaguiar.ecommerce.dto.ProdutoAdmDTO;
+import br.com.jcaguiar.ecommerce.dto.ProdutoPOST;
+import br.com.jcaguiar.ecommerce.dto.ProdutoPOST_ID;
 import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.model.ImagemProduto;
 import br.com.jcaguiar.ecommerce.model.Marca;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.model.Setor;
-import br.com.jcaguiar.ecommerce.projection.ProdutoAdmReport;
-import br.com.jcaguiar.ecommerce.projection.ProdutoUserReport;
+import br.com.jcaguiar.ecommerce.projection.MasterGET;
+import br.com.jcaguiar.ecommerce.projection.ProdutoAdmGET;
+import br.com.jcaguiar.ecommerce.projection.ProdutoUserGET;
 import br.com.jcaguiar.ecommerce.service.CategoriaService;
 import br.com.jcaguiar.ecommerce.service.ImagemProdutoService;
 import br.com.jcaguiar.ecommerce.service.MarcaService;
@@ -39,40 +43,57 @@ import br.com.jcaguiar.ecommerce.util.TratarString;
 
 @RestController
 @RequestMapping("**/produto")
-public class ProdutoController extends MasterController<Produto, Integer, ProdutoAdmDTO>{
+public class ProdutoController extends MasterController<Produto, Integer, ProdutoPOST>{
 	
 	@Autowired SetorService setorService;
 	@Autowired CategoriaService categoriaService;
 	@Autowired MarcaService marcaService;
 	@Autowired ImagemProdutoService imgService;
 	
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public ProdutoController(ProdutoService produtoService) {
 		super(
 				Produto.class,
-				ProdutoAdmDTO.class,
+				ProdutoPOST.class,
 				"produto",
 				produtoService
 		);
 	}
 	
-	@Override
-	@GetMapping
-	@Transactional
-	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
-		//Preparando ordenação
-		final Sort ORDENE = Sort.by("id").ascending();
-		
-		//Usuário da consulta ADMIN?
-		if( request.isUserInRole(ADM	) || admSql ) {
-			log(0);//Consulta ADMIN
-			List<ProdutoAdmReport> produtos =  ((ProdutoService) MASTER_SERVICE).findTodosAdm();			
-			return new ResponseEntity<>(produtos, HttpStatus.OK);
-		}
-		log(1);//Consulta USER
-		List<ProdutoUserReport> produtos = ((ProdutoService) MASTER_SERVICE).findTodos();
-		return new ResponseEntity<>(produtos, HttpStatus.OK);
-	}
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	/**NOVO PADRÃO DE CONSULTA (CONSULTAR TODOS)
+	 * 
+	 */
+//	@Override
+//	@GetMapping
+//	@Transactional
+//	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
+//		//Preparando ordenação
+//		final Sort ORDENE = Sort.by("id").ascending();
+//		List<Produto> produtos;
+//		List<? extends MasterGET> produtosGET;
+//		//Validando perfil do usuário
+//		if( request.isUserInRole(ADM) || admSql ) {
+//			//Consulta ADMIN
+//			log(0);
+//			Console.log("Coletando dados");
+//			produtos = ((ProdutoService) MASTER_SERVICE).findAll();
+//			Console.log("Convertendo dados");
+//			produtosGET = conversor(produtos, ProdutoAdmGET.class);
+//		}
+//		else {
+//			//Consulta USER
+//			log(1);
+//			Console.log("Coletando dados");
+//			produtos = ((ProdutoService) MASTER_SERVICE).findAll();
+//			Console.log("Convertendo dados");
+//			produtosGET = conversor(produtos, ProdutoUserGET.class);
+//		}
+//		Console.log("Reportando resposta");
+//		return new ResponseEntity<>(produtosGET, HttpStatus.OK);
+//	}
 	
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/** INSERIR PRODUTO VIA PLANILHA CSV
 	 *
 	 *
@@ -125,11 +146,12 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 	@Transactional
 	public ResponseEntity<?> addCsv(@RequestBody String fileName) {
 		Console.log("<IMPORTANDO-CSV>", +1);
+		//Inicializando variáveis
 		final LeitorCsv csv = new LeitorCsv(fileName);
 		final List<String[]> arquivo = csv.getArquivo();		
 		final List<Produto> produtos = new ArrayList<>();
+		ProdutoPOST_ID produtosId = new ProdutoPOST_ID();
 		Console.log("Coletando planilha. Total de: " + arquivo.size() + " linhas");
-		
 		//Iterando linhas da planilha csv
 		for(String[] linha : arquivo) {
 			Console.log( Arrays.toString(linha) );
@@ -166,21 +188,12 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 			for(String mc : marcasArray) {
 				marcasFinal.add( marcaService.validarByNome(mc) );
 			}
-			//marcasArray.forEach(mc -> marcasFinal.add( marcaService.validarByNome(mc) ));
-			//Criando Imagens
-			final List<String> imagensArray = Arrays.asList(imagens.split(","));
-			for(String img : imagensArray) {
-				imagensFinais.add( ImagemProduto.builder()
-						.imagem(img)
-						.build()
-				);
-			}
 			//Criando Produtos
 			Produto produto = Produto.builder()
 					.categoria(categoriaFinal)
 					.nome(nome)
 					.descricao(descricao)
-					.marca( marcaService.saveAll(marcasFinal) )
+					//.marca( marcaService.saveAll(marcasFinal) )
 					.modelo(modelo)
 					.valor(precoFinal)
 					.estoque(estoqueFinal)
@@ -188,22 +201,34 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 					.medidas(medidas)
 					.tamanho( String.valueOf(tamanhoFinal) )
 					.codigo(ean)
-					.imagem(imagensFinais)
+					//.imagem(imagensFinais)
 					.build();
+			//Criando Imagens
+			final List<String> imagensArray = Arrays.asList(imagens.split(","));
+			for(String img : imagensArray) {
+				imagensFinais.add(ImagemProduto.builder()
+					.imagem(img)
+					.produto(produto)
+					.build()
+				);
+			}
+			//Inserindo Atributos Pendentes (Imagens e Marca)
+			produto.setImagem(imagensFinais);
+			produto.setMarca( marcaService.saveAll(marcasFinal) );
 			//Populando na lista final de Produtos
 			Console.log("Salvando produto");
-			produtos.add( ((ProdutoService) MASTER_SERVICE).salvar(produto) );
+			produtos.add( produto = ((ProdutoService) MASTER_SERVICE).salvar(produto) );
+			//Coletando Ids
+			produtosId.addId( produto.getId() );
 			Console.log("Produto salvo com sucesso!");
-			
-		}
-		
+		}//Fim do looping (linha)
 		//Terminando processo
 		Console.log("</IMPORTANDO-CSV>", -1);
 		Console.log("Retornando resposta ao cliente");
-		//Console.log("TESTE MARCAS NO PRODUTO 1: " + produtos.get(0).getMarca().size() );
 		return new ResponseEntity<>(produtos, HttpStatus.OK);
 	}
 
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@Override
 	public ResponseEntity<?> atualizar(@Valid Produto objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -222,19 +247,36 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		return null;
 	}
 
-
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@DeleteMapping("/all")
 	@Transactional
 	public ResponseEntity<?> deletAll() {
 		((ProdutoService) MASTER_SERVICE).removeAll();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	@Override
 	public ResponseEntity<?> deletarTodos(@Valid List<Produto> objeto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+//	//CONVERSOR MODELO/DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//	private MasterGET conversor(Produto produto, Class<? extends MasterGET> classGET)
+//	throws IllegalArgumentException, ConfigurationException, MappingException {
+//		return modelMapper.map(produto, classGET);
+//	}
+	
+	//CONVERSOR MODELO/DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//	private List<? extends MasterGET> conversor(List<Produto> produtos, Class<? extends MasterGET> classGET)
+//	throws IllegalArgumentException, ConfigurationException, MappingException {
+//		List<MasterGET> produtosGET = new ArrayList<>();
+//		for(Produto prd : produtos) {
+//			produtosGET.add(conversor(prd, classGET));
+//		}
+//		return produtosGET;
+//	}
 
 
 }

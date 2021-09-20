@@ -9,16 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.dto.TransportadorDto;
 import br.com.jcaguiar.ecommerce.model.Transportador;
+import br.com.jcaguiar.ecommerce.projection.TransportadorGET;
 import br.com.jcaguiar.ecommerce.service.TransportadorService;
 
 @RestController
 @RequestMapping("/transp")
-public class TransportadorController extends MasterController<Transportador, Short, TransportadorDto> {
+public class TransportadorController extends MasterController<Transportador, Short, TransportadorGET> {
 
 	public TransportadorController(TransportadorService transpService) {
-		super(Transportador.class, TransportadorDto.class, "transp", transpService);
+		super(Transportador.class, TransportadorGET.class, "transp", transpService);
 	}
 
 	@Override

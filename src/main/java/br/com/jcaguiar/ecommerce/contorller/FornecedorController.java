@@ -9,16 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.dto.FornecedorDto;
+import br.com.jcaguiar.ecommerce.dto.FornecedorPOST;
 import br.com.jcaguiar.ecommerce.model.Fornecedor;
 import br.com.jcaguiar.ecommerce.service.FornecedorService;
 
 @RestController
 @RequestMapping("/fornecedor")
-public class FornecedorController extends MasterController<Fornecedor, Short, FornecedorDto> {
+public class FornecedorController extends MasterController<Fornecedor, Short, FornecedorPOST> {
 
 	public FornecedorController(FornecedorService fornecedorService) {
-		super(Fornecedor.class, FornecedorDto.class, "fornecedor", fornecedorService);
+		super(Fornecedor.class, FornecedorPOST.class, "fornecedor", fornecedorService);
 	}
 
 	@Override

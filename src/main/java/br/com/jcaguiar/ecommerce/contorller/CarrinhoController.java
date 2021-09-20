@@ -9,16 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.dto.CarrinhoDto;
+import br.com.jcaguiar.ecommerce.dto.CarrinhoPOST;
 import br.com.jcaguiar.ecommerce.model.Carrinho;
 import br.com.jcaguiar.ecommerce.service.CarrinhoService;
 
 @RestController
 @RequestMapping("/carrinho")
-public class CarrinhoController extends MasterController<Carrinho, Long, CarrinhoDto> {
+public class CarrinhoController extends MasterController<Carrinho, Long, CarrinhoPOST> {
 
 	public CarrinhoController(CarrinhoService carrinhoService) {
-		super(Carrinho.class, CarrinhoDto.class, "carrinho", carrinhoService);
+		super(Carrinho.class, CarrinhoPOST.class, "carrinho", carrinhoService);
 	}
 
 	@Override

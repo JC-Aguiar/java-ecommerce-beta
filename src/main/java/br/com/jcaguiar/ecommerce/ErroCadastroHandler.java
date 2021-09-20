@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import br.com.jcaguiar.ecommerce.dto.ErroCadastroDto;
+import br.com.jcaguiar.ecommerce.dto.ErroCadastroPOST;
 
 @RestControllerAdvice
 public final class ErroCadastroHandler {
@@ -29,18 +29,18 @@ public final class ErroCadastroHandler {
 	 */
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<ErroCadastroDto> handler(MethodArgumentNotValidException exc) {
+	public List<ErroCadastroPOST> handler(MethodArgumentNotValidException exc) {
 		//Coletando atributos inválidos
 		List<FieldError> listaErro = exc.getBindingResult().getFieldErrors();
 		
 		//Preparando lista DTO
-		List<ErroCadastroDto> listaErroDto = new ArrayList<ErroCadastroDto>();
+		List<ErroCadastroPOST> listaErroDto = new ArrayList<ErroCadastroPOST>();
 		
 		//Iterando listas
 		for(FieldError erro : listaErro) {
 			final String CAMPO =  erro.getField();
 			final String MENSAGEM = messageSource.getMessage(erro, LocaleContextHolder.getLocale() );
-			listaErroDto.add( new ErroCadastroDto(CAMPO, MENSAGEM) );
+			listaErroDto.add( new ErroCadastroPOST(CAMPO, MENSAGEM) );
 		}
 		
 		//Retornando exceptionDto

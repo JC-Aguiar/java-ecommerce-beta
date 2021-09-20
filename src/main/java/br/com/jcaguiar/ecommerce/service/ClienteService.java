@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
-import br.com.jcaguiar.ecommerce.projection.ClientesReport;
+import br.com.jcaguiar.ecommerce.projection.ClientesGET;
 import br.com.jcaguiar.ecommerce.repository.ClienteRepository;
 
 @Service
@@ -39,15 +39,15 @@ public class ClienteService {
 	
 	//ClienteInfoLimitada ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	public ClientesReport findByIdLimited(int id) {
+	public ClientesGET findByIdLimited(int id) {
 		return clienteRep.findByIdLimited(id);
 	}
 	
-	public List<ClientesReport> findAllLimited(Sort ordene) {
+	public List<ClientesGET> findAllLimited(Sort ordene) {
 		return clienteRep.findAllLimited();
 	}
 
-	public List<ClientesReport> findByNomeContainingLimited(String name) {
+	public List<ClientesGET> findByNomeContainingLimited(String name) {
 		return clienteRep.findByNomeContainingLimited(name);
 	}
 	
