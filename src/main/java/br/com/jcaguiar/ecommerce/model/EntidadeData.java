@@ -19,9 +19,27 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class EntidadeData<ID> implements Entidade<ID> {
 	
-	final protected boolean ativo = true;
-	final protected LocalDateTime data_cadastro = DataFormato.now();
-	final protected LocalDateTime data_ativo = DataFormato.now();
+	protected boolean ativo = false;
+	protected LocalDateTime data_cadastro = DataFormato.now();
+	protected LocalDateTime data_ativo = DataFormato.now();
 	protected LocalDateTime data_desativo;
+	
+	public void resetDataCadastro() {
+		this.data_cadastro = null;
+	}
+	
+	public void resetDataAtivo() {
+		this.data_ativo = null;
+	}
+	
+	public void resetDataDesativo() {
+		this.data_desativo = null;
+	}
+	
+	public void resetDatas() {
+		resetDataAtivo();
+		resetDataDesativo();
+		resetDataCadastro();
+	}
 
 }

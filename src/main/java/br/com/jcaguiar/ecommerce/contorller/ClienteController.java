@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
-import br.com.jcaguiar.ecommerce.projection.ClientesReport;
+import br.com.jcaguiar.ecommerce.projection.ClientesGET;
 import br.com.jcaguiar.ecommerce.service.ClienteService;
 import lombok.AllArgsConstructor;
 
@@ -38,8 +38,8 @@ public class ClienteController {
 			return new ResponseEntity<>(clientes, HttpStatus.FOUND);
 		}
 		System.out.printf("Consulta USER\n");
-		List<ClientesReport> clientesReport = CLIENTE_SERVICE.findAllLimited(ORDENE);
-		return new ResponseEntity<>(clientesReport, HttpStatus.FOUND);
+		List<ClientesGET> clientesGET = CLIENTE_SERVICE.findAllLimited(ORDENE);
+		return new ResponseEntity<>(clientesGET, HttpStatus.FOUND);
 	}
 	
 	//BUSCA ESPECIFICA ID
@@ -54,7 +54,7 @@ public class ClienteController {
 				return new ResponseEntity<>(cliente, HttpStatus.FOUND);
 			}
 			System.out.printf("Consulta USER\n");
-			final ClientesReport clienteReport = CLIENTE_SERVICE.findByIdLimited(ID);
+			final ClientesGET clienteReport = CLIENTE_SERVICE.findByIdLimited(ID);
 			return new ResponseEntity<>(clienteReport, HttpStatus.FOUND);
 		}
 		catch (NumberFormatException e) {
@@ -71,7 +71,7 @@ public class ClienteController {
 			return new ResponseEntity<>(cliente, HttpStatus.FOUND);
 		}
 		System.out.printf("Consulta USER\n");
-		final List<ClientesReport> clienteReport = CLIENTE_SERVICE.findByNomeContainingLimited(nome);
+		final List<ClientesGET> clienteReport = CLIENTE_SERVICE.findByNomeContainingLimited(nome);
 		return new ResponseEntity<>(clienteReport, HttpStatus.FOUND);
 	}
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.model.Cliente;
 import br.com.jcaguiar.ecommerce.model.Endereco;
-import br.com.jcaguiar.ecommerce.projection.ClientesReport;
+import br.com.jcaguiar.ecommerce.projection.ClientesGET;
 import br.com.jcaguiar.ecommerce.service.ClienteService;
 import br.com.jcaguiar.ecommerce.service.EnderecoService;
 

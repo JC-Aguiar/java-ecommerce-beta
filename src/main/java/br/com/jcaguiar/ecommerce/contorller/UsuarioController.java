@@ -9,17 +9,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcaguiar.ecommerce.dto.UsuarioDto;
+import br.com.jcaguiar.ecommerce.dto.UsuarioPOST;
 import br.com.jcaguiar.ecommerce.model.Usuario;
 import br.com.jcaguiar.ecommerce.service.UsuarioService;
 
 @RestController
 @RequestMapping("user")
-public class UsuarioController extends MasterController<Usuario, Integer, UsuarioDto> {
+public class UsuarioController extends MasterController<Usuario, Integer, UsuarioPOST> {
 
 	
 	public UsuarioController(UsuarioService userService) {
-		super(Usuario.class, UsuarioDto.class, "user", userService);
+		super(
+			Usuario.class,
+			UsuarioPOST.class,
+			"user", 
+			userService);
 	}
 
 	@Override

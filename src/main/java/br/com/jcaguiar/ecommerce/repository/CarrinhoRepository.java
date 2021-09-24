@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.jcaguiar.ecommerce.model.Carrinho;
-import br.com.jcaguiar.ecommerce.projection.CarrinhoReport;
+import br.com.jcaguiar.ecommerce.projection.CarrinhoGET;
 
 @Repository
 public interface CarrinhoRepository extends MasterRepository<Carrinho, Long> {
@@ -16,7 +16,7 @@ public interface CarrinhoRepository extends MasterRepository<Carrinho, Long> {
 					+ "FROM carrinho c "
 					+ "LEFT JOIN usuario u ON c.id = u.carrinho_id "
 					+ "LEFT JOIN carrinho_item i ON c.id = i.carrinho_id ")
-	List<CarrinhoReport> findTodosAdm();
+	List<CarrinhoGET> findTodosAdm();
 	
 	@Query(nativeQuery = true,
 			value = "SELECT i as itens, c.total, c.quantidade, c.avisos "
@@ -24,10 +24,10 @@ public interface CarrinhoRepository extends MasterRepository<Carrinho, Long> {
 					+ "LEFT JOIN usuario u ON c.id = u.carrinho_id "
 					+ "LEFT JOIN carrinho_item i ON c.id = i.carrinho_id "
 					+ "WHERE c.id = ?1")
-	CarrinhoReport findMeuCarrinho(long id);
+	CarrinhoGET findMeuCarrinho(long id);
 	
-	CarrinhoReport findTotalAndQuantidadeById(long id);	
+	CarrinhoGET findTotalAndQuantidadeById(long id);	
 
-	CarrinhoReport findTotalById(long id);
+	CarrinhoGET findTotalById(long id);
 	
 }

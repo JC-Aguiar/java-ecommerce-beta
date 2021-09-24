@@ -6,11 +6,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import br.com.jcaguiar.ecommerce.dto.MasterDto;
+import br.com.jcaguiar.ecommerce.dto.MasterPOST;
 import lombok.Getter;
 
 @Getter
-public final class LoginDto extends MasterDto {
+public final class LoginDto extends MasterPOST {
 	/**CONCEITO
 	 * 
 	 */

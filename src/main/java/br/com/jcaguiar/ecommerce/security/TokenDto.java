@@ -1,10 +1,10 @@
 package br.com.jcaguiar.ecommerce.security;
 
-import br.com.jcaguiar.ecommerce.dto.MasterDto;
+import br.com.jcaguiar.ecommerce.dto.MasterPOST;
 import lombok.Getter;
 
 @Getter
-public final class TokenDto extends MasterDto {
+public final class TokenDto extends MasterPOST {
 
 	public String token;
 	public String tipo;
