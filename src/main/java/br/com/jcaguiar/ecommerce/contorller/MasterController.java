@@ -68,7 +68,6 @@ import lombok.RequiredArgsConstructor;
 public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 
 	protected boolean admSql = false;
-	
 	@Autowired protected ModelMapper modelMapper;
 	protected final Class<OBJ> classeModelo;
 	protected final Class<DTO> classeDto;
@@ -84,7 +83,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 										"Erro na Operação"			//5+
 										};
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
 	/**CADASTRAR UM 
 	 * 
 	 * @param dto
@@ -114,7 +113,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	}
 
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**BUSCA TODOS 
 	 * 
 	 * @param request
@@ -149,7 +147,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	}
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**BUSCA POR ID - EXATA 
 	 * 
 	 * @param id
@@ -173,7 +170,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 		return new ResponseEntity<>(OBJ_VO, HttpStatus.OK);
 	}
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
 	/**BUSCA POR NOME - POSSUI
 	 * Dependendo do login/perfil de quem fez a solicitação serão retornados diferentes campos da Entidade.
 	 * @param nome
@@ -197,7 +194,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	}
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**BUSCA POR NOME - EXATA 
 	 * 
 	 * @param nome
@@ -222,7 +218,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	}
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**ATUALIZA UM CADASTRO 
 	 * 
 	 * @param objeto
@@ -233,7 +228,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	public abstract ResponseEntity<?> atualizar(@RequestBody @Valid OBJ objeto, HttpServletRequest request);
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**ATUALIZA MUITOS CADASTROS 
 	 * 
 	 * @param objeto
@@ -244,7 +238,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	public abstract ResponseEntity<?> atualizarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request);
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**DELETA UM CADASTRO 
 	 * 
 	 * @param objeto
@@ -255,7 +248,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	public abstract ResponseEntity<?> deletar(@RequestBody @Valid OBJ objeto, HttpServletRequest request);
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**DELETA MUITOS CADASTROS 
 	 * 
 	 * @param objeto
@@ -266,7 +258,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	public abstract ResponseEntity<?> deletarTodos(@RequestBody @Valid List<OBJ> objeto, HttpServletRequest request);	
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/**CONVERSOR: ENTIDADE >>> DTO
 	 * 
 	 * @param object
@@ -276,12 +267,12 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	 * @throws ConfigurationException
 	 * @throws MappingException
 	 */
-	protected MasterGET conversorDto(OBJ object, Class<? extends MasterGET> classGET)
+	public MasterGET conversorDto(OBJ object, Class<? extends MasterGET> classGET)
 	throws IllegalArgumentException, ConfigurationException, MappingException {
 		return modelMapper.map(object, classGET);
 	}
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
 	/**CONVERSOR (LISTA): ENTIDADE >>> DTO 
 	 * 
 	 * @param object
@@ -291,7 +282,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	 * @throws ConfigurationException
 	 * @throws MappingException
 	 */
-	protected List<? extends MasterGET> conversorDto(List<OBJ> object, Class<? extends MasterGET> classGET)
+	public List<? extends MasterGET> conversorDto(List<OBJ> object, Class<? extends MasterGET> classGET)
 	throws IllegalArgumentException, ConfigurationException, MappingException {
 		List<MasterGET> dto = new ArrayList<>();
 		for(OBJ obj : object) {
@@ -300,7 +291,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 		return dto;
 	}
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
 	/**CONVERSOR: DTO >>> ENTIDADE
 	 * 
 	 * @param dto
@@ -309,12 +300,12 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	 * @throws ConfigurationException
 	 * @throws MappingException
 	 */
-	protected OBJ conversorEntidade(DTO dto)
+	public OBJ conversorEntidade(DTO dto)
 	throws IllegalArgumentException, ConfigurationException, MappingException {
 		return modelMapper.map(dto, classeModelo);
 	}
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
 	/**CONVERSOR (LISTA): DTO >>> ENTIDADE
 	 * 
 	 * @param listaDto
@@ -323,7 +314,7 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	 * @throws ConfigurationException
 	 * @throws MappingException
 	 */
-	protected List<OBJ> conversorEntidade(List<DTO> listaDto)
+	public List<OBJ> conversorEntidade(List<DTO> listaDto)
 	throws IllegalArgumentException, ConfigurationException, MappingException {
 		List<OBJ> listaObjects = new ArrayList<>();
 		for(DTO dto : listaDto) {
@@ -333,7 +324,6 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	}
 	
 	
-	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	/*MENSAGENS DAS OPERAÇÕES 
 	 * Mensagens LOG:
 	 * 0  "Consulta Completa"
