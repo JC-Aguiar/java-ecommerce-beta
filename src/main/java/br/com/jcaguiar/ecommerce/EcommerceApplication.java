@@ -10,7 +10,39 @@ public class EcommerceApplication {
 	
 	/**SISTEMA E-COMMERCE
 	 * 
-	 * PROPRIETÁRIO:
+	 * API:
+	 * 	> Rest
+	 * 	> Desacoplamento
+	 * 	> Escalabilidade
+	 * 	> Manutenção
+	 * 	> Verbosidade
+	 * 
+	 * TECNOLOGIAS:
+	 *  > Spring Boot
+	 *  > Spring Data
+	 *  > Spring MVC
+	 *  > Spring Security
+	 *  > Spring Validation
+	 *  > Spring Web
+	 *  > Spring Test
+	 *  > Spring WebFlux
+	 *  > MySQL
+	 *  > Lombok
+	 *  > OpenCsv
+	 *  > ModelMapper
+	 *  > JWT
+	 * 
+	 * IDE:
+	 * 	> Eclipse
+	 * 	> Eclipse Color Theme
+	 * 	> EditBox
+	 * 
+	 * USUÁRIOS FINAIS:
+	 * 	> Usuário
+	 * 	> Proprietário
+	 * 	> Administrador
+	 * 
+	 * <Proprietario>
 	 * 		Cadastrar, Desativar/Ativar, Alterar e Remover:
 	 * 			> Setores
 	 * 			> Categorias
@@ -30,13 +62,13 @@ public class EcommerceApplication {
 	 * 		Consultar localidades e regiões dos Usuários/Clientes
 	 * 		Consultar taxa dos Meios de Pagamento utilizados nas compras 
 	 * 
-	 * ADMINISTRADOR:
+	 * <Administrador>
 	 * 		(Proprietário com mais permissóes)
 	 * 		Monitorar Status da API
 	 * 		Consultar LOG do Servidor
 	 * 		Consultar dados dos Usuários/Clientes
 	 * 
-	 * USUÁRIO:
+	 * <Usuario>
 	 * 		Se cadastrar
 	 * 		Realizar login
 	 * 		Configurar Conta do Usuário

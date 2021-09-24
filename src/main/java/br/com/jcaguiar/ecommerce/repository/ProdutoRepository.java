@@ -14,7 +14,6 @@ import br.com.jcaguiar.ecommerce.projection.ProdutoUserGET;
 @Repository
 public interface ProdutoRepository extends MasterRepository<Produto, Integer> {
 	
-
 	@Query(nativeQuery = true,
 			value = "SELECT p.id, c.nome as categoria, p.nome, p.descricao, p.modelo, p.valor, m.nome as marca, f.nome as fornacedor, "
 					+ "p.tamanho, p.medidas, p.estoque, p.acessos, p.votos, p.nota, ip.imagem as imagem "

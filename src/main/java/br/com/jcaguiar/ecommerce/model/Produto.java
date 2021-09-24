@@ -44,7 +44,7 @@ public class Produto extends EntidadeData<Integer> {
 	private String descricao;
 	private String modelo;
 	private BigDecimal valor;
-	private short estoque;
+	private Short estoque;
 	private String tamanho;
 	private String medidas;
 	private String material;
@@ -59,23 +59,24 @@ public class Produto extends EntidadeData<Integer> {
 
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	final private List<Comentario> comentario = new ArrayList<>();
-	private int acessos;
-	private int votos;
-	private short nota;
+	private Integer acessos;
+	private Integer votos;
+	private Short nota;
 
-	public void setImagem(ImagemProduto img) {
+	public void addImagem(ImagemProduto img) {
 		this.imagem.add(img);
 	}
 
-	public void setImagem(List<ImagemProduto> img) {
+	public void addImagem(List<ImagemProduto> img) {
 		this.imagem.addAll(img);
 	}
 
-	public void setMarca(Marca marca) {
+	public void addMarca(Marca marca) {
 		this.marca.add(marca);
 	}
 
-	public void setMarca(List<Marca> marca) {
+	public void addMarca(List<Marca> marca) {
 		this.marca.addAll(marca);
 	}
+
 }

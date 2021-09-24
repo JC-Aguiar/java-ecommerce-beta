@@ -97,19 +97,17 @@ public abstract class MasterController<OBJ extends Entidade<ID>, ID, DTO> {
 	@Transactional
 	public ResponseEntity<?> salvar(@RequestBody @Valid DTO dto, HttpServletRequest request, UriComponentsBuilder uriBuilder)
 	throws Exception {		
-	//Convertendo DTO e Salvando
+		//Convertendo DTO e Salvando
 		final OBJ OBJ_MODEL = conversorEntidade(dto);
 		final ID OBJ_MODEL_ID = (ID) OBJ_MODEL.getId();
-		MASTER_SERVICE.salvar(OBJ_MODEL);
-		
-	//Montando URI de retorno
+		MASTER_SERVICE.salvar(OBJ_MODEL);		
+		//Montando URI de retorno
 		final String PATH = String.format("/%s/{id}", URL);
 		URI uri = uriBuilder
 				.path(PATH)
 				.buildAndExpand(OBJ_MODEL_ID)
-				.toUri();
-		
-	//Retornando HttpStatus, URL e DTO 
+				.toUri();		
+		//Retornando HttpStatus, URL e DTO 
 		return ResponseEntity
 				.created(uri)
 				.body(dto);

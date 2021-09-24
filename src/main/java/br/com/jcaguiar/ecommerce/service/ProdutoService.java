@@ -2,9 +2,11 @@ package br.com.jcaguiar.ecommerce.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.model.Produto;
 import br.com.jcaguiar.ecommerce.projection.MasterGET;
 import br.com.jcaguiar.ecommerce.repository.ProdutoRepository;
@@ -16,34 +18,11 @@ public class ProdutoService extends MasterService<Produto, Integer> {
 		super(jpaRepo);
 	}
 	
-
-//	@Cacheable("ProdutoUser")
-//	public List<ProdutoUserGET> findTodosUser() {
-//		Console.log("<PRODUTO-SERVICE>", +1);
-//		Console.log("Coletando produtos");
-//		List<Produto> produtos = ((ProdutoRepository) JPA_REPO).findAll();
-//		List<ProdutoUserGET> produtosGET = new ArrayList<>();
-//		Console.log("Convertendo dados da resposta");
-//		for(Produto prd : produtos) {
-//			produtosGET.add( ProdutoUserGET.of(prd) );
-//		}
-//		Console.log("</PRODUTO-SERVICE>", -1);
-//		return produtosGET;
-//	}
-//
-//	@Cacheable("ProdutoAdm")
-//	public List<ProdutoAdmGET> findTodosAdm() {
-//		Console.log("<PRODUTO-SERVICE>", +1);
-//		Console.log("Coletando produtos");
-//		List<Produto> produtos = ((ProdutoRepository) JPA_REPO).findAll();
-//		List<ProdutoAdmGET> produtosGET = new ArrayList<>();
-//		Console.log("Convertendo dados da resposta");
-//		for(Produto prd : produtos) {
-//			produtosGET.add( ProdutoAdmGET.of(prd) );
-//		}
-//		Console.log("</PRODUTO-SERVICE>", -1);
-//		return produtosGET;
-//	}
+	public List<Produto> findAll(Example<Produto> produtoExemplo) {
+		List<Produto> produtos = ((ProdutoRepository) JPA_REPO).findAll(produtoExemplo);
+		Console.log("[PRODUTO-SERVICE] Total: " + produtos.size());
+		return produtos;
+	}
 
 	@Override
 	public List<? extends MasterGET> findTodos(Sort ordene) {
@@ -111,6 +90,13 @@ public class ProdutoService extends MasterService<Produto, Integer> {
 
 	@Override
 	public List<? extends MasterGET> findTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<? extends MasterGET> findTodosAdm() {
 		// TODO Auto-generated method stub
 		return null;
 	}

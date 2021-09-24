@@ -8,15 +8,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.modelmapper.ConfigurationException;
-import org.modelmapper.MappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcaguiar.ecommerce.Console;
 import br.com.jcaguiar.ecommerce.dto.ProdutoPOST;
-import br.com.jcaguiar.ecommerce.dto.ProdutoPOST_ID;
 import br.com.jcaguiar.ecommerce.model.Categoria;
 import br.com.jcaguiar.ecommerce.model.ImagemProduto;
 import br.com.jcaguiar.ecommerce.model.Marca;
@@ -50,97 +47,107 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 	@Autowired MarcaService marcaService;
 	@Autowired ImagemProdutoService imgService;
 	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	public ProdutoController(ProdutoService produtoService) {
 		super(
-				Produto.class,
-				ProdutoPOST.class,
-				"produto",
-				produtoService
+			Produto.class,
+			ProdutoPOST.class,
+			"produto",
+			produtoService
 		);
 	}
 	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	/**NOVO PADRÃO DE CONSULTA (CONSULTAR TODOS)
+
+	/**BUSCA FILTRADA 
 	 * 
+	 * @param request
+	 * @return
 	 */
-//	@Override
-//	@GetMapping
-//	@Transactional
-//	public ResponseEntity<List<?>> buscarTodos(HttpServletRequest request) {
-//		//Preparando ordenação
-//		final Sort ORDENE = Sort.by("id").ascending();
-//		List<Produto> produtos;
-//		List<? extends MasterGET> produtosGET;
-//		//Validando perfil do usuário
-//		if( request.isUserInRole(ADM) || admSql ) {
-//			//Consulta ADMIN
-//			log(0);
-//			Console.log("Coletando dados");
-//			produtos = ((ProdutoService) MASTER_SERVICE).findAll();
-//			Console.log("Convertendo dados");
-//			produtosGET = conversor(produtos, ProdutoAdmGET.class);
-//		}
-//		else {
-//			//Consulta USER
-//			log(1);
-//			Console.log("Coletando dados");
-//			produtos = ((ProdutoService) MASTER_SERVICE).findAll();
-//			Console.log("Convertendo dados");
-//			produtosGET = conversor(produtos, ProdutoUserGET.class);
-//		}
-//		Console.log("Reportando resposta");
-//		return new ResponseEntity<>(produtosGET, HttpStatus.OK);
-//	}
+	@PostMapping("/filtrar")
+	@Transactional
+	public ResponseEntity<List<?>> buscarTodos(@RequestBody ProdutoPOST produtoPost, HttpServletRequest request) {
+		//Iniciando variáveis
+		List<Produto> produtos;
+		List<? extends MasterGET> produtosGET;
+		Produto produtoExemplo;
+		//Preparando ordenação
+		final Sort ORDENE = Sort.by("id").ascending();
+		//Conferindo dados DTO
+		Console.log("ProdutoDTO: " + produtoPost.toString());
+		//Convertendo Dados
+		produtoExemplo = conversorEntidade(produtoPost);
+		produtoExemplo.resetDatas();
+		//Validando perfil do usuário
+		if( request.isUserInRole(ADM) || admSql ) {
+			//Consulta ADMIN
+			log(0);
+			produtos = ((ProdutoService) MASTER_SERVICE).findAll( Example.of(produtoExemplo) );
+			Console.log("Produtos coletados com base no exemplo: " + produtos.size());
+			Console.log("Convertendo dados");
+			produtosGET = conversorDto(produtos, ProdutoAdmGET.class);
+		}
+		else {
+			//Consulta USER
+			log(1);
+			produtos = ((ProdutoService) MASTER_SERVICE).findAll( Example.of(produtoExemplo) );
+			Console.log("Produtos coletados com base no exemplo: " + produtos.size());
+			Console.log("Convertendo dados");
+			produtosGET = conversorDto(produtos, ProdutoUserGET.class);
+		}
+		Console.log("Reportando resposta");
+		return new ResponseEntity<>(produtosGET, HttpStatus.OK);
+	}
 	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	/** INSERIR PRODUTO VIA PLANILHA CSV
+	
+	/** INSERE PRODUTOS VIA PLANILHA CSV <br>
+	 * Para cada linha do csv, os campos são identificados, tratador e inseridos na listagem final de Produtos.<br>
+	 * Atributos  nào coletados via planilha, como Acesso e Votos, são zerdos manualmente antes de inseridos na listagem.
+	 * A importação da planilha, até o momento, só aceita padrão UTF-8.
+	 * 
+	 * @param Caminho absoluto do arquivo csv.
+	 * @return ResponseEntity List<ProdutoAdmGET> dos Produtos cadastrados com sucesso.
 	 *
-	 *
-	 * SETOR
-	 * 		Já existe Setor com mesmo nome?
-	 * 		S: colete esse Setor
-	 * 		N: crie essa Categoria
+	 *@apiNote
+	 * SETOR: Já existe Setor com mesmo nome? <br>
+	 * 		 S: colete esse Setor <br>
+	 * 		 N: crie essa Categoria <br><br>
 	 * 
-	 * CATEGORIA
-	 * 		Já existe Categoria com mesmo nome?
-	 * 		S: colete essa Categoria
-	 * 		N: crie essa Categoria
-	 * 
-	 * MARCA
-	 * 		Já existe Marca com mesmo nome?
-	 * 		S: colete essa Marca
-	 * 		N: crie essa Marca
-	 * 
-	 * PRECO
-	 * 		Apura se Preço é válido
-	 * 
-	 * ESTOQUE
-	 * 		Apura se Estoque é válido
-	 * 
-	 * CODIGO EAN
-	 * 		Apurar se o Código é válido
-	 * 		Já existe EAN com mesmo número?
-	 * 		S: Substitua os dados do produto
-	 * 		N: Crie um novo produto
-	 * 
-	 * Classe TratarString
-	 * 		getDepois:
-	 * 		método estático que elimina todos os caracteres
-	 * 		até a posição da string informada no parâmetro
-	 * 		<targetCharSequence>
+	 * CATEGORIA:
+	 * 		Já existe Categoria com mesmo nome dentro do Setor coletado? <br>
+	 * 		 S: colete essa Categoria <br>
+	 * 		 N: crie essa Categoria nesse Setor <br><br>
 	 * 
 	 * MARCA:
-	 * 		TratarString.getDepois(":")
+	 * 		Já existe Marca com mesmo nome? <br>
+	 * 		 S: colete essa Marca <br>
+	 * 		 N: crie essa Marca <br><br>
+	 * 
+	 * PRECO:
+	 * 		Apura se Preço é válido <br><br>
+	 * 
+	 * ESTOQUE:
+	 * 		Apura se Estoque é válido <br><br>
+	 * 
+	 * CODIGO EAN:
+	 * 		Apurar se o Código é válido. <br>
+	 * 		Já existe EAN com mesmo número? <br>
+	 * 		 S: Substitua o Produto desse EAN por este novo cadastro <br>
+	 * 		 N: Crie um novo produto <br><br>
+	 * 
+	 * MARCA:
+	 * 		TratarString.getDepois(":") <br><br>
 	 * 
 	 * MATERIAIS:
-	 * 		Divida a string em array por ","	
-	 * 		TratarString.getDepois(":")
+	 * 		Divida a string em array, critério: ","	 <br>
+	 * 		TratarString.getDepois(":") <br><br>
 	 * 
-	 * IMAGENS
-	 * 		Dividir string em array por ","
-	 * 		Adicionar os links aos já existentes
+	 * IMAGENS:
+	 * 		Dividir string em array, critério: "," <br>
+	 * 		Adicionar os links aos já existentes <br><br>
 	 * 
+	 * Classe TratarString:
+	 * 		O método estático <b>getDepois</b> elimina todos os caracteres até a posição da string informada no
+	 * 						  parâmetro targetCharSequence <br>
 	 */
 	@PostMapping("/file")
 	@Transactional
@@ -148,9 +155,9 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		Console.log("<IMPORTANDO-CSV>", +1);
 		//Inicializando variáveis
 		final LeitorCsv csv = new LeitorCsv(fileName);
-		final List<String[]> arquivo = csv.getArquivo();		
+		final List<String[]> arquivo = csv.getArquivo();
 		final List<Produto> produtos = new ArrayList<>();
-		ProdutoPOST_ID produtosId = new ProdutoPOST_ID();
+		final List<MasterGET> produtosGET = new ArrayList<>();
 		Console.log("Coletando planilha. Total de: " + arquivo.size() + " linhas");
 		//Iterando linhas da planilha csv
 		for(String[] linha : arquivo) {
@@ -193,7 +200,6 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 					.categoria(categoriaFinal)
 					.nome(nome)
 					.descricao(descricao)
-					//.marca( marcaService.saveAll(marcasFinal) )
 					.modelo(modelo)
 					.valor(precoFinal)
 					.estoque(estoqueFinal)
@@ -201,7 +207,6 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 					.medidas(medidas)
 					.tamanho( String.valueOf(tamanhoFinal) )
 					.codigo(ean)
-					//.imagem(imagensFinais)
 					.build();
 			//Criando Imagens
 			final List<String> imagensArray = Arrays.asList(imagens.split(","));
@@ -213,41 +218,45 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 				);
 			}
 			//Inserindo Atributos Pendentes (Imagens e Marca)
-			produto.setImagem(imagensFinais);
-			produto.setMarca( marcaService.saveAll(marcasFinal) );
+			produto.addImagem(imagensFinais);
+			produto.addMarca( marcaService.saveAll(marcasFinal) );
+			produto.setAcessos(0);
+			produto.setNota((short) 0);
+			produto.setVotos(0);
 			//Populando na lista final de Produtos
 			Console.log("Salvando produto");
-			produtos.add( produto = ((ProdutoService) MASTER_SERVICE).salvar(produto) );
-			//Coletando Ids
-			produtosId.addId( produto.getId() );
+			produtos.add( ((ProdutoService) MASTER_SERVICE).salvar(produto) );
 			Console.log("Produto salvo com sucesso!");
-		}//Fim do looping (linha)
+		}
+		//Fim do looping (linha)
+		//Convertendo dados
+		Console.log("Convertendo produtos para dto");
+		produtosGET.addAll( conversorDto(produtos, ProdutoAdmGET.class) );
 		//Terminando processo
-		Console.log("</IMPORTANDO-CSV>", -1);
 		Console.log("Retornando resposta ao cliente");
-		return new ResponseEntity<>(produtos, HttpStatus.OK);
+		Console.log("</IMPORTANDO-CSV>", -1);
+		return new ResponseEntity<>(produtosGET, HttpStatus.OK);
 	}
 
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	@Override
 	public ResponseEntity<?> atualizar(@Valid Produto objeto, HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 	@Override
 	public ResponseEntity<?> atualizarTodos(@Valid List<Produto> objeto, HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 	@Override
 	public ResponseEntity<?> deletar(@Valid Produto objeto, HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	@DeleteMapping("/all")
 	@Transactional
 	public ResponseEntity<?> deletAll() {
@@ -255,28 +264,10 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	@Override
 	public ResponseEntity<?> deletarTodos(@Valid List<Produto> objeto, HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
-//	//CONVERSOR MODELO/DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//	private MasterGET conversor(Produto produto, Class<? extends MasterGET> classGET)
-//	throws IllegalArgumentException, ConfigurationException, MappingException {
-//		return modelMapper.map(produto, classGET);
-//	}
-	
-	//CONVERSOR MODELO/DTO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//	private List<? extends MasterGET> conversor(List<Produto> produtos, Class<? extends MasterGET> classGET)
-//	throws IllegalArgumentException, ConfigurationException, MappingException {
-//		List<MasterGET> produtosGET = new ArrayList<>();
-//		for(Produto prd : produtos) {
-//			produtosGET.add(conversor(prd, classGET));
-//		}
-//		return produtosGET;
-//	}
-
 
 }
