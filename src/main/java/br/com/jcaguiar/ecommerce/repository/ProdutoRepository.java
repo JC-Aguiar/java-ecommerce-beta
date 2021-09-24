@@ -63,6 +63,6 @@ public interface ProdutoRepository extends MasterRepository<Produto, Integer> {
 					+ "LEFT JOIN imagem_produto ip ON p.id = ip.produto_id "
 					+ "LEFT JOIN categoria c ON c.id = p.categoria_id "
 					+ "WHERE p.nome like %?1%")
-	List<ProdutoUserGET> findByNomeContainingLimited(String nome);
+	List<ProdutoUserGET> findByNomeContainingLimited(String nome); 
 
 }

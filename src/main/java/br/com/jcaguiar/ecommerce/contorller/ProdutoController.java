@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,9 +59,11 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 	
 
 	/**BUSCA FILTRADA 
+	 * Busca por um produto com as especificações informadas.
+	 * @apiNote Para os atributos tipo Srting, é necessário coletá-los e 
 	 * 
-	 * @param request
-	 * @return
+	 * @param HttpServletRequest para validar se usuário é ADM ou não
+	 * @return ResponseEntity List<ProdutoAdmGET> ou List<ProdutoUserGET>
 	 */
 	@PostMapping("/filtrar")
 	@Transactional
@@ -69,31 +71,35 @@ public class ProdutoController extends MasterController<Produto, Integer, Produt
 		//Iniciando variáveis
 		List<Produto> produtos;
 		List<? extends MasterGET> produtosGET;
-		Produto produtoExemplo;
+		Class<? extends MasterGET> classeAlvo; 
+		Produto produto;
+		//Exibindo DTO
+		Console.log("ProdutoDTO: ");
+		Console.log( produtoPost.toString() );
 		//Preparando ordenação
-		final Sort ORDENE = Sort.by("id").ascending();
-		//Conferindo dados DTO
-		Console.log("ProdutoDTO: " + produtoPost.toString());
-		//Convertendo Dados
-		produtoExemplo = conversorEntidade(produtoPost);
-		produtoExemplo.resetDatas();
-		//Validando perfil do usuário
+		//final Sort ORDENE = Sort.by("id").ascending();
+		//Complexidade do resultado com base no perfil do usuário
 		if( request.isUserInRole(ADM) || admSql ) {
-			//Consulta ADMIN
-			log(0);
-			produtos = ((ProdutoService) MASTER_SERVICE).findAll( Example.of(produtoExemplo) );
-			Console.log("Produtos coletados com base no exemplo: " + produtos.size());
-			Console.log("Convertendo dados");
-			produtosGET = conversorDto(produtos, ProdutoAdmGET.class);
+			log(0); //Consulta ADMIN
+			classeAlvo = ProdutoAdmGET.class;
 		}
 		else {
-			//Consulta USER
-			log(1);
-			produtos = ((ProdutoService) MASTER_SERVICE).findAll( Example.of(produtoExemplo) );
-			Console.log("Produtos coletados com base no exemplo: " + produtos.size());
-			Console.log("Convertendo dados");
-			produtosGET = conversorDto(produtos, ProdutoUserGET.class);
+			log(1); //Consulta USER
+			classeAlvo = ProdutoUserGET.class;
 		}
+		produto = conversorEntidade(produtoPost);
+		produto.resetDatas();
+		produto.setAtivo(false);
+		ExampleMatcher matcher = ExampleMatcher.matching()
+	        .withIgnoreCase()
+	        .withIgnoreNullValues()
+	        .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+		Example<Produto> produtoExemplo = Example.of(produto, matcher);
+		Console.log("ProdutoExemplo Nome: " + produtoExemplo.getProbe().getNome());
+		Console.log("ProdutoExemplo Tamanho: " + produtoExemplo.getProbe().getTamanho());
+		produtos = ((ProdutoService) MASTER_SERVICE).findAll(produtoExemplo);
+		Console.log("Convertendo dados");
+		produtosGET = conversorDto(produtos, classeAlvo);
 		Console.log("Reportando resposta");
 		return new ResponseEntity<>(produtosGET, HttpStatus.OK);
 	}

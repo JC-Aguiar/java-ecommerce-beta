@@ -10,18 +10,18 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Getter @NoArgsConstructor @AllArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE)
 final public class ProdutoPOST extends MasterPOST {
 	
 	String categoria;
 	List<String> marca;
-	@Size(min = 3) String nome;									//@NotEmpty @NotNull @Size(min = 2) 
+	@Size(min = 3) String nome;
 	@Size(min = 3) String descricao;
-	@Min(value = 1) BigDecimal valor; 								//@NotEmpty @NotNull @Min(value = 1) @Max(value = 999999999) 
-	@Size(min = 1, max = 1) String tamanho;									//@NotEmpty @NotNull @Size(min = 1, max = 1) 
-	String medidas;
+	@Min(value = 1) BigDecimal valor;
+	@Size(min = 1, max = 1) String tamanho;
 	String material;
 	List<String> imagem;
 	
@@ -37,7 +37,6 @@ final public class ProdutoPOST extends MasterPOST {
 			+ "Categoria: %s\n"
 			+ "Valor: %d\n"
 			+ "Tamanho: %s\n"
-			+ "Medidas: %s\n"
 			+ "Materiais: %s\n"
 			+ "Imagens: %s\n", 
 			nome, 
@@ -46,7 +45,6 @@ final public class ProdutoPOST extends MasterPOST {
 			categoria,
 			valor,
 			tamanho,
-			medidas,
 			material,
 			stringImagens
 		);
